@@ -2,12 +2,17 @@
 
 ## Back end Requirements
 
+### Authorization/Security Requirements
+
+1. Users should be able to securely login into the application to view protected content or perform protected steps.
+2. Users should be able to store their credentials securely in a database.
+3. Secure tokens should be generated to allow access to secure views/content.  
+
 ### User Management Requirements
 
 1. Details of all application users should be stored in a database allowing CRUD operations on the entries.
 2. Users should be able to register themselves on the application providing information like username, password, userType, email, address etc.
-3. Users should be able to securely login into the application to view protected content or perform protected steps.
-4. Users should be able to update/modify their information.
+3. Users should be able to update/modify their information.
 
 ### Product Management Requirements
 
@@ -41,6 +46,20 @@
 3. Landing view should provide the ability to filter items based on category, price etc.
 4. Landing view should provide the ability to search for products based on their name/description/specifications.
 
+### Login view Requirements
+
+1. Login view should allow user to enter username and password to  login into the application.
+2. Login view should raise appropriate alert in case of invalid credentials/ failure to login.
+
+### Register User view Requirements
+
+1. Register User view should allow user to enter their personal information in order to register with the application
+2. Register User view should check validity of inputs
+3. Register User view should alert if the username is already taken/registered.
+4. Register User view should alert appropriately if the registration is unsuccessful.
+5. Register User view should prevent accidental navigation to other pages if the registration process is not complete.
+6. Register User view should ask for shop details if registering as a `seller` along with required govt. IDs.
+
 ### User Dashboard view
 
 1. `seller` after logging should be routed to this view and shown the list of their orders with option to add/update/remove products and inventory.
@@ -68,5 +87,9 @@
 1. Order view should allow users to view/edit the delivery location fetched from the user address in the database.
 2. It should indicate the total sum for the order.
 3. It should display a confirmation prompt after an order has been successfully placed.
-4. It should prevent accidental navigation to other pages if the order placement process inst complete.
+4. It should prevent accidental navigation to other pages if the order placement process is not complete.
 5. It should accept and process payment information from the user when placing an order.
+
+### Page not found view
+
+1. Page not found view should be displayed if user tries to access a non-existent endpoint.
