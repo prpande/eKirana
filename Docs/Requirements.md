@@ -1,4 +1,4 @@
-# Requirements for eKirana
+# Requirements for eKirana (Grocery/Food delivery app)
 
 ## Back end Requirements
 
@@ -17,7 +17,7 @@
 ### Product Management Requirements
 
 1. All product details should be stored in a database allowing CRUD operations on the entries.
-2. User with type = `seller` only should be able to add products available on sale by them providing information like productId, product name, description, stock etc.
+2. User with type `seller` only should be able to add products available on sale by them providing information like productId, product name, description, stock etc.
 3. `seller` should be able to update/delete product items for sale.
 4. Product availability and count should automatically be handled on order placement.
 5. `seller` should be able to query all the products on sale by them.  
@@ -39,32 +39,34 @@
 1. Header should provide users links to login/ register to the application.
 2. Header should provide users links to get to the landing view.
 
-### Landing view Requirements
+### Landing view
 
-1. Application should have an aesthetically pleasing landing view for clients to interact with.
+1. Application should have an aesthetically pleasing landing view for users to interact with.
 2. Landing view should display the products for sale.
 3. Landing view should provide the ability to filter items based on category, price etc.
 4. Landing view should provide the ability to search for products based on their name/description/specifications.
 
-### Login view Requirements
+### Login view
 
 1. Login view should allow user to enter username and password to  login into the application.
 2. Login view should raise appropriate alert in case of invalid credentials/ failure to login.
 
-### Register User view Requirements
+### Register User view
 
 1. Register User view should allow user to enter their personal information in order to register with the application
 2. Register User view should check validity of inputs
 3. Register User view should alert if the username is already taken/registered.
 4. Register User view should alert appropriately if the registration is unsuccessful.
 5. Register User view should prevent accidental navigation to other pages if the registration process is not complete.
-6. Register User view should ask for shop details if registering as a `seller` along with required govt. IDs.
+6. Register User view should ask for shop details if registering as a `seller` along with required govt. IDs/numbers like GSTIN etc.
+7. Register User view should ask for mode of transportation, capacity and preferred locality if registering as a `carrier`.
 
 ### User Dashboard view
 
 1. `seller` after logging should be routed to this view and shown the list of their orders with option to add/update/remove products and inventory.
-2. `customer` should be able to view all their previous orders and their status on this view.
+2. `customer` should be able to view all their previous orders and their status on this view with option to cancel/track order.
 3. Users should be able to search the orders based on product name.
+4. `carrier` should be able to see the available deliveries within a certain radius of his location and select them.
 
 ### User Information view
 
