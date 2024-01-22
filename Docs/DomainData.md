@@ -11,6 +11,7 @@ Class representing user credentials stored in the authorization service database
 public class UserCredential {
     @Id
     private String userId;
+
     private String password;
     private String userType; // used in generating encryption key for JWT signing
 }
@@ -43,11 +44,31 @@ Class representing `carrier` user vehicle information data.
 ```java
 public class VehicleInfo {
     private String drivingLicenseNumber;
+    
     private String registrationNumber;
+    
     private String make;
     private String model;
+    
     private String vehicleType;
     private String capacity;
+
+    private boolean isDelivering;
+    private double latitude;
+    private double longitude;
+}
+```
+
+### enum `UserType`
+
+Enum representing the type of the User registered.
+
+```java
+public enum UserType {
+    SELLER,
+    CUSTOMER,
+    CARRIER,
+    ADMIN
 }
 ```
 
@@ -67,7 +88,7 @@ public class User {
     private String phoneNumber;
     private String dateOfBirth;
     
-    private String userType;
+    private UserType userType;
 
     private Address address; // mailing address for customer and carrier , shop address for seller
     private List<Address> deliveryAddresses; // list of delivery addresses for customer
@@ -81,3 +102,66 @@ public class User {
 
 ## Product Service
 
+### class `Product`
+
+Class representing a product on sale by a `seller` on the application.
+
+```java
+@Document
+public class Product {
+    @Id
+    private String productId;
+
+    private String name;
+    private double price;
+    private String specifications;
+    private String description;
+    private List<String> imageUrl;
+
+    private boolean available;
+    private int quantity; // reflect quantity in stock, also used as item quantity when placing orders
+    private String sellerId;
+}
+```
+
+## Order Service
+
+### enum `OrderStatus`
+
+Enum representing the state in which an order placed on the application can be in.
+
+```java
+public enum OrderStatus {
+    INITIALIZED,
+    CONFIRMED,
+    SHIPPED,
+    DELIVERED,
+    CANCELLATION_REQUESTED,
+    CANCELLED
+}
+```
+
+### class `Order`
+
+Class representing an order placed by a `customer` on the application.
+
+```java
+@Document
+public class Order {
+    @Id
+    private String orderId;
+
+    private List<Product> orderedItems;
+    private double totalAmount;
+    private Address deliveryAddress;
+    private OrderStatus status;
+    private Date placedOn;
+    private Date deliveredOn; // can also stored expected delivery date if deliveredOn > current Date
+
+    private User customer;
+    private User seller;
+    private User carrier;
+
+    private String comments;
+}
+```
