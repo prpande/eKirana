@@ -7,7 +7,7 @@
 Class representing user credentials stored in the authorization service database
 
 ```java
-@Entity
+@Document
 public class UserCredential {
     @Id
     private String userId;
@@ -31,6 +31,8 @@ public class Address {
     private String landmark;
     private String city;
     private String state;
+    private double latitude;
+    private double longitude;
     private String phoneNumber;
     private boolean isDefault;
     private String instructions;
