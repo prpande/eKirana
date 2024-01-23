@@ -1,0 +1,16 @@
+server:
+  port: 8084
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/ekirana_db
+  application:
+    name: ekirana-order-service
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka
+#    fetchRegistry: true
+#    registerWithEureka: true
+#  instance:
+#    hostname: localhost
