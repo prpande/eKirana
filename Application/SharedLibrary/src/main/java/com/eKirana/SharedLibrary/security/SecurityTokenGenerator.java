@@ -1,4 +1,4 @@
-package com.eKirana.AuthenticationService.security;
+package com.eKirana.SharedLibrary.security;
 
 import com.eKirana.SharedLibrary.model.authorization.UserCredential;
 

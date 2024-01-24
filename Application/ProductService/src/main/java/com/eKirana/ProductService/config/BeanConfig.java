@@ -1,8 +1,6 @@
-package com.eKirana.AuthenticationService.config;
+package com.eKirana.ProductService.config;
 
 import com.eKirana.SharedLibrary.security.JwtFilter;
-import com.eKirana.SharedLibrary.security.SecurityTokenGenerator;
-import com.eKirana.SharedLibrary.security.UserCredentialJWTGenerator;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,12 +11,7 @@ public class BeanConfig {
     public FilterRegistrationBean<?> jwtFilterBean(){
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new JwtFilter());
-        filterRegistrationBean.addUrlPatterns("/api/auth/updatePassword");
+        filterRegistrationBean.addUrlPatterns("/api/product");
         return filterRegistrationBean;
-    }
-
-    @Bean
-    public SecurityTokenGenerator securityTokenGeneratorBean(){
-        return new UserCredentialJWTGenerator();
     }
 }

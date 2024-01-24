@@ -28,14 +28,13 @@ public class JwtFilter extends GenericFilter {
             pw.println("Missing or Invalid Token");
         } else {
             String token = authHeader.substring(AUTH_HEADER_PREFIX.length());
-            Claims claims = Jwts.parser().setSigningKey(ENCRYPTION_KEY).parseClaimsJws(token).getBody();
+            Claims claims = Jwts.parser().setSigningKey(JWT_ENCRYPTION_KEY).parseClaimsJws(token).getBody();
             request.setAttribute(CLAIMS_ATTRIBUTE_STRING, claims);
             filterChain.doFilter(request, response);
         }
     }
 
-    public static String getSubjectFromClaims(@NotNull HttpServletRequest request) {
-        Claims claims = (Claims) request.getAttribute(CLAIMS_ATTRIBUTE_STRING);
-        return claims.getSubject();
+    public static Claims getClaims(@NotNull HttpServletRequest request) {
+        return (Claims) request.getAttribute(CLAIMS_ATTRIBUTE_STRING);
     }
 }
