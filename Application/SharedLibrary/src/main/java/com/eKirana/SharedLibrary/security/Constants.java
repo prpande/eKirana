@@ -1,5 +1,7 @@
 package com.eKirana.SharedLibrary.security;
 
+import com.eKirana.SharedLibrary.model.authorization.UserCredential;
+
 public class Constants {
     public static final String JWT_ENCRYPTION_KEY = "UserKey";
 
@@ -10,4 +12,6 @@ public class Constants {
 
     public static final String USERID_CLAIMS_KEY = "userId";
     public static final String USERTYPE_CLAIMS_KEY = "userType";
+
+    public static final String SYSTEM_USER_ID = "1cee9bc9-502d-4fdc-ad0b-960636546fce";
 }

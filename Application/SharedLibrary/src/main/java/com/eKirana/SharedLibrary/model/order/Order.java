@@ -2,7 +2,6 @@ package com.eKirana.SharedLibrary.model.order;
 
 import com.eKirana.SharedLibrary.model.product.Product;
 import com.eKirana.SharedLibrary.model.user.Address;
-import com.eKirana.SharedLibrary.model.user.User;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,9 +21,9 @@ public class Order {
     private Date placedOn;
     private Date deliveredOn; // can also stored expected delivery date if deliveredOn > current Date
 
-    private User customer;
-    private User seller;
-    private User carrier;
+    private String customerId;
+    private String sellerId;
+    private String carrierId;
 
     private String comments;
 
@@ -38,9 +37,9 @@ public class Order {
                  OrderStatus status,
                  Date placedOn,
                  Date deliveredOn,
-                 User customer,
-                 User seller,
-                 User carrier,
+                 String customerId,
+                 String sellerId,
+                 String carrierId,
                  String comments) {
         this.orderId = orderId;
         this.orderedItems = orderedItems;
@@ -49,9 +48,9 @@ public class Order {
         this.status = status;
         this.placedOn = placedOn;
         this.deliveredOn = deliveredOn;
-        this.customer = customer;
-        this.seller = seller;
-        this.carrier = carrier;
+        this.customerId = customerId;
+        this.sellerId = sellerId;
+        this.carrierId = carrierId;
         this.comments = comments;
     }
 
@@ -111,28 +110,28 @@ public class Order {
         this.deliveredOn = deliveredOn;
     }
 
-    public User getCustomer() {
-        return customer;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(User customer) {
-        this.customer = customer;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
-    public User getSeller() {
-        return seller;
+    public String getSellerId() {
+        return sellerId;
     }
 
-    public void setSeller(User seller) {
-        this.seller = seller;
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
     }
 
-    public User getCarrier() {
-        return carrier;
+    public String getCarrierId() {
+        return carrierId;
     }
 
-    public void setCarrier(User carrier) {
-        this.carrier = carrier;
+    public void setCarrierId(String carrierId) {
+        this.carrierId = carrierId;
     }
 
     public String getComments() {
@@ -155,9 +154,9 @@ public class Order {
                 status == order.status &&
                 Objects.equals(placedOn, order.placedOn) &&
                 Objects.equals(deliveredOn, order.deliveredOn) &&
-                Objects.equals(customer, order.customer) &&
-                Objects.equals(seller, order.seller) &&
-                Objects.equals(carrier, order.carrier) &&
+                Objects.equals(customerId, order.customerId) &&
+                Objects.equals(sellerId, order.sellerId) &&
+                Objects.equals(carrierId, order.carrierId) &&
                 Objects.equals(comments, order.comments);
     }
 
@@ -170,9 +169,9 @@ public class Order {
                 status,
                 placedOn,
                 deliveredOn,
-                customer,
-                seller,
-                carrier,
+                customerId,
+                sellerId,
+                carrierId,
                 comments);
     }
 
@@ -186,9 +185,9 @@ public class Order {
                 ", status=" + status +
                 ", placedOn=" + placedOn +
                 ", deliveredOn=" + deliveredOn +
-                ", customer=" + customer +
-                ", seller=" + seller +
-                ", carrier=" + carrier +
+                ", customerId=" + customerId +
+                ", sellerId=" + sellerId +
+                ", carrierId=" + carrierId +
                 ", comments='" + comments + '\'' +
                 '}';
     }

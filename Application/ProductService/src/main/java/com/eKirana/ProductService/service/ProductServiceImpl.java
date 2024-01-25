@@ -4,11 +4,14 @@ import com.eKirana.ProductService.exception.ProductAlreadyExistsException;
 import com.eKirana.ProductService.exception.ProductNotFoundException;
 import com.eKirana.ProductService.repository.ProductRepository;
 import com.eKirana.SharedLibrary.model.product.Product;
+import com.eKirana.SharedLibrary.security.exception.UserIsNotOwnerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.eKirana.SharedLibrary.security.Constants.SYSTEM_USER_ID;
 
 @Service
 public class ProductServiceImpl implements IProductService{
@@ -20,22 +23,28 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public Product saveProduct(Product product) throws ProductAlreadyExistsException {
+    public Product saveProduct(Product product, String userId) throws ProductAlreadyExistsException {
         if(productRepository.findById(product.getProductId()).isPresent()){
             throw new ProductAlreadyExistsException();
         }
 
+        product.setSellerId(userId);
         return productRepository.save(product);
     }
 
     @Override
-    public Product getProductById(String productId) throws ProductNotFoundException {
+    public Product getProductById(String productId, String userId) throws ProductNotFoundException, UserIsNotOwnerException {
         Optional<Product> optProduct = productRepository.findById(productId);
         if(optProduct.isEmpty()){
             throw new ProductNotFoundException();
         }
 
-        return optProduct.get();
+        Product product = optProduct.get();
+        if(!product.getSellerId().equals(userId) && !userId.equals(SYSTEM_USER_ID) ){
+            throw new UserIsNotOwnerException();
+        }
+
+        return product;
     }
 
     @Override
@@ -49,49 +58,58 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public Product updateProduct(String productId, Product newProduct) throws ProductNotFoundException {
+    public Product updateProduct(String productId, Product newProduct, String userId) throws ProductNotFoundException, UserIsNotOwnerException {
         Optional<Product> optProduct = productRepository.findById(productId);
-        if(optProduct.isEmpty()){
+        if (optProduct.isEmpty()) {
             throw new ProductNotFoundException();
         }
 
         Product product = optProduct.get();
 
-        if(newProduct.getName() != null){
+        if (!product.getSellerId().equals(userId) && !userId.equals(SYSTEM_USER_ID)) {
+            throw new UserIsNotOwnerException();
+        }
+
+        if (newProduct.getName() != null) {
             product.setName(newProduct.getName());
         }
 
-        if(newProduct.getPrice() > 0){
+        if (newProduct.getPrice() > 0) {
             product.setPrice(newProduct.getPrice());
         }
 
-        if(newProduct.getSpecifications() != null){
+        if (newProduct.getSpecifications() != null) {
             product.setSpecifications(newProduct.getSpecifications());
         }
 
-        if(newProduct.getDescription() != null){
+        if (newProduct.getDescription() != null) {
             product.setDescription(newProduct.getDescription());
         }
 
-        if(newProduct.getCategory() != null){
+        if (newProduct.getCategory() != null) {
             product.setCategory(newProduct.getCategory());
         }
 
-        if (newProduct.getImageUrl() != null && !newProduct.getImageUrl().isEmpty()){
+        if (newProduct.getImageUrl() != null && !newProduct.getImageUrl().isEmpty()) {
             product.setImageUrl(newProduct.getImageUrl());
         }
 
         return productRepository.save(product);
+
     }
 
     @Override
-    public Product updateProductQuantity(String productId, int newQuantity) throws ProductNotFoundException {
+    public Product updateProductQuantity(String productId, int newQuantity, String userId) throws ProductNotFoundException, UserIsNotOwnerException {
         Optional<Product> optProduct = productRepository.findById(productId);
         if(optProduct.isEmpty()){
             throw new ProductNotFoundException();
         }
 
         Product product = optProduct.get();
+        if(!product.getSellerId().equals(userId) && !userId.equals(SYSTEM_USER_ID) ){
+            throw new UserIsNotOwnerException();
+        }
+
         product.setQuantity(product.getQuantity() + newQuantity);
 
         if(product.getQuantity() < 1)
@@ -103,10 +121,15 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public boolean removeProduct(String productId) throws ProductNotFoundException {
+    public boolean removeProduct(String productId, String userId) throws ProductNotFoundException, UserIsNotOwnerException {
         Optional<Product> optProduct = productRepository.findById(productId);
         if(optProduct.isEmpty()){
             throw new ProductNotFoundException();
+        }
+
+        Product product = optProduct.get();
+        if(!product.getSellerId().equals(userId) && !userId.equals(SYSTEM_USER_ID) ){
+            throw new UserIsNotOwnerException();
         }
 
         productRepository.deleteById(productId);
@@ -114,25 +137,33 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public Product enableProduct(String productId) throws ProductNotFoundException {
+    public Product enableProduct(String productId, String userId) throws ProductNotFoundException, UserIsNotOwnerException {
         Optional<Product> optProduct = productRepository.findById(productId);
         if(optProduct.isEmpty()){
             throw new ProductNotFoundException();
         }
 
         Product product = optProduct.get();
+        if(!product.getSellerId().equals(userId) && !userId.equals(SYSTEM_USER_ID) ){
+            throw new UserIsNotOwnerException();
+        }
+
         product.setAvailable(true);
         return productRepository.save(product);
     }
 
     @Override
-    public Product disableProduct(String productId) throws ProductNotFoundException {
+    public Product disableProduct(String productId, String userId) throws ProductNotFoundException, UserIsNotOwnerException {
         Optional<Product> optProduct = productRepository.findById(productId);
         if(optProduct.isEmpty()){
             throw new ProductNotFoundException();
         }
 
         Product product = optProduct.get();
+        if(!product.getSellerId().equals(userId) && !userId.equals(SYSTEM_USER_ID) ){
+            throw new UserIsNotOwnerException();
+        }
+
         product.setAvailable(false);
         return productRepository.save(product);
     }

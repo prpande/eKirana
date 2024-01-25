@@ -17,6 +17,16 @@ public class RestEndpoints {
 
     //region Product Service endpoints
     public static final String PRODUCT_ROOT = "/api/product";
+    public static final String SAVE_PRODUCT = "";
+    public static final String GET_PRODUCT_BY_ID = "/{productId}";
+    public static final String GET_ALL_PRODUCT_BY_SELLER_ID = "/seller";
+    public static final String GET_ALL_PRODUCTS = "/products";
+    public static final String UPDATE_PRODUCT = "/{productId}";
+    public static final String UPDATE_PRODUCT_QUANTITY = "/{productId}/quantity";
+    public static final String REMOVE_PRODUCT = "/{productId}";
+    public static final String ENABLE_PRODUCT = "/{productId}/enable";
+    public static final String DISABLE_PRODUCT = "/{productId}/disable";
+
     public static final String[] PRODUCT_SECURE_PATTERNS = new String[]{PRODUCT_ROOT};
     //endregion
 
@@ -24,7 +34,8 @@ public class RestEndpoints {
     public static final String ORDER_ROOT = "/api/order";
     public static final String PLACE_ORDER = "";
     public static final String GET_ALL_ORDERS_BY_USER_ID = "/user/{userId}";
-    public static final String GET_ALL_ORDERS = "";
+    public static final String GET_ALL_ORDERS = "/orders";
+    public static final String GET_ORDERS_AVAILABLE_FOR_DELIVERY = "/delivery";
     public static final String GET_ORDER_BY_ID = "/{orderId}";
     public static final String CANCEL_ORDER = "/{orderId}";
     public static final String UPDATE_ORDER_STATUS = "/{orderId}/status";
