@@ -138,41 +138,7 @@ public class User {
     }
 
     public void setVehicleInfo(Vehicle vehicleInfo) {
-        if(this.vehicleInfo == null){
-            this.vehicleInfo = new Vehicle();
-        }
-
-        if(vehicleInfo.getDrivingLicenseNumber() != null){
-            this.vehicleInfo.setDrivingLicenseNumber(vehicleInfo.getDrivingLicenseNumber());
-        }
-
-        if(vehicleInfo.getRegistrationNumber() != null){
-            this.vehicleInfo.setRegistrationNumber(vehicleInfo.getRegistrationNumber());
-        }
-
-        if(vehicleInfo.getMake() != null){
-            this.vehicleInfo.setMake(vehicleInfo.getMake());
-        }
-
-        if(vehicleInfo.getModel() != null){
-            this.vehicleInfo.setModel(vehicleInfo.getModel());
-        }
-
-        if(vehicleInfo.getVehicleType() != null){
-            this.vehicleInfo.setVehicleType(vehicleInfo.getVehicleType());
-        }
-
-        if(vehicleInfo.getCapacity() != null){
-            this.vehicleInfo.setCapacity(vehicleInfo.getCapacity());
-        }
-
-        if(vehicleInfo.getLatitude() != 0){
-            this.vehicleInfo.setLatitude(vehicleInfo.getLatitude());
-        }
-
-        if(vehicleInfo.getLongitude() != 0){
-            this.vehicleInfo.setLongitude(vehicleInfo.getLongitude());
-        }
+        this.vehicleInfo = vehicleInfo;
     }
 
     @Override

@@ -1,8 +1,12 @@
 package com.eKirana.SharedLibrary.model.user;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.Objects;
 
 public class Address {
+    @Id
+    private String addressId;
     private String fullName;
     private String line1;
     private String line2;
@@ -14,11 +18,11 @@ public class Address {
     private String phoneNumber;
     private boolean isDefault;
     private String instructions;
-
     public Address() {
     }
 
-    public Address(String fullName,
+    public Address(String addressId,
+                   String fullName,
                    String line1,
                    String line2,
                    String landmark,
@@ -29,6 +33,7 @@ public class Address {
                    String phoneNumber,
                    boolean isDefault,
                    String instructions) {
+        this.addressId = addressId;
         this.fullName = fullName;
         this.line1 = line1;
         this.line2 = line2;
@@ -40,6 +45,14 @@ public class Address {
         this.phoneNumber = phoneNumber;
         this.isDefault = isDefault;
         this.instructions = instructions;
+    }
+
+    public String getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
     }
 
     public String getFullName() {
@@ -135,9 +148,7 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Double.compare(address.latitude, latitude) == 0 &&
-                Double.compare(address.longitude, longitude) == 0 &&
-                Objects.equals(fullName, address.fullName) &&
+        return  Objects.equals(fullName, address.fullName) &&
                 Objects.equals(line1, address.line1) &&
                 Objects.equals(line2, address.line2) &&
                 Objects.equals(landmark, address.landmark) &&
@@ -154,7 +165,8 @@ public class Address {
     @Override
     public String toString() {
         return "Address{" +
-                "fullName='" + fullName + '\'' +
+                "addressId='" + addressId + '\'' +
+                ", fullName='" + fullName + '\'' +
                 ", line1='" + line1 + '\'' +
                 ", line2='" + line2 + '\'' +
                 ", landmark='" + landmark + '\'' +

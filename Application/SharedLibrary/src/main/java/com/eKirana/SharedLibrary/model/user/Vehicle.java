@@ -1,11 +1,14 @@
 package com.eKirana.SharedLibrary.model.user;
 
+import org.springframework.data.annotation.Id;
+
 import java.util.Objects;
 
 public class Vehicle {
+    @Id
+    private String registrationNumber;
     private String drivingLicenseNumber;
 
-    private String registrationNumber;
 
     private String make;
     private String model;
