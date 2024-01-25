@@ -1,5 +1,6 @@
 package com.eKirana.SharedLibrary.security;
 
+import com.eKirana.SharedLibrary.model.user.UserType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.jetbrains.annotations.NotNull;
@@ -36,5 +37,13 @@ public class JwtFilter extends GenericFilter {
 
     public static Claims getClaims(@NotNull HttpServletRequest request) {
         return (Claims) request.getAttribute(CLAIMS_ATTRIBUTE_STRING);
+    }
+
+    public static String getUserIdFromRequest(@NotNull HttpServletRequest request) {
+        return getClaims(request).getSubject();
+    }
+
+    public static UserType getUserTypeFromRequest(@NotNull HttpServletRequest request) {
+        return (UserType) getClaims(request).get(USERTYPE_CLAIMS_KEY);
     }
 }

@@ -11,7 +11,9 @@ public interface IProductService {
     Product getProductById(String productId) throws ProductNotFoundException;
     List<Product> getAllProductBySellerId(String sellerId);
     List<Product> getAllProducts();
-    Product updateProduct(Product product) throws ProductNotFoundException;
+    Product updateProduct(String productId, Product product) throws ProductNotFoundException;
     Product updateProductQuantity(String productId, int newQuantity) throws ProductNotFoundException;
     boolean removeProduct(String productId) throws ProductNotFoundException;
+    Product enableProduct(String productId) throws ProductNotFoundException;
+    Product disableProduct(String productId) throws ProductNotFoundException;
 }

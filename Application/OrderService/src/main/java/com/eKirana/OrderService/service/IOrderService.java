@@ -5,15 +5,15 @@ import com.eKirana.OrderService.exception.OrderNotFoundException;
 import com.eKirana.SharedLibrary.model.order.Order;
 import com.eKirana.SharedLibrary.model.order.OrderStatus;
 import com.eKirana.SharedLibrary.model.user.User;
+import com.eKirana.SharedLibrary.model.user.UserType;
+import com.eKirana.SharedLibrary.security.UnauthorizedUserTypeException;
 
 import java.util.Date;
 import java.util.List;
 
 public interface IOrderService {
     Order placeOrder(Order order) throws OrderAlreadyExistsException;
-    List<Order> getAllOrdersByCustomerId(String customerId);
-    List<Order> getAllOrdersBySellerId(String sellerId);
-    List<Order> getAllOrdersByCarrierId(String carrierId);
+    List<Order> getAllOrdersByUserId(String userId, UserType userType) throws UnauthorizedUserTypeException;
     List<Order> getAllOrders();
     Order getOrderById(String orderId) throws OrderNotFoundException;
     Order cancelOrder(String orderId) throws OrderNotFoundException;

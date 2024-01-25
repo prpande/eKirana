@@ -15,12 +15,12 @@ public class Product {
     private double price;
     private String specifications;
     private String description;
+    private String category;
     private List<String> imageUrl;
-
     private boolean available;
+
     private int quantity; // reflect quantity in stock, also used as item quantity when placing orders
     private String sellerId;
-
     public Product() {
     }
 
@@ -29,6 +29,7 @@ public class Product {
                    double price,
                    String specifications,
                    String description,
+                   String category,
                    List<String> imageUrl,
                    boolean available,
                    int quantity,
@@ -38,6 +39,7 @@ public class Product {
         this.price = price;
         this.specifications = specifications;
         this.description = description;
+        this.category = category;
         this.imageUrl = imageUrl;
         this.available = available;
         this.quantity = quantity;
@@ -84,6 +86,14 @@ public class Product {
         this.description = description;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public List<String> getImageUrl() {
         return imageUrl;
     }
@@ -128,6 +138,7 @@ public class Product {
                 Objects.equals(name, product.name) &&
                 Objects.equals(specifications, product.specifications) &&
                 Objects.equals(description, product.description) &&
+                Objects.equals(category, product.category) &&
                 Objects.equals(imageUrl, product.imageUrl) &&
                 Objects.equals(sellerId, product.sellerId);
     }
@@ -139,6 +150,7 @@ public class Product {
                 price,
                 specifications,
                 description,
+                category,
                 imageUrl,
                 available,
                 quantity,
@@ -153,6 +165,7 @@ public class Product {
                 ", price=" + price +
                 ", specifications='" + specifications + '\'' +
                 ", description='" + description + '\'' +
+                ", category='" + category + '\'' +
                 ", imageUrl=" + imageUrl +
                 ", available=" + available +
                 ", quantity=" + quantity +

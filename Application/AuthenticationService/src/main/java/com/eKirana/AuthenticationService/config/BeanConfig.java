@@ -7,13 +7,15 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import static com.eKirana.SharedLibrary.RestEndpoints.AUTHORIZATION_SECURE_PATTERNS;
+
 @Configuration
 public class BeanConfig {
     @Bean
     public FilterRegistrationBean<?> jwtFilterBean(){
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new JwtFilter());
-        filterRegistrationBean.addUrlPatterns("/api/auth/updatePassword");
+        filterRegistrationBean.addUrlPatterns(AUTHORIZATION_SECURE_PATTERNS);
         return filterRegistrationBean;
     }
 

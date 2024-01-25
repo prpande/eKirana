@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface IUserService {
     User registerUser(User user) throws UserAlreadyExistsException;
-    User updateUser(User newUserInfo) throws UserNotFoundException, UserAlreadyExistsException;
+    User updateUser(String userId, User newUserInfo) throws UserNotFoundException, UserAlreadyExistsException;
     User getUserById(String userId) throws UserNotFoundException;
     List<User> getAllUsers();
+    User setDeliveryStatus(String userId, boolean isDelivering) throws UserNotFoundException;
+
 }

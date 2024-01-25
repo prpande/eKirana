@@ -31,11 +31,5 @@ public class UserCredentialJWTGenerator implements SecurityTokenGenerator {
                 .compact();
     }
 
-    public static String getUserIdFromRequest(@NotNull HttpServletRequest request) {
-        return JwtFilter.getClaims(request).getSubject();
-    }
 
-    public static UserType getUserTypeFromRequest(@NotNull HttpServletRequest request) {
-        return (UserType) JwtFilter.getClaims(request).get(USERTYPE_CLAIMS_KEY);
-    }
 }
