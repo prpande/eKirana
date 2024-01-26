@@ -1,5 +1,6 @@
 package com.eKirana.SharedLibrary.model.user;
 
+import com.eKirana.SharedLibrary.messaging.model.Alert;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -27,10 +28,12 @@ public class User {
 
     private Vehicle vehicleInfo; // details of carrier vehicle
 
+    private List<Alert> alertList;
+
     public User() {
     }
 
-    public User(String userId, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, UserType userType, Address address, List<Address> deliveryAddresses, String panCardNumber, String gstIdNumber, Vehicle vehicleInfo) {
+    public User(String userId, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, UserType userType, Address address, List<Address> deliveryAddresses, String panCardNumber, String gstIdNumber, Vehicle vehicleInfo, List<Alert> alertList) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,6 +46,7 @@ public class User {
         this.panCardNumber = panCardNumber;
         this.gstIdNumber = gstIdNumber;
         this.vehicleInfo = vehicleInfo;
+        this.alertList = alertList;
     }
 
     public String getUserId() {
@@ -141,6 +145,14 @@ public class User {
         this.vehicleInfo = vehicleInfo;
     }
 
+    public List<Alert> getAlertList() {
+        return alertList;
+    }
+
+    public void setAlertList(List<Alert> alertList) {
+        this.alertList = alertList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -169,6 +181,7 @@ public class User {
                 ", panCardNumber='" + panCardNumber + '\'' +
                 ", gstIdNumber='" + gstIdNumber + '\'' +
                 ", vehicleInfo=" + vehicleInfo +
+                ", alertList=" + alertList +
                 '}';
     }
 }

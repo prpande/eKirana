@@ -1,4 +1,4 @@
-package com.eKirana.ProductService.exception;
+package com.eKirana.SharedLibrary.model.product.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

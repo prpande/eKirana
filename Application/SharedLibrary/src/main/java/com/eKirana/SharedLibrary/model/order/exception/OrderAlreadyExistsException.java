@@ -1,4 +1,4 @@
-package com.eKirana.OrderService.exception;
+package com.eKirana.SharedLibrary.model.order.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

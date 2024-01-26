@@ -1,4 +1,4 @@
-package com.eKirana.AuthenticationService.exception;
+package com.eKirana.SharedLibrary.model.authorization.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

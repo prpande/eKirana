@@ -1,7 +1,8 @@
 package com.eKirana.ProductService.service;
 
-import com.eKirana.ProductService.exception.ProductAlreadyExistsException;
-import com.eKirana.ProductService.exception.ProductNotFoundException;
+import com.eKirana.SharedLibrary.model.product.exception.InsufficientProductQuantityException;
+import com.eKirana.SharedLibrary.model.product.exception.ProductAlreadyExistsException;
+import com.eKirana.SharedLibrary.model.product.exception.ProductNotFoundException;
 import com.eKirana.ProductService.repository.ProductRepository;
 import com.eKirana.SharedLibrary.model.product.Product;
 import com.eKirana.SharedLibrary.security.exception.UserIsNotOwnerException;
@@ -99,7 +100,7 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public Product updateProductQuantity(String productId, int newQuantity, String userId) throws ProductNotFoundException, UserIsNotOwnerException {
+    public Product updateProductQuantity(String productId, int newQuantity, String userId) throws ProductNotFoundException, UserIsNotOwnerException, InsufficientProductQuantityException {
         Optional<Product> optProduct = productRepository.findById(productId);
         if(optProduct.isEmpty()){
             throw new ProductNotFoundException();
@@ -110,6 +111,9 @@ public class ProductServiceImpl implements IProductService{
             throw new UserIsNotOwnerException();
         }
 
+        if(product.getQuantity() + newQuantity < 0){
+            throw new InsufficientProductQuantityException();
+        }
         product.setQuantity(product.getQuantity() + newQuantity);
 
         if(product.getQuantity() < 1)

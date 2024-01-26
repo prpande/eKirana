@@ -1,11 +1,16 @@
 package com.eKirana.OrderService.service;
 
-import com.eKirana.OrderService.exception.OrderAlreadyExistsException;
-import com.eKirana.OrderService.exception.OrderNotFoundException;
 import com.eKirana.OrderService.repository.OrderRepository;
+import com.eKirana.SharedLibrary.messaging.IMessagePublisher;
+import com.eKirana.SharedLibrary.messaging.model.Alert;
+import com.eKirana.SharedLibrary.messaging.model.AlertLevel;
+import com.eKirana.SharedLibrary.messaging.model.AlertQMessage;
 import com.eKirana.SharedLibrary.model.order.Order;
 import com.eKirana.SharedLibrary.model.order.OrderStatus;
-import com.eKirana.SharedLibrary.model.user.User;
+import com.eKirana.SharedLibrary.model.order.exception.OrderAlreadyExistsException;
+import com.eKirana.SharedLibrary.model.order.exception.OrderNotFoundException;
+import com.eKirana.SharedLibrary.model.product.Product;
+import com.eKirana.SharedLibrary.model.product.exception.InsufficientProductQuantityException;
 import com.eKirana.SharedLibrary.model.user.UserType;
 import com.eKirana.SharedLibrary.security.exception.UnauthorizedUserTypeException;
 import com.eKirana.SharedLibrary.security.exception.UserIsNotOwnerException;
@@ -16,23 +21,25 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.eKirana.SharedLibrary.security.Constants.SYSTEM_USER_ID;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
     private OrderRepository orderRepository;
+    private IMessagePublisher messagePublisher;
     private final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, IMessagePublisher messagePublisher) {
         this.orderRepository = orderRepository;
+        this.messagePublisher = messagePublisher;
     }
 
     @Override
-    public Order placeOrder(Order order, String userId) throws OrderAlreadyExistsException {
+    public Order placeOrder(Order order, String userId) throws OrderAlreadyExistsException, InsufficientProductQuantityException {
         if (orderRepository.findById(order.getOrderId()).isPresent()) {
             throw new OrderAlreadyExistsException();
         }
@@ -41,8 +48,11 @@ public class OrderServiceImpl implements IOrderService {
         order.setCustomerId(userId);
         order.setSellerId(order.getOrderedItems().get(0).getSellerId());
         order.setCarrierId(null);
-        // TODO - confirm from seller using amqp and update status and product inventory
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+        messagePublisher.publishOrder(savedOrder);
+
+        // TODO - confirm from seller using amqp and update status
+        return savedOrder;
     }
 
     @Override
@@ -102,9 +112,9 @@ public class OrderServiceImpl implements IOrderService {
             throw new UserIsNotOwnerException();
         }
 
-        order.setStatus(OrderStatus.CANCELLATION_REQUESTED);
+        Order savedOrder = systemUpdateOrderStatus(order.getOrderId(), OrderStatus.CANCELLATION_REQUESTED);
         // TODO - confirm cancellation from seller using amqp
-        return orderRepository.save(order);
+        return savedOrder;
     }
 
     @Override
@@ -119,10 +129,45 @@ public class OrderServiceImpl implements IOrderService {
             throw new UserIsNotOwnerException();
         }
 
-        order.setStatus(newStatus);
-        return orderRepository.save(order);
+
+        if(newStatus == OrderStatus.CANCELLED) {
+            List<Product> items = order.getOrderedItems();
+            for(Product item : items){
+                item.setQuantity(-item.getQuantity());
+            }
+            order.setOrderedItems(items);
+            messagePublisher.publishOrder(order);
+        }
+
+        return systemUpdateOrderStatus(order.getOrderId(), newStatus);
     }
 
+    @Override
+    public  Order systemUpdateOrderStatus(String orderId, OrderStatus newStatus) {
+        Order order = orderRepository.findById(orderId).get();
+        order.setStatus(newStatus);
+
+        Order savedOrder = orderRepository.save(order);
+        String alertMsg = String.format("Order:[%s] Status change:[%s]->[%s].", order.getOrderId(), order.getStatus(), savedOrder.getStatus());
+        AlertLevel alertLevel = AlertLevel.CRITICAL;
+        switch (newStatus){
+            case CONFIRMED:
+            case DELIVERED:
+                alertLevel = AlertLevel.MEDIUM;
+                break;
+            case SHIPPED:
+                alertLevel = AlertLevel.LOW;
+                break;
+        }
+
+        Alert alert = new Alert(UUID.randomUUID().toString(), alertLevel, alertMsg, new Date(), false);
+        messagePublisher.publishAlert(new AlertQMessage(order.getCustomerId(),alert));
+        messagePublisher.publishAlert(new AlertQMessage(order.getSellerId(),alert));
+        if(order.getCarrierId() != null){
+            messagePublisher.publishAlert(new AlertQMessage(order.getCarrierId(), alert));
+        }
+        return savedOrder;
+    }
     @Override
     public Order updateOrderCarrier(String orderId, String userId, UserType userType) throws OrderNotFoundException, UnauthorizedUserTypeException {
         if (userType != UserType.CARRIER) {

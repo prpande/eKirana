@@ -1,12 +1,10 @@
 package com.eKirana.UserService.service;
 
+import com.eKirana.SharedLibrary.messaging.model.Alert;
 import com.eKirana.SharedLibrary.model.user.Address;
 import com.eKirana.SharedLibrary.model.user.User;
 import com.eKirana.SharedLibrary.model.user.Vehicle;
-import com.eKirana.UserService.exception.AddressAlreadyExistsException;
-import com.eKirana.UserService.exception.AddressNotFoundException;
-import com.eKirana.UserService.exception.UserAlreadyExistsException;
-import com.eKirana.UserService.exception.UserNotFoundException;
+import com.eKirana.SharedLibrary.model.user.exception.*;
 import com.eKirana.UserService.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,6 +79,10 @@ public class UserServiceImpl implements IUserService{
 
         if(newUserInfo.getVehicleInfo() != null){
             user.setVehicleInfo(newUserInfo.getVehicleInfo());
+        }
+
+        if(newUserInfo.getAlertList() != null){
+            user.setAlertList(newUserInfo.getAlertList());
         }
 
         return userRepository.save(user);
@@ -254,6 +256,33 @@ public class UserServiceImpl implements IUserService{
         }
 
         user.setVehicleInfo(vehicleInfo);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User clearAlert(String userId, String alertId) throws UserNotFoundException, AlertNotFoundException {
+        Optional<User> optUser = userRepository.findById(userId);
+        if(optUser.isEmpty()){
+            throw new UserNotFoundException();
+        }
+
+        User user = optUser.get();
+        List<Alert> alertList = user.getAlertList();
+
+        boolean found = false;
+        for(Alert a : alertList){
+            if(a.getAlertId().equals(alertId)){
+                a.setCleared(true);
+                found = true;
+                break;
+            }
+        }
+
+        if(!found){
+            throw new AlertNotFoundException();
+        }
+
+        user.setAlertList(alertList);
         return userRepository.save(user);
     }
 }

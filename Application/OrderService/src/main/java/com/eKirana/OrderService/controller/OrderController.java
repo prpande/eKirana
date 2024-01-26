@@ -1,7 +1,7 @@
 package com.eKirana.OrderService.controller;
 
-import com.eKirana.OrderService.exception.OrderAlreadyExistsException;
-import com.eKirana.OrderService.exception.OrderNotFoundException;
+import com.eKirana.SharedLibrary.model.order.exception.OrderAlreadyExistsException;
+import com.eKirana.SharedLibrary.model.order.exception.OrderNotFoundException;
 import com.eKirana.OrderService.service.IOrderService;
 import com.eKirana.SharedLibrary.model.order.Order;
 import com.eKirana.SharedLibrary.model.order.OrderStatus;

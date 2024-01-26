@@ -1,9 +1,9 @@
 package com.eKirana.AuthenticationService.service;
 
 import com.eKirana.SharedLibrary.model.authorization.UserCredential;
-import com.eKirana.AuthenticationService.exception.InvalidUserCredentialsException;
-import com.eKirana.AuthenticationService.exception.UserCredentialsAlreadyExistsException;
-import com.eKirana.AuthenticationService.exception.UserCredentialsNotFoundException;
+import com.eKirana.SharedLibrary.model.authorization.exception.InvalidUserCredentialsException;
+import com.eKirana.SharedLibrary.model.authorization.exception.UserCredentialsAlreadyExistsException;
+import com.eKirana.SharedLibrary.model.authorization.exception.UserCredentialsNotFoundException;
 import com.eKirana.AuthenticationService.repository.UserCredentialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

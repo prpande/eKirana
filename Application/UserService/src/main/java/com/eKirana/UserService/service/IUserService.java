@@ -3,10 +3,7 @@ package com.eKirana.UserService.service;
 import com.eKirana.SharedLibrary.model.user.Address;
 import com.eKirana.SharedLibrary.model.user.User;
 import com.eKirana.SharedLibrary.model.user.Vehicle;
-import com.eKirana.UserService.exception.AddressAlreadyExistsException;
-import com.eKirana.UserService.exception.AddressNotFoundException;
-import com.eKirana.UserService.exception.UserAlreadyExistsException;
-import com.eKirana.UserService.exception.UserNotFoundException;
+import com.eKirana.SharedLibrary.model.user.exception.*;
 
 import java.util.List;
 
@@ -28,4 +25,5 @@ public interface IUserService {
     User setDeliveryStatus(String userId, boolean isDelivering) throws UserNotFoundException;
 
     User updateVehicleInfo(String userId, Vehicle newVehicleInfo) throws UserNotFoundException;
+    User clearAlert(String userId, String alertId) throws UserNotFoundException, AlertNotFoundException;
 }

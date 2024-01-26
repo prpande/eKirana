@@ -1,7 +1,8 @@
 package com.eKirana.ProductService.controller;
 
-import com.eKirana.ProductService.exception.ProductAlreadyExistsException;
-import com.eKirana.ProductService.exception.ProductNotFoundException;
+import com.eKirana.SharedLibrary.model.product.exception.InsufficientProductQuantityException;
+import com.eKirana.SharedLibrary.model.product.exception.ProductAlreadyExistsException;
+import com.eKirana.SharedLibrary.model.product.exception.ProductNotFoundException;
 import com.eKirana.ProductService.service.IProductService;
 import com.eKirana.SharedLibrary.model.product.Product;
 import com.eKirana.SharedLibrary.security.JwtFilter;
@@ -106,12 +107,12 @@ public class ProductController {
     }
 
     @PutMapping(UPDATE_PRODUCT_QUANTITY)
-    public ResponseEntity<?> updateProductQuantity(@PathVariable String productId, @RequestBody int newQuantity, HttpServletRequest request) throws ProductNotFoundException, UserIsNotOwnerException {
+    public ResponseEntity<?> updateProductQuantity(@PathVariable String productId, @RequestBody int newQuantity, HttpServletRequest request) throws ProductNotFoundException, UserIsNotOwnerException, InsufficientProductQuantityException {
         try {
             String userId = JwtFilter.getUserIdFromRequest(request);
             logger.info("[updateProductQuantity]: User:[{}] Product:[{}]", userId, productId);
             responseEntity = new ResponseEntity<>(productService.updateProductQuantity(productId, newQuantity, userId), HttpStatus.OK);
-        } catch (ProductNotFoundException | UserIsNotOwnerException ex) {
+        } catch (ProductNotFoundException | UserIsNotOwnerException | InsufficientProductQuantityException ex) {
             throw ex;
         } catch (Exception ex) {
             logger.error("[updateProductQuantity]: Error", ex);
