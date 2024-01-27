@@ -4,7 +4,6 @@ import com.eKirana.SharedLibrary.model.user.Address;
 import com.eKirana.SharedLibrary.model.user.User;
 import com.eKirana.SharedLibrary.model.user.Vehicle;
 import com.eKirana.SharedLibrary.model.user.exception.*;
-import com.eKirana.SharedLibrary.security.exception.UserIsNotOwnerException;
 
 import java.util.List;
 

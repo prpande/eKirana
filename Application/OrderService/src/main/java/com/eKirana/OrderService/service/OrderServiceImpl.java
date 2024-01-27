@@ -145,6 +145,9 @@ public class OrderServiceImpl implements IOrderService {
     public  Order systemUpdateOrderStatus(String orderId, OrderStatus newStatus) {
         Order order = orderRepository.findById(orderId).get();
         OrderStatus oldStatus = order.getStatus();
+        if(oldStatus == newStatus){
+            throw new OrderAlreadyExistsException();
+        }
         order.setStatus(newStatus);
 
         Order savedOrder = orderRepository.save(order);
