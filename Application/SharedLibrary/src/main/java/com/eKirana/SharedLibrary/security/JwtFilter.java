@@ -44,6 +44,6 @@ public class JwtFilter extends GenericFilter {
     }
 
     public static UserType getUserTypeFromRequest(@NotNull HttpServletRequest request) {
-        return (UserType) getClaims(request).get(USERTYPE_CLAIMS_KEY);
+        return UserType.valueOf(getClaims(request).get(USERTYPE_CLAIMS_KEY).toString());
     }
 }

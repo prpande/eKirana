@@ -1,8 +1,10 @@
 package com.eKirana.SharedLibrary.model.authorization.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-@ResponseStatus(value = HttpStatus.CONFLICT, reason = "User Already Present")
-public class UserCredentialsAlreadyExistsException extends Exception{
+public class UserCredentialsAlreadyExistsException extends ResponseStatusException {
+    public UserCredentialsAlreadyExistsException() {
+        super(HttpStatus.CONFLICT, "User Already Present");
+    }
 }

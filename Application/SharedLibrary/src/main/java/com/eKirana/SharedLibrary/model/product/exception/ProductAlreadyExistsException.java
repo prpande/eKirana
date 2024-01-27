@@ -1,8 +1,10 @@
 package com.eKirana.SharedLibrary.model.product.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-@ResponseStatus(code = HttpStatus.CONFLICT, reason = "Product already exists")
-public class ProductAlreadyExistsException extends Exception{
+public class ProductAlreadyExistsException extends ResponseStatusException {
+    public ProductAlreadyExistsException() {
+        super(HttpStatus.CONFLICT, "Product already exists");
+    }
 }

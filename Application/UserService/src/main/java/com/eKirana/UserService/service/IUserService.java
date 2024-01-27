@@ -4,12 +4,11 @@ import com.eKirana.SharedLibrary.model.user.Address;
 import com.eKirana.SharedLibrary.model.user.User;
 import com.eKirana.SharedLibrary.model.user.Vehicle;
 import com.eKirana.SharedLibrary.model.user.exception.*;
+import com.eKirana.SharedLibrary.security.exception.UserIsNotOwnerException;
 
 import java.util.List;
 
 public interface IUserService {
-    User registerUser(User user) throws UserAlreadyExistsException;
-
     User updateUser(String userId, User newUserInfo) throws UserNotFoundException, UserAlreadyExistsException;
 
     User getUserById(String userId) throws UserNotFoundException;

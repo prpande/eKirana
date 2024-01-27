@@ -5,6 +5,7 @@ import com.eKirana.SharedLibrary.model.user.Address;
 import com.eKirana.SharedLibrary.model.user.User;
 import com.eKirana.SharedLibrary.model.user.Vehicle;
 import com.eKirana.SharedLibrary.model.user.exception.*;
+import com.eKirana.SharedLibrary.security.exception.UserIsNotOwnerException;
 import com.eKirana.UserService.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,16 +21,6 @@ public class UserServiceImpl implements IUserService{
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    @Override
-    public User registerUser(User user) throws UserAlreadyExistsException {
-        Optional<User> optUser = userRepository.findById(user.getUserId());
-        if(optUser.isPresent()){
-            throw new UserAlreadyExistsException();
-        }
-
-        return userRepository.save(user);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.eKirana.OrderService.service;
 
 import com.eKirana.SharedLibrary.model.order.exception.OrderAlreadyExistsException;
+import com.eKirana.SharedLibrary.model.order.exception.OrderNotConfirmedException;
 import com.eKirana.SharedLibrary.model.order.exception.OrderNotFoundException;
 import com.eKirana.SharedLibrary.model.order.Order;
 import com.eKirana.SharedLibrary.model.order.OrderStatus;
@@ -29,9 +30,9 @@ public interface IOrderService {
 
     Order systemUpdateOrderStatus(String orderId, OrderStatus newStatus);
 
-    Order updateOrderCarrier(String orderId, String userId, UserType userType) throws OrderNotFoundException, UnauthorizedUserTypeException;
+    Order updateOrderCarrier(String orderId, String userId, UserType userType) throws OrderNotFoundException, UnauthorizedUserTypeException, OrderNotConfirmedException;
 
     Order updateOrderComments(String orderId, String newComments, String userId) throws OrderNotFoundException, UserIsNotOwnerException;
 
-    Order updateOrderDeliveryDate(String orderId, Date newDeliveredOn, String userId) throws OrderNotFoundException, UserIsNotOwnerException;
+    Order updateOrderDeliveryDate(String orderId, Date newDeliveredOn, String userId) throws OrderNotFoundException, UserIsNotOwnerException, OrderNotConfirmedException;
 }

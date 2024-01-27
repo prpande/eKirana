@@ -1,12 +1,11 @@
 package com.eKirana.AuthenticationService.controller;
 
+import com.eKirana.AuthenticationService.service.IUserCredentialService;
+import com.eKirana.SharedLibrary.model.authorization.UserCredential;
 import com.eKirana.SharedLibrary.model.authorization.exception.InvalidUserCredentialsException;
 import com.eKirana.SharedLibrary.model.authorization.exception.UserCredentialsAlreadyExistsException;
 import com.eKirana.SharedLibrary.model.authorization.exception.UserCredentialsNotFoundException;
-import com.eKirana.AuthenticationService.service.IUserCredentialService;
-import com.eKirana.SharedLibrary.model.authorization.UserCredential;
 import com.eKirana.SharedLibrary.security.SecurityTokenGenerator;
-import com.eKirana.SharedLibrary.utilities.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +37,9 @@ public class UserCredentialController {
         try {
             logger.info("[saveCredentials]: " + userCredential.getUserId());
             responseEntity = new ResponseEntity<>(userCredentialService.saveUserCredential(userCredential), HttpStatus.CREATED);
-        } catch (UserCredentialsAlreadyExistsException ex) {
-            throw ex;
         } catch (Exception ex) {
             logger.error("[saveCredentials]: Error", ex);
-            responseEntity = CommonUtils.get500ResponseEntity(ex);
+            throw ex;
         }
 
         return responseEntity;
@@ -54,11 +51,9 @@ public class UserCredentialController {
             logger.info("[login]: " + userCredential.getUserId());
             UserCredential foundCredentials = userCredentialService.getUserCredentialByUserIdAndPassword(userCredential.getUserId(), userCredential.getPassword());
             responseEntity = new ResponseEntity<>(securityTokenGenerator.createToken(foundCredentials), HttpStatus.OK);
-        } catch (InvalidUserCredentialsException ex) {
-            throw ex;
         } catch (Exception ex) {
             logger.error("[login]: Error", ex);
-            responseEntity = CommonUtils.get500ResponseEntity(ex);
+            throw ex;
         }
 
         return responseEntity;
@@ -70,13 +65,9 @@ public class UserCredentialController {
             String userId = getUserIdFromRequest(httpServletRequest);
             logger.info("[updatePassword]: " + userId);
             responseEntity = new ResponseEntity<>(userCredentialService.updateUserPassword(userId, newPassword), HttpStatus.OK);
-        } catch (UserCredentialsNotFoundException ex) {
-            throw ex;
-        } catch (UserCredentialsAlreadyExistsException ex) {
-            throw ex;
         } catch (Exception ex) {
             logger.error("[updatePassword]: Error", ex);
-            responseEntity = CommonUtils.get500ResponseEntity(ex);
+            throw ex;
         }
 
         return responseEntity;

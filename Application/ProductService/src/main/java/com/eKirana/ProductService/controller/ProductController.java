@@ -1,13 +1,12 @@
 package com.eKirana.ProductService.controller;
 
+import com.eKirana.ProductService.service.IProductService;
+import com.eKirana.SharedLibrary.model.product.Product;
 import com.eKirana.SharedLibrary.model.product.exception.InsufficientProductQuantityException;
 import com.eKirana.SharedLibrary.model.product.exception.ProductAlreadyExistsException;
 import com.eKirana.SharedLibrary.model.product.exception.ProductNotFoundException;
-import com.eKirana.ProductService.service.IProductService;
-import com.eKirana.SharedLibrary.model.product.Product;
 import com.eKirana.SharedLibrary.security.JwtFilter;
 import com.eKirana.SharedLibrary.security.exception.UserIsNotOwnerException;
-import com.eKirana.SharedLibrary.utilities.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +36,9 @@ public class ProductController {
             String userId = JwtFilter.getUserIdFromRequest(request);
             logger.info("[saveProduct]: User:[{}] Product:[{}]", userId, product.getProductId());
             responseEntity = new ResponseEntity<>(productService.saveProduct(product, userId), HttpStatus.CREATED);
-        } catch (ProductAlreadyExistsException ex) {
-            throw ex;
         } catch (Exception ex) {
             logger.error("[saveProduct]: Error", ex);
-            responseEntity = CommonUtils.get500ResponseEntity(ex);
+            throw ex;
         }
 
         return responseEntity;
@@ -53,11 +50,9 @@ public class ProductController {
             String userId = JwtFilter.getUserIdFromRequest(request);
             logger.info("[getProductById]: User:[{}] Product:[{}]", userId, productId);
             responseEntity = new ResponseEntity<>(productService.getProductById(productId, userId), HttpStatus.OK);
-        } catch (ProductNotFoundException | UserIsNotOwnerException ex) {
-            throw ex;
         } catch (Exception ex) {
             logger.error("[getProductById]: Error", ex);
-            responseEntity = CommonUtils.get500ResponseEntity(ex);
+            throw ex;
         }
 
         return responseEntity;
@@ -67,11 +62,11 @@ public class ProductController {
     public ResponseEntity<?> getAllProductBySellerId(HttpServletRequest request) {
         try {
             String userId = JwtFilter.getUserIdFromRequest(request);
-            logger.info("[getAllProductBySellerId]: User:[{}]" + userId);
+            logger.info("[getAllProductBySellerId]: User:[{}]", userId);
             responseEntity = new ResponseEntity<>(productService.getAllProductBySellerId(userId), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("[getAllProductBySellerId]: Error", ex);
-            responseEntity = CommonUtils.get500ResponseEntity(ex);
+            throw ex;
         }
 
         return responseEntity;
@@ -84,7 +79,7 @@ public class ProductController {
             responseEntity = new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("[getAllProducts]: Error", ex);
-            responseEntity = CommonUtils.get500ResponseEntity(ex);
+            throw ex;
         }
 
         return responseEntity;
@@ -96,11 +91,9 @@ public class ProductController {
             String userId = JwtFilter.getUserIdFromRequest(request);
             logger.info("[updateProduct]: User:[{}] Product:[{}]", userId, productId);
             responseEntity = new ResponseEntity<>(productService.updateProduct(productId, product, userId), HttpStatus.OK);
-        } catch (ProductNotFoundException | UserIsNotOwnerException ex) {
-            throw ex;
         } catch (Exception ex) {
             logger.error("[updateProduct]: Error", ex);
-            responseEntity = CommonUtils.get500ResponseEntity(ex);
+            throw ex;
         }
 
         return responseEntity;
@@ -112,11 +105,9 @@ public class ProductController {
             String userId = JwtFilter.getUserIdFromRequest(request);
             logger.info("[updateProductQuantity]: User:[{}] Product:[{}]", userId, productId);
             responseEntity = new ResponseEntity<>(productService.updateProductQuantity(productId, newQuantity, userId), HttpStatus.OK);
-        } catch (ProductNotFoundException | UserIsNotOwnerException | InsufficientProductQuantityException ex) {
-            throw ex;
         } catch (Exception ex) {
             logger.error("[updateProductQuantity]: Error", ex);
-            responseEntity = CommonUtils.get500ResponseEntity(ex);
+            throw ex;
         }
 
         return responseEntity;
@@ -128,11 +119,9 @@ public class ProductController {
             String userId = JwtFilter.getUserIdFromRequest(request);
             logger.info("[removeProduct]: User:[{}] Product:[{}]", userId, productId);
             responseEntity = new ResponseEntity<>(productService.removeProduct(productId, userId), HttpStatus.OK);
-        } catch (ProductNotFoundException | UserIsNotOwnerException ex) {
-            throw ex;
         } catch (Exception ex) {
             logger.error("[removeProduct]: Error", ex);
-            responseEntity = CommonUtils.get500ResponseEntity(ex);
+            throw ex;
         }
 
         return responseEntity;
@@ -144,11 +133,9 @@ public class ProductController {
             String userId = JwtFilter.getUserIdFromRequest(request);
             logger.info("[enableProduct]: User:[{}] Product:[{}]", userId, productId);
             responseEntity = new ResponseEntity<>(productService.enableProduct(productId, userId), HttpStatus.OK);
-        } catch (ProductNotFoundException | UserIsNotOwnerException ex) {
-            throw ex;
         } catch (Exception ex) {
             logger.error("[enableProduct]: Error", ex);
-            responseEntity = CommonUtils.get500ResponseEntity(ex);
+            throw ex;
         }
 
         return responseEntity;
@@ -160,11 +147,9 @@ public class ProductController {
             String userId = JwtFilter.getUserIdFromRequest(request);
             logger.info("[disableProduct]: User:[{}] Product:[{}]", userId, productId);
             responseEntity = new ResponseEntity<>(productService.disableProduct(productId, userId), HttpStatus.OK);
-        } catch (ProductNotFoundException | UserIsNotOwnerException ex) {
-            throw ex;
         } catch (Exception ex) {
             logger.error("[disableProduct]: Error", ex);
-            responseEntity = CommonUtils.get500ResponseEntity(ex);
+            throw ex;
         }
 
         return responseEntity;

@@ -8,6 +8,7 @@ import com.eKirana.SharedLibrary.messaging.model.AlertQMessage;
 import com.eKirana.SharedLibrary.model.order.Order;
 import com.eKirana.SharedLibrary.model.order.OrderStatus;
 import com.eKirana.SharedLibrary.model.order.exception.OrderAlreadyExistsException;
+import com.eKirana.SharedLibrary.model.order.exception.OrderNotConfirmedException;
 import com.eKirana.SharedLibrary.model.order.exception.OrderNotFoundException;
 import com.eKirana.SharedLibrary.model.product.Product;
 import com.eKirana.SharedLibrary.model.product.exception.InsufficientProductQuantityException;
@@ -44,15 +45,13 @@ public class OrderServiceImpl implements IOrderService {
             throw new OrderAlreadyExistsException();
         }
 
-        order.setStatus(OrderStatus.INITIALIZED);
         order.setCustomerId(userId);
         order.setSellerId(order.getOrderedItems().get(0).getSellerId());
         order.setCarrierId(null);
+        order.setPlacedOn(new Date());
         Order savedOrder = orderRepository.save(order);
         messagePublisher.publishOrder(savedOrder);
-
-        // TODO - confirm from seller using amqp and update status
-        return savedOrder;
+        return systemUpdateOrderStatus(savedOrder.getOrderId(), OrderStatus.INITIALIZED);
     }
 
     @Override
@@ -145,10 +144,11 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public  Order systemUpdateOrderStatus(String orderId, OrderStatus newStatus) {
         Order order = orderRepository.findById(orderId).get();
+        OrderStatus oldStatus = order.getStatus();
         order.setStatus(newStatus);
 
         Order savedOrder = orderRepository.save(order);
-        String alertMsg = String.format("Order:[%s] Status change:[%s]->[%s].", order.getOrderId(), order.getStatus(), savedOrder.getStatus());
+        String alertMsg = String.format("Order:[%s] Status change:[%s]->[%s].", order.getOrderId(), oldStatus, savedOrder.getStatus());
         AlertLevel alertLevel = AlertLevel.CRITICAL;
         switch (newStatus){
             case CONFIRMED:
@@ -159,17 +159,12 @@ public class OrderServiceImpl implements IOrderService {
                 alertLevel = AlertLevel.LOW;
                 break;
         }
+        publishOrderAlerts(savedOrder, alertMsg, alertLevel);
 
-        Alert alert = new Alert(UUID.randomUUID().toString(), alertLevel, alertMsg, new Date(), false);
-        messagePublisher.publishAlert(new AlertQMessage(order.getCustomerId(),alert));
-        messagePublisher.publishAlert(new AlertQMessage(order.getSellerId(),alert));
-        if(order.getCarrierId() != null){
-            messagePublisher.publishAlert(new AlertQMessage(order.getCarrierId(), alert));
-        }
         return savedOrder;
     }
     @Override
-    public Order updateOrderCarrier(String orderId, String userId, UserType userType) throws OrderNotFoundException, UnauthorizedUserTypeException {
+    public Order updateOrderCarrier(String orderId, String userId, UserType userType) throws OrderNotFoundException, UnauthorizedUserTypeException, OrderNotConfirmedException {
         if (userType != UserType.CARRIER) {
             throw new UnauthorizedUserTypeException();
         }
@@ -180,8 +175,16 @@ public class OrderServiceImpl implements IOrderService {
         }
 
         Order order = optOrder.get();
+        if(order.getStatus() != OrderStatus.CONFIRMED){
+            throw new OrderNotConfirmedException();
+        }
         order.setCarrierId(userId);
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+
+        String alertMsg = String.format("Order:[%s] Carrier assigned: Id:[%s].", order.getOrderId(), userId);
+        publishOrderAlerts(savedOrder, alertMsg, AlertLevel.LOW);
+
+        return savedOrder;
     }
 
     @Override
@@ -201,13 +204,17 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public Order updateOrderDeliveryDate(String orderId, Date newDeliveredOn, String userId) throws OrderNotFoundException, UserIsNotOwnerException {
+    public Order updateOrderDeliveryDate(String orderId, Date newDeliveredOn, String userId) throws OrderNotFoundException, UserIsNotOwnerException, OrderNotConfirmedException {
         Optional<Order> optOrder = orderRepository.findById(orderId);
         if (optOrder.isEmpty()) {
             throw new OrderNotFoundException();
         }
 
         Order order = optOrder.get();
+        if(order.getStatus() != OrderStatus.CONFIRMED){
+            throw new OrderNotConfirmedException();
+        }
+
         if (!isSellerCarrierOrAdmin(order, userId)) {
             throw new UserIsNotOwnerException();
         }
@@ -227,5 +234,14 @@ public class OrderServiceImpl implements IOrderService {
         return userId.equals(order.getSellerId()) ||
                 userId.equals(order.getCarrierId()) ||
                 userId.equals(SYSTEM_USER_ID);
+    }
+
+    private void publishOrderAlerts(Order order, String alertMsg, AlertLevel alertLevel) {
+        Alert alert = new Alert(UUID.randomUUID().toString(), alertLevel, alertMsg, new Date(), false);
+        messagePublisher.publishAlert(new AlertQMessage(order.getCustomerId(),alert));
+        messagePublisher.publishAlert(new AlertQMessage(order.getSellerId(),alert));
+        if(order.getCarrierId() != null){
+            messagePublisher.publishAlert(new AlertQMessage(order.getCarrierId(), alert));
+        }
     }
 }

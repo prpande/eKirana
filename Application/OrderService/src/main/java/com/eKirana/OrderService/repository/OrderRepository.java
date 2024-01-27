@@ -19,6 +19,6 @@ public interface OrderRepository extends MongoRepository<Order, String> {
     @Query("{ 'carrier.userId': ?0}")
     List<Order> getAllOrdersByCarrierId(String carrierId);
 
-    @Query("{ 'carrier': null}")
+    @Query("{ 'carrier': null, 'status': 'CONFIRMED'}")
     List<Order> getOrdersAvailableForDelivery();
 }
