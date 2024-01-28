@@ -1,5 +1,5 @@
-import { Product } from "../product/product";
-import { Address } from "../user/address";
+import { Product } from "../../shop/models/product";
+import { Address } from "../../user/models/address";
 import { OrderStatus } from "./orderStatus";
 
 export type Order = {
