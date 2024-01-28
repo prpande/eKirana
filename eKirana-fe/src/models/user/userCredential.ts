@@ -1,4 +1,4 @@
-import { UserType } from "./UserType";
+import { UserType } from "./userType";
 
 export type UserCredential = {
     userId: string;

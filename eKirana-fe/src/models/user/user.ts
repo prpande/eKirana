@@ -1,4 +1,4 @@
-import { UserType } from "./UserType";
+import { UserType } from "./userType";
 import { Address } from "./address";
 import { Alert } from "./alert";
 import { Vehicle } from "./vehicle";
