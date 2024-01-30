@@ -20,6 +20,9 @@ import { AlertCardComponent } from './components/alert-card/alert-card.component
   ],
   imports: [
     SharedModule
+  ],
+  exports:[
+    LoginViewComponent
   ]
 })
 export class UserModule { }

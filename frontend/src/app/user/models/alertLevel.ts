@@ -1,5 +1,5 @@
 export enum AlertLevel {
-    LOW,
-    MEDIUM,
-    CRITICAL
+    LOW = "LOW",
+    MEDIUM = "MEDIUM",
+    CRITICAL = "CRITICAL"
 }

@@ -1,1 +1,13 @@
-<p>shop-card works!</p>
+<a>
+    <mat-card mat-ripple class="shop-card d-lg-inline-block m-3">
+        <mat-card-content>
+            <img mat-card-image src="{{shop?.displayImageUrl}}" alt=" {{shop?.displayImageUrl}}">
+            <mat-card-title color="primary">
+                {{shop?.fullName}}
+            </mat-card-title>
+            <mat-card-subtitle>
+                <p>{{shop?.line1}}, {{shop?.line2}}, {{shop?.city}}, {{shop?.phoneNumber}}</p>
+            </mat-card-subtitle>
+        </mat-card-content>
+    </mat-card>
+</a>

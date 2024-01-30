@@ -16,6 +16,12 @@ import { ProductDetailsComponent } from './components/product-details/product-de
   ],
   imports: [
     SharedModule
+  ],
+  exports: [
+    ShopViewComponent,
+    ProductCardComponent,
+    ShopCardComponent,
+    ProductDetailsComponent
   ]
 })
 export class ShopModule { }

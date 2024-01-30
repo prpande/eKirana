@@ -1,1 +1,33 @@
-<p>login-view works!</p>
+<div class="container text-center my-5 mx-auto w-50">
+    <h1>Login</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" id="userId" class="d-block">
+            <mat-label>UserId</mat-label>
+            <input matInput type="text" formControlName="userId" />
+            <mat-error *ngIf="userId?.errors?.['required']">
+                UserId is required.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" id="password" class="d-block">
+            <mat-label>Password</mat-label>
+            <input matInput type="{{(showPassword === false)?'password':'text'}}" formControlName="password" />
+            <mat-icon matSuffix style="cursor: pointer;" (click)="toggleShowPassword()">
+                {{!showPassword?'visibility':'visibility_off'}}</mat-icon>
+            <mat-error *ngIf="password?.errors?.['required']">
+                Password is required.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" id="userType" class="d-block">
+            <mat-label>User Type</mat-label>
+            <mat-select formControlName="userType">
+                <mat-option *ngFor="let type of UserTypes" [value]="type">{{type}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="userType?.errors?.['required']">
+                User Type is required.
+            </mat-error>
+        </mat-form-field>
+        <div id="button-container">
+            <button mat-raised-button type="submit" color="primary" [disabled]="loginForm.invalid">Log In</button>
+        </div>
+    </form>
+</div>

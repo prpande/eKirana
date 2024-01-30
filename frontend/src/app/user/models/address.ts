@@ -11,4 +11,5 @@ export type Address = {
     phoneNumber: string;
     isDefault: boolean;
     instructions: string;
+    displayImageUrl: string;
 }

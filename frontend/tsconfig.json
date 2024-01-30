@@ -23,7 +23,6 @@
       "ES2022",
       "dom"
     ],
-    "types": ["jest", "node", "jasmine"],
     "typeRoots": ["node_modules/@angular/material"]
   },
   "angularCompilerOptions": {

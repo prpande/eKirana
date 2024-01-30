@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  title:string;
+  loggedIn:boolean;
 
+  constructor(){
+    this.title = "e-Kirana";
+    this.loggedIn = true;
+  }
+
+  logout(){
+
+  }
 }

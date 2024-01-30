@@ -1,3 +1,30 @@
-<div class="container-fluid">
-    <p>header works!</p>
-</div>
+<mat-toolbar id="main-toolbar" color="primary" class="container-fluid py-5 justify-content-between">
+    <div class="">
+        <div class="d-inline-block h1">{{title}}</div>
+    </div>
+    <div class="">
+        <div class="container  ">
+            <div class="button-container d-inline-block ">
+                <button mat-mini-fab matTooltip="Home" routerLink="splash" class="">
+                    <mat-icon class="">home</mat-icon>
+                </button>
+            </div>
+            <div class="button-container d-inline-block ">
+                <button *ngIf="loggedIn!==true" mat-mini-fab matTooltip="login" routerLink="login"
+                    class="">
+                    <mat-icon>login</mat-icon>
+                </button>
+                <button *ngIf="loggedIn===true" mat-mini-fab matTooltip="logout" (click)="logout()"
+                    class="">
+                    <mat-icon>logout</mat-icon>
+                </button>
+            </div>
+            <div class="button-container d-inline-block ">
+                <button *ngIf="loggedIn===true" mat-mini-fab matTooltip="Profile" routerLink="user-view"
+                    class="">
+                    <mat-icon class="">person</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</mat-toolbar>
