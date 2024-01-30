@@ -12,15 +12,17 @@ public class RestEndpoints {
 
     //region User Service endpoints
     public static final String USER_ROOT = "/api/user";
+    public static final String CREATE_USER = "/info";
     public static final String UPDATE_USER = "/info";
     public static final String GET_USER_BY_ID = "/info";
     public static final String GET_ALL_USERS = "/infos";
+    public static final String GET_ALL_SHOPS = "/shops";
     public static final String ADD_USER_ADDRESS = "/info/address";
     public static final String UPDATE_USER_ADDRESS = "/info/address";
     public static final String DELETE_USER_ADDRESS = "/info/address/{addressId}";
     public static final String SET_DELIVERY_STATUS = "/info/deliveryStatus";
     public static final String UPDATE_VEHICLE_INFO = "/info/vehicle";
-    public static final String[] USER_SECURE_PATTERNS = new String[]{USER_ROOT + UPDATE_USER + "/*"};
+    public static final String[] USER_SECURE_PATTERNS = new String[]{USER_ROOT + CREATE_USER + "/*"};
     //endregion
 
     //region Product Service endpoints

@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import static com.eKirana.SharedLibrary.RestEndpoints.*;
 @RestController
 @RequestMapping(USER_ROOT)
+@CrossOrigin("*")
 public class UserController {
     private final IUserService userService;
     private ResponseEntity<?> responseEntity;
@@ -30,6 +31,21 @@ public class UserController {
     @Autowired
     public UserController(IUserService userService) {
         this.userService = userService;
+    }
+
+    @PostMapping(CREATE_USER)
+    public ResponseEntity<?> createUser(@RequestBody User userInfo) throws UserAlreadyExistsException {
+        try {
+            String userId = userInfo.getUserId();
+            UserType userType = userInfo.getUserType();
+            logger.info("[createUser]: User:[{}] UserType:[{}]", userId, userType);
+            responseEntity = new ResponseEntity<>(userService.createUser(userInfo), HttpStatus.CREATED);
+        } catch (Exception ex) {
+            logger.error("[createUser]: Error", ex);
+            throw ex;
+        }
+
+        return responseEntity;
     }
 
     @PutMapping(UPDATE_USER)
@@ -69,6 +85,19 @@ public class UserController {
             responseEntity = new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("[getAllUsers]: Error", ex);
+            throw ex;
+        }
+
+        return responseEntity;
+    }
+
+    @GetMapping(GET_ALL_SHOPS)
+    public ResponseEntity<?> getAllShops() {
+        try {
+            logger.info("[getAllShops]: Enter");
+            responseEntity = new ResponseEntity<>(userService.getAllShops(), HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("[getAllShops]: Error", ex);
             throw ex;
         }
 

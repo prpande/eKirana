@@ -20,6 +20,7 @@ import static com.eKirana.SharedLibrary.RestEndpoints.*;
 
 @RestController
 @RequestMapping(PRODUCT_ROOT)
+@CrossOrigin("*")
 public class ProductController {
     private final IProductService productService;
     private ResponseEntity<?> responseEntity;

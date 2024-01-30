@@ -18,6 +18,8 @@ public class Address {
     private String phoneNumber;
     private boolean isDefault;
     private String instructions;
+    private String displayImageUrl;
+
     public Address() {
     }
 
@@ -32,7 +34,8 @@ public class Address {
                    double longitude,
                    String phoneNumber,
                    boolean isDefault,
-                   String instructions) {
+                   String instructions,
+                   String displayImageUrl) {
         this.addressId = addressId;
         this.fullName = fullName;
         this.line1 = line1;
@@ -45,6 +48,7 @@ public class Address {
         this.phoneNumber = phoneNumber;
         this.isDefault = isDefault;
         this.instructions = instructions;
+        this.displayImageUrl = displayImageUrl;
     }
 
     public String getAddressId() {
@@ -143,6 +147,14 @@ public class Address {
         this.longitude = longitude;
     }
 
+    public String getDisplayImageUrl() {
+        return displayImageUrl;
+    }
+
+    public void setDisplayImageUrl(String displayImageUrl) {
+        this.displayImageUrl = displayImageUrl;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -177,6 +189,7 @@ public class Address {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", isDefault=" + isDefault +
                 ", instructions='" + instructions + '\'' +
+                ", displayImageUrl='" + displayImageUrl + '\'' +
                 '}';
     }
 }

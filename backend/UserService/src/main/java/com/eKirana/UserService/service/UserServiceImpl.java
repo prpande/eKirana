@@ -3,9 +3,9 @@ package com.eKirana.UserService.service;
 import com.eKirana.SharedLibrary.messaging.model.Alert;
 import com.eKirana.SharedLibrary.model.user.Address;
 import com.eKirana.SharedLibrary.model.user.User;
+import com.eKirana.SharedLibrary.model.user.UserType;
 import com.eKirana.SharedLibrary.model.user.Vehicle;
 import com.eKirana.SharedLibrary.model.user.exception.*;
-import com.eKirana.SharedLibrary.security.exception.UserIsNotOwnerException;
 import com.eKirana.UserService.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +21,15 @@ public class UserServiceImpl implements IUserService{
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public User createUser(User userInfo) throws UserAlreadyExistsException {
+        if(userRepository.findById(userInfo.getUserId()).isPresent()){
+            throw new UserAlreadyExistsException();
+        }
+
+        return userRepository.save(userInfo);
     }
 
     @Override
@@ -92,6 +101,17 @@ public class UserServiceImpl implements IUserService{
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<Address> getAllShops() {
+        List<User> sellers = userRepository.findByUserType(UserType.SELLER);
+        List<Address> shops = new ArrayList<>();
+        for(User seller: sellers){
+            shops.add(seller.getAddress());
+        }
+
+        return shops;
     }
 
     @Override

@@ -23,6 +23,7 @@ import static com.eKirana.SharedLibrary.RestEndpoints.*;
 
 @RestController
 @RequestMapping(ORDER_ROOT)
+@CrossOrigin("*")
 public class OrderController {
     private final IOrderService orderService;
     private ResponseEntity<?> responseEntity;

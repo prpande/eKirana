@@ -8,11 +8,14 @@ import com.eKirana.SharedLibrary.model.user.exception.*;
 import java.util.List;
 
 public interface IUserService {
+    User createUser(User userInfo) throws UserAlreadyExistsException;
     User updateUser(String userId, User newUserInfo) throws UserNotFoundException, UserAlreadyExistsException;
 
     User getUserById(String userId) throws UserNotFoundException;
 
     List<User> getAllUsers();
+
+    List<Address> getAllShops();
 
     User addUserAddress(String userId, Address address) throws UserNotFoundException, AddressAlreadyExistsException;
 

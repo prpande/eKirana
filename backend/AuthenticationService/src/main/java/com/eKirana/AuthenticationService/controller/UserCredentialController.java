@@ -5,6 +5,7 @@ import com.eKirana.SharedLibrary.model.authorization.UserCredential;
 import com.eKirana.SharedLibrary.model.authorization.exception.InvalidUserCredentialsException;
 import com.eKirana.SharedLibrary.model.authorization.exception.UserCredentialsAlreadyExistsException;
 import com.eKirana.SharedLibrary.model.authorization.exception.UserCredentialsNotFoundException;
+import com.eKirana.SharedLibrary.model.user.UserType;
 import com.eKirana.SharedLibrary.security.SecurityTokenGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import static com.eKirana.SharedLibrary.security.JwtFilter.getUserIdFromRequest;
 
 @RestController
 @RequestMapping(AUTHORIZATION_ROOT)
+@CrossOrigin("*")
 public class UserCredentialController {
     private final IUserCredentialService userCredentialService;
     private final SecurityTokenGenerator securityTokenGenerator;
@@ -48,8 +50,10 @@ public class UserCredentialController {
     @PostMapping(LOGIN)
     public ResponseEntity<?> login(@RequestBody UserCredential userCredential) throws InvalidUserCredentialsException {
         try {
-            logger.info("[login]: " + userCredential.getUserId());
-            UserCredential foundCredentials = userCredentialService.getUserCredentialByUserIdAndPassword(userCredential.getUserId(), userCredential.getPassword());
+            String userId = userCredential.getUserId();
+            UserType userType = userCredential.getUserType();
+            logger.info("[login]: User:[{}] UserType:[{}]", userId, userType);
+            UserCredential foundCredentials = userCredentialService.getUserCredentialByUserIdAndPasswordAndUserType(userCredential.getUserId(), userCredential.getPassword(), userCredential.getUserType());
             responseEntity = new ResponseEntity<>(securityTokenGenerator.createToken(foundCredentials), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("[login]: Error", ex);
