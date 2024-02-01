@@ -34,6 +34,19 @@ public class UserCredentialController {
         this.securityTokenGenerator = securityTokenGenerator;
     }
 
+    @PostMapping(CHECK_USER_ID)
+    public ResponseEntity<?> checkUserId(@RequestBody String userId) throws UserCredentialsAlreadyExistsException {
+        try {
+            logger.info("[checkUserId]: " + userId);
+            responseEntity = new ResponseEntity<>(userCredentialService.checkUserId(userId), HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("[checkUserId]: Error", ex);
+            throw ex;
+        }
+
+        return responseEntity;
+    }
+
     @PostMapping(SAVE_CREDENTIALS)
     public ResponseEntity<?> saveCredentials(@RequestBody UserCredential userCredential) throws UserCredentialsAlreadyExistsException {
         try {

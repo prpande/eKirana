@@ -4,6 +4,7 @@ public class RestEndpoints {
 
     //region Authorization Service endpoints
     public static final String AUTHORIZATION_ROOT = "/api/auth";
+    public static final String CHECK_USER_ID = "/check";
     public static final String SAVE_CREDENTIALS = "/userCredential";
     public static final String LOGIN = "/login";
     public static final String UPDATE_PASSWORD = "/password";
@@ -22,7 +23,7 @@ public class RestEndpoints {
     public static final String DELETE_USER_ADDRESS = "/info/address/{addressId}";
     public static final String SET_DELIVERY_STATUS = "/info/deliveryStatus";
     public static final String UPDATE_VEHICLE_INFO = "/info/vehicle";
-    public static final String[] USER_SECURE_PATTERNS = new String[]{USER_ROOT + CREATE_USER + "/*"};
+    public static final String[] USER_SECURE_PATTERNS = new String[]{USER_ROOT + CREATE_USER + "*"};
     //endregion
 
     //region Product Service endpoints

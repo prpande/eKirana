@@ -7,6 +7,7 @@ import com.eKirana.SharedLibrary.model.authorization.exception.UserCredentialsNo
 import com.eKirana.SharedLibrary.model.user.UserType;
 
 public interface IUserCredentialService {
+    String checkUserId(String userId) throws UserCredentialsAlreadyExistsException;
     UserCredential saveUserCredential(UserCredential userCredential) throws UserCredentialsAlreadyExistsException;
     UserCredential getUserCredentialByUserIdAndPasswordAndUserType(String userId, String password, UserType userType) throws InvalidUserCredentialsException;
     UserCredential updateUserPassword(String userId, String newPassword) throws UserCredentialsNotFoundException, UserCredentialsAlreadyExistsException;
