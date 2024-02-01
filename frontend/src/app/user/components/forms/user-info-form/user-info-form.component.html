@@ -1,0 +1,87 @@
+<div class="container">
+    <form [formGroup]="userInfoGroup" class="">
+        <div class="">
+            <mat-form-field appearance="fill" class="d-inline-block mx-3">
+                <mat-label>First Name</mat-label>
+                <input matInput type="text" id="firstName" formControlName="firstName" />
+                <mat-error *ngIf="firstName?.errors?.['required']">
+                    First Name is required
+                </mat-error>
+                <mat-error *ngIf="firstName?.errors?.['minlength']">
+                    Minimum 2 character required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="d-inline-block">
+                <mat-label>Last Name</mat-label>
+                <input matInput type="text" id="lastName" formControlName="lastName" />
+            </mat-form-field>
+        </div>
+        <div class="">
+            <mat-form-field appearance="fill" class="d-inline-block mx-3">
+                <mat-label>Email</mat-label>
+                <input matInput type="text" id="email" formControlName="email" />
+                <mat-error *ngIf="email?.errors?.['required']">
+                    Email is required
+                </mat-error>
+                <mat-error *ngIf="email?.errors?.['pattern']">
+                    Enter valid email address
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="d-inline-block">
+                <mat-label>Phone Number</mat-label>
+                <input matInput type="number" formControlName="phone" id="phone">
+                <mat-error *ngIf="phone?.errors?.['pattern']">
+                    Valid phone number contains 10 digits starting with 7/8/9
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="">
+            <mat-form-field appearance="fill" id="dateOfBirth" class="d-inline-block mx-3">
+                <mat-label>Date 0f Birth</mat-label>
+                <input [max]="maxDateOfBirth" matInput [matDatepicker]="dobPicker" formControlName="dateOfBirth">
+                <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+                <mat-datepicker #dobPicker></mat-datepicker>
+                <mat-error *ngIf="dateOfBirth?.errors?.['required']">
+                    Delivery Date is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" id="userType" class="d-inline-block">
+                <mat-label>User Type</mat-label>
+                <input matInput type="text" id="userType" formControlName="userType" readonly />
+            </mat-form-field>
+        </div>
+        <div class="">
+            <h3>Mailing Address</h3>
+            <app-address-form [parentFormGroup]="userInfoGroup"></app-address-form>
+        </div>
+        <div *ngIf="userType?.value != 'CUSTOMER'" class="">
+            <h3>{{userType?.value}} specific information</h3>
+            <mat-form-field appearance="fill" class="d-inline-block mx-3">
+                <mat-label>PAN Card Number</mat-label>
+                <input matInput type="text" id="panCardNumber" formControlName="panCardNumber" />
+                <mat-error *ngIf="panCardNumber?.errors?.['required']">
+                    PAN Card number is required
+                </mat-error>
+                <mat-error
+                    *ngIf="panCardNumber?.errors?.['minlength'] || panCardNumber?.errors?.['maxlength'] || panCardNumber?.errors?.['pattern']">
+                    Invalid PAN Card number
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="d-inline-block">
+                <mat-label>GST Number</mat-label>
+                <input matInput type="text" id="gstNumber" formControlName="gstNumber" />
+                <mat-error *ngIf="gstNumber?.errors?.['required']">
+                    GST Number is required
+                </mat-error>
+                <mat-error
+                    *ngIf="gstNumber?.errors?.['minlength'] || gstNumber?.errors?.['maxlength'] || gstNumber?.errors?.['pattern']">
+                    Invalid GST number
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="container my-3">
+            <p></p>
+            <button mat-raised-button color="primary" matStepperNext [disabled]="!userInfoGroup.valid">Next</button>
+        </div>
+    </form>
+</div>

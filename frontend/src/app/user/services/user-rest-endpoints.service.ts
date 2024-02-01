@@ -9,6 +9,7 @@ export class UserRestEndpointsService {
   public static readonly AUTH_SERVICE_URL: string = "http://localhost:8081";
 
   public static readonly AUTHORIZATION_ROOT: string = UserRestEndpointsService.AUTH_SERVICE_URL + "/api/auth";
+  public static readonly CHECK_USER_ID: string = UserRestEndpointsService.AUTHORIZATION_ROOT + "/check";
   public static readonly SAVE_CREDENTIALS: string = UserRestEndpointsService.AUTHORIZATION_ROOT + "/userCredential";
   public static readonly LOGIN: string = UserRestEndpointsService.AUTHORIZATION_ROOT + "/login";
   public static readonly UPDATE_PASSWORD: string = UserRestEndpointsService.AUTHORIZATION_ROOT + "/password";

@@ -1,1 +1,28 @@
-<p>new-user-view works!</p>
+<div class="container card my-4 w-75 mx-auto">
+    <div class="h3 mt-4 ms-4">Welcome to e-Kirana</div>
+
+    <!-- <mat-stepper [linear]="true" [orientation]="(stepperOrientation | async)!" #stepper> -->
+    <mat-stepper [linear]="true" orientation='vertical' #stepper>
+        <mat-step label="Create your Credentials" completed="false">
+            <app-new-user-credentials-step
+                (stepCompletedEvent)="setUserCredentials($event)"></app-new-user-credentials-step>
+        </mat-step>
+        <mat-step label="Enter your Information">
+            <app-user-info-form [userSubject$]="userSubject$"></app-user-info-form>
+        </mat-step>
+
+        <div *ngIf="userCredentialGroupCompleted">
+            <mat-step completed="false" label="Enter your Address details">
+                <!-- <app-customer-address-form [parentFormGroup]="userInfoGroup"></app-customer-address-form> -->
+            </mat-step>
+            <mat-step *ngIf="userInfo.userType != 'CUSTOMER'" completed="false"
+                label="Enter your government ID details">
+
+            </mat-step>
+            <mat-step *ngIf="userInfo.userType == 'CARRIER'" label="Enter your Vehicle Information" completed="false">
+                <!-- <app-carrier-vehicle-info-form
+                    [parentFormGroup]="carrierVehicleInfoGroup"></app-carrier-vehicle-info-form> -->
+            </mat-step>
+        </div>
+    </mat-stepper>
+</div>

@@ -7,13 +7,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,10 @@ import { MatInputModule } from '@angular/material/input';
     MatTooltipModule,
     MatSnackBarModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     BrowserModule,
@@ -52,7 +57,10 @@ import { MatInputModule } from '@angular/material/input';
     MatTooltipModule,
     MatSnackBarModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
 })
 export class SharedModule { }

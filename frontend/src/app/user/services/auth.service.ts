@@ -25,53 +25,80 @@ export class AuthService {
   SystemToken: string = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxY2VlOWJjOS01MDJkLTRmZGMtYWQwYi05NjA2MzY1NDZmY2UiLCJ1c2VyVHlwZSI6IlNZU1RFTSIsInVzZXJJZCI6IjFjZWU5YmM5LTUwMmQtNGZkYy1hZDBiLTk2MDYzNjU0NmZjZSIsImlhdCI6MTcwNjUwOTg0OX0.7JVolbjedPcrfqMrdN9I002T6uiGpD0Tv-cew1dWgrY";
 
   private _userCredential$ = new BehaviorSubject<UserCredentialData>({});
-
-  private subscriptions: Subscription[] = [];
+  private _userIdValidation$ = new BehaviorSubject<string | undefined>(undefined);
 
   constructor(private httpCLient: HttpClient, private restErrorSvc: RestErrorHandlerService, private logger: LoggerService) {
   }
 
   get UserCredentials() { return this.userCredential$.value.credentials; }
   get UserJwt() { return this.userCredential$.value.jwt; }
-  get userCredential$() {return this._userCredential$;}
+  get userCredential$() { return this._userCredential$; }
+  get userIdValidation$() { return this._userIdValidation$; }
 
   get isLoggedIn(): boolean {
     return this.UserJwt != undefined;
   }
 
-  private refreshSubject(){
+  private refreshUserCredentialSubject() {
     this._userCredential$ = new BehaviorSubject<UserCredentialData>({});
   }
 
+  private refreshUserIdValidationSubject() {
+    this._userIdValidation$ = new BehaviorSubject<string | undefined>(undefined);
+  }
+
   login(userCredential: UserCredential) {
-    this.refreshSubject();
-    this.subscriptions.push(this.httpCLient.post(UserRestEndpointsService.LOGIN, userCredential, { responseType: 'text' })
-    .subscribe(
-      {
-        next: data => {
-          let credentialData: UserCredentialData = {
-            credentials: userCredential,
-            jwt: data
-          };
-          this.logger.info(`Logged in: User:[${userCredential.userId}] UserType:[${userCredential.userType}]`);
-          this.userCredential$.next(credentialData);
-        },
-        error: err => {
-          this.logger.error(`Error logging in: User:[${userCredential.userId}] UserType:[${userCredential.userType}]`);
-          let response = err as HttpErrorResponse;
-          if (response.status == 401) {
-            this.userCredential$.error(err);
-          }
-          else {
-            this.restErrorSvc.processPostError(err);
+    this.refreshUserCredentialSubject();
+    this.httpCLient.post(UserRestEndpointsService.LOGIN, userCredential, { responseType: 'text' })
+      .subscribe(
+        {
+          next: data => {
+            let credentialData: UserCredentialData = {
+              credentials: userCredential,
+              jwt: data
+            };
+            this.logger.info(`Logged in: User:[${userCredential.userId}] UserType:[${userCredential.userType}]`);
+            this.userCredential$.next(credentialData);
+          },
+          error: err => {
+            this.logger.error(`Error logging in: User:[${userCredential.userId}] UserType:[${userCredential.userType}]`);
+            let response = err as HttpErrorResponse;
+            if (response.status == 401) {
+              this.userCredential$.error(err);
+            }
+            else {
+              this.restErrorSvc.processPostError(err);
+            }
           }
         }
-      }
-    ));
+      );
   }
 
   logout() {
     this.logger.info(`Log Out: User:[${this.UserCredentials?.userId}] UserType:[${this.UserCredentials?.userType}]`)
     this.userCredential$.next({});
+  }
+
+  checkUserId(userId: string) {
+    this.refreshUserIdValidationSubject();
+    this.httpCLient.post(UserRestEndpointsService.CHECK_USER_ID, userId, { responseType: 'text' })
+      .subscribe(
+        {
+          next: data => {
+            this.logger.info(`Valid UserId:[${data}]`);
+            this.userIdValidation$.next(data);
+          },
+          error: err => {
+            this.logger.error(`Error in validating UserId:[${userId}]`);
+            let response = err as HttpErrorResponse;
+            if (response.status == 409) {
+              this.userIdValidation$.error(err);
+            }
+            else {
+              this.restErrorSvc.processPostError(err);
+            }
+          }
+        }
+      );
   }
 }

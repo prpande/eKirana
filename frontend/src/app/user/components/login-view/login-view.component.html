@@ -1,5 +1,5 @@
-<div class="container text-center my-5 mx-auto w-50">
-    <h1>Login</h1>
+<div class="container text-center my-5 mx-auto w-50 card px-4">
+    <h1 class="mt-4">Login</h1>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline" id="userId" class="d-block">
             <mat-label>UserId</mat-label>
@@ -26,7 +26,10 @@
                 User Type is required.
             </mat-error>
         </mat-form-field>
-        <div id="button-container">
+        <div class="">
+            New to e-Kirana? <a routerLink="">Start here.</a>
+        </div>
+        <div class="my-4">
             <button mat-raised-button type="submit" color="primary" [disabled]="loginForm.invalid">Log In</button>
         </div>
     </form>

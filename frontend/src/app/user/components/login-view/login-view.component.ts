@@ -4,7 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterService } from 'src/app/shared/services/router.service';
 import { UserCredential } from '../../models/userCredential';
-import { UserType } from '../../models/userType';
+import { UserTypeAllowed } from '../../models/userType';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class LoginViewComponent {
 
   constructor(private fb: FormBuilder, private authService: AuthService, private snackBar: MatSnackBar, private router: RouterService, private logger: LoggerService) {
     this.showPassword = false;
-    this.UserTypes = Object.values(UserType);
+    this.UserTypes = Object.values(UserTypeAllowed);
     this.loginForm = this.fb.group({
       userId: ['', [Validators.required]],
       password: ['', [Validators.required]],

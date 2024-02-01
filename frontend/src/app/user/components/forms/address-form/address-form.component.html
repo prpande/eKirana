@@ -1,0 +1,84 @@
+<form [formGroup]="addressFormGroup" class="">
+    <div class="">
+        <mat-form-field appearance="fill" class="d-inline-block mx-3">
+            <mat-label>Full Name</mat-label>
+            <input matInput type="text" id="fullName" formControlName="fullName" />
+            <mat-error *ngIf="fullName?.errors?.['required']">
+                Full Name is required
+            </mat-error>
+            <mat-error *ngIf="fullName?.errors?.['minlength']">
+                Minimum 5 characters required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="d-inline-block">
+            <mat-label>Phone Number</mat-label>
+            <input matInput type="number" formControlName="phoneNumber" id="phoneNumber">
+            <mat-error *ngIf="phoneNumber?.errors?.['pattern']">
+                Valid phone number contains 10 digits starting with 7/8/9
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="">
+        <mat-form-field appearance="fill" id="line1" class="mx-3">
+            <mat-label>Line 1</mat-label>
+            <input matInput type="text" formControlName="line1" />
+            <mat-error *ngIf="line1?.errors?.['required']">
+                Address line 1 is required.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" id="line2" class="">
+            <mat-label>Line 2</mat-label>
+            <input matInput type="text" formControlName="line2" />
+        </mat-form-field>
+    </div>
+    <div class="">
+        <mat-form-field appearance="fill" id="landmark" class="mx-3">
+            <mat-label>Landmark</mat-label>
+            <input matInput type="text" formControlName="landmark" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" id="city" class="">
+            <mat-label>City</mat-label>
+            <input matInput type="text" formControlName="city" />
+            <mat-error *ngIf="city?.errors?.['required']">
+                City is required.
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="">
+        <mat-form-field appearance="fill" id="state" class="mx-3">
+            <mat-label>State</mat-label>
+            <mat-select formControlName="state">
+                <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="state?.errors?.['required']">
+                State is required.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" id="pincode" class="">
+            <mat-label>Pincode</mat-label>
+            <input matInput type="text" formControlName="pincode" />
+            <mat-error *ngIf="pincode?.errors?.['required']">
+                Pincode is required.
+            </mat-error>
+            <mat-error *ngIf="pincode?.errors?.['pattern']">
+                Enter valid Pincode containing 6 digits.
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="">
+        <mat-form-field appearance="fill" id="latitude" class="mx-3">
+            <mat-label>Latitude</mat-label>
+            <input matInput type="text" formControlName="latitude" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" id="longitude" class="">
+            <mat-label>Longitude</mat-label>
+            <input matInput type="text" formControlName="longitude" />
+        </mat-form-field>
+    </div>
+    <div class="">
+        <mat-form-field appearance="fill" id="instructions" class="mt-2 mx-3">
+            <mat-label>Instructions</mat-label>
+            <textarea matInput type="text" formControlName="instructions"></textarea>
+        </mat-form-field>
+    </div>
+</form>
