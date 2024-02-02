@@ -66,13 +66,18 @@
         </mat-form-field>
     </div>
     <div class="">
+        <div class="">
+            <google-map [zoom]="mapZoom" [center]="mapCenter" [options]="mapOptions" (mapInitialized)="doMapStuff()" (mapClick)="mapClick($event)">
+                <map-marker [position]="markerLatLng" [options]="markerOptions"></map-marker>
+            </google-map>
+        </div>
         <mat-form-field appearance="fill" id="latitude" class="mx-3">
             <mat-label>Latitude</mat-label>
-            <input matInput type="text" formControlName="latitude" />
+            <input matInput type="text" formControlName="latitude" readonly/>
         </mat-form-field>
         <mat-form-field appearance="fill" id="longitude" class="">
             <mat-label>Longitude</mat-label>
-            <input matInput type="text" formControlName="longitude" />
+            <input matInput type="text" formControlName="longitude" readonly/>
         </mat-form-field>
     </div>
     <div class="">

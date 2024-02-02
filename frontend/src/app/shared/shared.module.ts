@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatInputModule,
     MatStepperModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    GoogleMapsModule
   ],
   exports: [
     BrowserModule,
@@ -60,7 +62,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatInputModule,
     MatStepperModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    GoogleMapsModule
   ],
 })
 export class SharedModule { }
