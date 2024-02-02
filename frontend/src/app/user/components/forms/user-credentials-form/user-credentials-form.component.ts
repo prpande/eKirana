@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
+import { GlobalConstants } from 'src/app/app.module';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 import { UserCredential } from 'src/app/user/models/userCredential';
 import { UserTypeAllowed } from 'src/app/user/models/userType';
@@ -16,6 +17,7 @@ export class UserCredentialsFormComponent implements OnInit {
   @Input()
   userCredentials!: UserCredential;
 
+  _isTest = true;
   isUserIdValid: number = -1;
   showPassword: boolean = false;
   done: boolean = false;
@@ -33,23 +35,34 @@ export class UserCredentialsFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.userCredentialGroup = this.fb.group({
-      userId: ['', [Validators.required, Validators.minLength(5), this.userIdValidator.bind(this)]],
+      userId: ['', [Validators.required,
+      Validators.minLength(5),
+      this.userIdValidator.bind(this),
+      Validators.pattern(/^[A-Za-z0-9]+(?:[@._-][A-Za-z0-9]+)*$/)]],
       userType: ['', Validators.required],
       password: ['', [Validators.required,
       Validators.pattern(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/)]],
       confirmPassword: ['', [Validators.required,
-      Validators.pattern(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/),
-      this.confirmPasswordValidator]],
-    });
+      Validators.pattern(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/)]]
+    }, { validators: [this.confirmPasswordValidator] });
 
-    if(this.userCredentials){
+    if (this.userCredentials) {
       this.userId?.setValue(this.userCredentials.userId);
       this.userType?.setValue(this.userCredentials.userType);
+    }
+
+    if(GlobalConstants.IS_TEST_ENV || this._isTest){
+      this.password?.clearValidators();
+      this.confirmPassword?.clearValidators();
     }
   }
 
   toggleShowPassword() {
     this.showPassword = !this.showPassword;
+  }
+
+  forceLower() {
+    this.userId?.setValue((this.userId.value as string).toLowerCase());
   }
 
   confirmPasswordValidator(formGroupControl: AbstractControl) {

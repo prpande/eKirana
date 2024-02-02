@@ -7,21 +7,31 @@
             <app-new-user-credentials-step
                 (stepCompletedEvent)="setUserCredentials($event)"></app-new-user-credentials-step>
         </mat-step>
-        <mat-step label="Enter your Information">
-            <app-user-info-form [userSubject$]="userSubject$"></app-user-info-form>
+        <mat-step label="Enter your Information" completed="false">
+            <ng-template matStepContent>
+                <app-new-user-info-step [userInfo]="userInfo" [stepUpdate$]="stepUpdate$"></app-new-user-info-step>
+            </ng-template>
         </mat-step>
 
+        <mat-step completed="false" label="Enter your Address details">
+            <ng-template matStepContent>
+                <app-new-user-address-step [userInfo]="userInfo"
+                    [stepUpdate$]="stepUpdate$"></app-new-user-address-step>
+            </ng-template>
+        </mat-step>
         <div *ngIf="userCredentialGroupCompleted">
-            <mat-step completed="false" label="Enter your Address details">
-                <!-- <app-customer-address-form [parentFormGroup]="userInfoGroup"></app-customer-address-form> -->
-            </mat-step>
             <mat-step *ngIf="userInfo.userType != 'CUSTOMER'" completed="false"
                 label="Enter your government ID details">
-
+                <ng-template matStepContent>
+                    <app-new-user-identification-step [userInfo]="userInfo"
+                        [stepUpdate$]="stepUpdate$"></app-new-user-identification-step>
+                </ng-template>
             </mat-step>
             <mat-step *ngIf="userInfo.userType == 'CARRIER'" label="Enter your Vehicle Information" completed="false">
-                <!-- <app-carrier-vehicle-info-form
-                    [parentFormGroup]="carrierVehicleInfoGroup"></app-carrier-vehicle-info-form> -->
+                <ng-template matStepContent>
+                    <app-new-user-vehicle-info-step [userInfo]="userInfo"
+                    [stepUpdate$]="stepUpdate$"></app-new-user-vehicle-info-step>
+                </ng-template>
             </mat-step>
         </div>
     </mat-stepper>

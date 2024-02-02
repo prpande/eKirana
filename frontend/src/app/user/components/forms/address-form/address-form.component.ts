@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IdGeneratorService } from 'src/app/services/id-generator.service';
 import { IndiaStatesService } from 'src/app/shared/services/india-states.service';
 import { Address } from 'src/app/user/models/address';
+import { User } from 'src/app/user/models/user';
 
 @Component({
   selector: 'app-address-form',
@@ -15,7 +16,7 @@ export class AddressFormComponent implements OnInit {
   states: string[];
 
   @Input()
-  parentFormGroup!: FormGroup;
+  userInfo!: User;
 
   addressFormGroup!: FormGroup;
 
@@ -27,7 +28,7 @@ export class AddressFormComponent implements OnInit {
   get pincode() { return this.addressFormGroup.get("pincode"); }
   get latitude() { return this.addressFormGroup.get("latitude"); }
   get longitude() { return this.addressFormGroup.get("longitude"); }
-
+  
   constructor(private fb: FormBuilder, private idGenerator: IdGeneratorService, private statesService: IndiaStatesService) { 
     this.states = statesService.States;
   }
@@ -49,12 +50,9 @@ export class AddressFormComponent implements OnInit {
       instructions: [''],
       displayImageUrl: ['']
     });
+  }
 
-
-    if (this.parentFormGroup != undefined) {
-      this.parentFormGroup.addControl('address', this.addressFormGroup);
-    } else {
-      this.parentFormGroup = this.addressFormGroup;
-    }
+  getAddressObj(): Address{
+    return new Address(this.addressFormGroup.value);
   }
 }

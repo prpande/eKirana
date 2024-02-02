@@ -11,6 +11,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { SplashComponent } from './components/splash/splash.component';
 import { AuthService } from './user/services/auth.service';
 import { LoggerService } from './shared/components/logger/services/logger.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from './user/services/auth-interceptor.service';
+import { RouterService } from './shared/services/router.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,20 @@ import { LoggerService } from './shared/components/logger/services/logger.servic
     ShopModule,
     MatToolbarModule
   ],
-  providers: [AuthService, LoggerService],
+  providers: [
+    AuthService, 
+    LoggerService, 
+    RouterService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+export const GlobalConstants = Object.freeze({
+  IS_TEST_ENV: false
+});

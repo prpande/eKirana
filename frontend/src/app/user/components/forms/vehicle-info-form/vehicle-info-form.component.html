@@ -1,1 +1,47 @@
-<p>vehicle-info-form works!</p>
+<div class="">
+    <form [formGroup]="vehicleInfoGroup" class="">        
+        <mat-form-field appearance="fill" class="d-block">
+            <mat-label>Driving License No.</mat-label>
+            <input matInput type="text" id="drivingLicenseNumber" formControlName="drivingLicenseNumber" />
+            <mat-error *ngIf="drivingLicenseNumber?.errors?.['required']">
+                Driving License is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="d-block">
+            <mat-label>Vehicle Registration No.</mat-label>
+            <input matInput type="text" id="registrationNumber" formControlName="registrationNumber" />
+            <mat-error *ngIf="registrationNumber?.errors?.['required']">
+                Registration Number is required
+            </mat-error>
+        </mat-form-field>
+        <div class="">
+            <mat-form-field appearance="fill" class="d-inline-block">
+                <mat-label>Vehicle Make</mat-label>
+                <input matInput type="text" id="make" formControlName="make" />
+                <mat-error *ngIf="make?.errors?.['required']">
+                    Make is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="d-inline-block">
+                <mat-label>Vehicle Model</mat-label>
+                <input matInput type="text" id="model" formControlName="model" />
+                <mat-error *ngIf="model?.errors?.['required']">
+                    Model is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="">
+            <mat-form-field appearance="fill" class="d-inline-block">
+                <mat-label>Vehicle Type</mat-label>
+                <input matInput type="text" id="vehicleType" formControlName="vehicleType" />
+                <mat-error *ngIf="vehicleType?.errors?.['required']">
+                    Type is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="d-inline-block">
+                <mat-label>Vehicle Capacity</mat-label>
+                <input matInput type="text" id="capacity" formControlName="capacity" />
+            </mat-form-field>
+        </div>
+    </form>
+</div>

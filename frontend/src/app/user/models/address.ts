@@ -1,4 +1,4 @@
-export type Address = {
+export class Address {
     addressId?: string;
     fullName?: string;
     line1?: string;
@@ -13,4 +13,12 @@ export type Address = {
     isDefault?: boolean;
     instructions?: string;
     displayImageUrl?: string;
+
+    constructor(init?: Partial<Address>){
+        this.setValues(init);
+    }
+    
+    setValues(init?: Partial<Address>) {
+        Object.assign(this, init);
+    }
 }

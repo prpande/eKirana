@@ -1,1 +1,6 @@
-<p>new-user-info-step works!</p>
+<div class="">
+    <app-user-info-form [userInfo]="userInfo"></app-user-info-form>
+    <div class="container my-3">
+        <button mat-raised-button color="primary" [disabled]="checkNextDisabled()" (click)="onNext()">Next</button>
+    </div>
+</div>

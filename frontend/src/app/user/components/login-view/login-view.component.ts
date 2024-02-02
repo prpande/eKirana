@@ -34,11 +34,7 @@ export class LoginViewComponent {
   get userType() { return this.loginForm.get('userType'); }
 
   onSubmit() {
-    let userCredentials: UserCredential = {
-      userId: this.userId?.value,
-      password: this.password?.value,
-      userType: this.userType?.value
-    }
+    let userCredentials: UserCredential = new UserCredential(this.loginForm.value);
     this.authService.login(userCredentials);
     this.authService.userCredential$.subscribe({
       next: () => {

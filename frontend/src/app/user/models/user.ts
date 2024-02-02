@@ -3,7 +3,7 @@ import { Address } from "./address";
 import { Alert } from "./alert";
 import { Vehicle } from "./vehicle";
 
-export type User = {
+export class User {
     userId?: string;
     firstName?: string;
     lastName?: string;
@@ -17,4 +17,12 @@ export type User = {
     gstIdNumber?: string;
     vehicleInfo?: Vehicle;
     alertList?: Alert[];
+
+    constructor(init?: Partial<User>){
+        this.setValues(init);
+    }
+
+    setValues(init?: Partial<User>) {
+        Object.assign(this, init);
+    }
 }

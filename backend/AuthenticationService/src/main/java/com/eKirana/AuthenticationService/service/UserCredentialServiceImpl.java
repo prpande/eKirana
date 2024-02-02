@@ -37,6 +37,7 @@ public class UserCredentialServiceImpl implements IUserCredentialService{
 
     @Override
     public UserCredential saveUserCredential(UserCredential userCredential) throws UserCredentialsAlreadyExistsException {
+        userCredential.setUserId(userCredential.getUserId().toLowerCase());
         if(userCredentialRepository.findById(userCredential.getUserId()).isPresent()){
             throw new UserCredentialsAlreadyExistsException();
         }

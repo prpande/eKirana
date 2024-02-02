@@ -1,8 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 import { User } from 'src/app/user/models/user';
-import { UserType } from 'src/app/user/models/userType';
 
 @Component({
   selector: 'app-user-info-form',
@@ -14,7 +12,8 @@ export class UserInfoFormComponent implements OnInit {
   maxDateOfBirth: Date;
 
   @Input()
-  userSubject$!: BehaviorSubject<User>;
+  userInfo!: User;
+  
   userInfoGroup!: FormGroup;
 
   get firstName() { return this.userInfoGroup.get("firstName"); }
@@ -22,10 +21,10 @@ export class UserInfoFormComponent implements OnInit {
   get email() { return this.userInfoGroup.get("email"); }
   get phone() { return this.userInfoGroup.get("phone"); }
   get dateOfBirth() { return this.userInfoGroup.get("dateOfBirth"); }
-  get address() { return this.userInfoGroup.get("address"); }
   get panCardNumber() { return this.userInfoGroup.get("panCardNumber"); }
   get gstNumber() { return this.userInfoGroup.get("gstNumber"); }
   get userType() { return this.userInfoGroup.get("userType"); }
+  get userId() { return this.userInfoGroup.get("userId"); }
 
   constructor(private fb: FormBuilder) {
     this.maxDateOfBirth = new Date();
@@ -40,31 +39,18 @@ export class UserInfoFormComponent implements OnInit {
       phone: ['', [Validators.required, Validators.pattern(/^[789]\d{9,9}$/)]],
       dateOfBirth: ['', [Validators.required]],
       userType: [''],
-      panCardNumber: [''],
-      gstNumber: [''],
+      userId:['']
     });
 
-    this.userSubject$.subscribe({
-      next: userInfo => {
-        if (userInfo.userId) {
-          this.firstName?.setValue(userInfo.firstName);
-          this.lastName?.setValue(userInfo.lastName);
-          this.email?.setValue(userInfo.email);
-          this.phone?.setValue(userInfo.phoneNumber);
-          this.userType?.setValue(userInfo.userType);
-          this.dateOfBirth?.setValue(userInfo.dateOfBirth);
-          this.panCardNumber?.setValue(userInfo.panCardNumber);
-          this.gstNumber?.setValue(userInfo.gstIdNumber);
 
-          console.log(userInfo);
-          
-          if (userInfo?.userType != UserType.CUSTOMER) {
-            this.panCardNumber?.setValidators([Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/)]);
-            this.gstNumber?.setValidators([Validators.required, Validators.minLength(15), Validators.maxLength(15), Validators.pattern(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/)]);
-          }
-        }
-      }
-    })
-
+    if (this.userInfo.userId) {
+      this.firstName?.setValue(this.userInfo.firstName);
+      this.lastName?.setValue(this.userInfo.lastName);
+      this.email?.setValue(this.userInfo.email);
+      this.phone?.setValue(this.userInfo.phoneNumber);
+      this.dateOfBirth?.setValue(this.userInfo.dateOfBirth);
+      this.userType?.setValue(this.userInfo.userType);
+      this.userId?.setValue(this.userInfo.userId);
+    }
   }
 }

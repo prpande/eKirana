@@ -1,4 +1,4 @@
-export type Vehicle = {
+export class Vehicle {
     registrationNumber?: string;
     drivingLicenseNumber?: string;
     make?: string;
@@ -8,4 +8,12 @@ export type Vehicle = {
     isDelivering?: boolean;
     latitude?: number;
     longitude?: number;
+
+    constructor(init?: Partial<Vehicle>){
+        this.setValues(init);
+    }
+
+    setValues(init?: Partial<Vehicle>) {
+        Object.assign(this, init);
+    }
 }

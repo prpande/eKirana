@@ -17,11 +17,11 @@ export type UserCredentialData = {
 })
 export class AuthService {
 
-  SystemCredentials: UserCredential = {
+  SystemCredentials: UserCredential = new UserCredential({
     userId: "1cee9bc9-502d-4fdc-ad0b-960636546fce",
     userType: UserType.SYSTEM,
     password: ''
-  }
+  });
   SystemToken: string = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxY2VlOWJjOS01MDJkLTRmZGMtYWQwYi05NjA2MzY1NDZmY2UiLCJ1c2VyVHlwZSI6IlNZU1RFTSIsInVzZXJJZCI6IjFjZWU5YmM5LTUwMmQtNGZkYy1hZDBiLTk2MDYzNjU0NmZjZSIsImlhdCI6MTcwNjUwOTg0OX0.7JVolbjedPcrfqMrdN9I002T6uiGpD0Tv-cew1dWgrY";
 
   private _userCredential$ = new BehaviorSubject<UserCredentialData>({});

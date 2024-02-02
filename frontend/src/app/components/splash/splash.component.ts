@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalConstants } from 'src/app/app.module';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
 import { Address } from 'src/app/user/models/address';
@@ -18,13 +19,16 @@ export class SplashComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.shopService.getShops().subscribe({
-    //   next: data => {
-    //     this.shops = data;
-    //   },
-    //   error: err => {
-    //     this.restErrorSvc.processFetchError(err);
-    //   }
-    // })
+    if (GlobalConstants.IS_TEST_ENV) {
+      return;
+    }
+    this.shopService.getShops().subscribe({
+      next: data => {
+        this.shops = data;
+      },
+      error: err => {
+        this.restErrorSvc.processFetchError(err);
+      }
+    })
   }
 }
