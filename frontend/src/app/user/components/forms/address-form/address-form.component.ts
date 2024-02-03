@@ -83,7 +83,6 @@ export class AddressFormComponent implements OnInit {
       displayImageUrl: ['']
     });
 
-    console.log(this.address)
     if (this.address && this.address.addressId) {
       this.addressId?.setValue(this.address.addressId);
       this.fullName?.setValue(this.address.fullName);

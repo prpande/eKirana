@@ -1,59 +1,31 @@
-<p>{{content}}</p>
-<div class="container card m-4">
-    <mat-tab-group>
-        <mat-tab>
-            <ng-template matTabLabel>
-                <mat-icon>person</mat-icon>
-                <p>Personal Information</p>
-            </ng-template>
-            <ng-template matTabContent>
-                <app-user-info-form [userInfo]="userInfo"></app-user-info-form>
-            </ng-template>
-        </mat-tab>
-        <mat-tab *ngIf="userInfo && userInfo!.userType != 'SELLER'">
-            <ng-template matTabLabel>
-                <mat-icon>person</mat-icon>
-                <p>Mailing Address Details</p>
-            </ng-template>
-            <ng-template matTabContent>
-                <app-address-form [address]="userInfo.address!"></app-address-form>
-            </ng-template>
-        </mat-tab>
-        <mat-tab *ngIf="userInfo && userInfo!.userType == 'CUSTOMER'">
-            <ng-template matTabLabel>
-                <mat-icon>person</mat-icon>
-                <p>Delivery Addresses</p>
-            </ng-template>
-            <ng-template matTabContent>
-
-            </ng-template>
-        </mat-tab>
-        <mat-tab *ngIf="userInfo && userInfo!.userType == 'SELLER'">
-            <ng-template matTabLabel>
-                <mat-icon>person</mat-icon>
-                <p>Business Information</p>
-            </ng-template>
-            <ng-template matTabContent>
-                <app-address-form [address]="userInfo.address!"></app-address-form>
-            </ng-template>
-        </mat-tab>
-        <mat-tab *ngIf="userInfo && userInfo!.userType != 'CUSTOMER'">
-            <ng-template matTabLabel>
-                <mat-icon>person</mat-icon>
-                <p>Identification Information</p>
-            </ng-template>
-            <ng-template matTabContent>
-                <app-id-form [userInfo]="userInfo"></app-id-form>
-            </ng-template>
-        </mat-tab>
-        <mat-tab *ngIf="userInfo && userInfo!.userType == 'CARRIER'">
-            <ng-template matTabLabel>
-                <mat-icon>person</mat-icon>
-                <p>Vehicle Information</p>
-            </ng-template>
-            <ng-template matTabContent>
-                <app-vehicle-info-form [userInfo]="userInfo"></app-vehicle-info-form>
-            </ng-template>
-        </mat-tab>
-    </mat-tab-group>
+<div class="">
+    <mat-sidenav-container>
+        <mat-sidenav opened="true" mode="side">
+            <mat-nav-list *ngIf="userInfo && userInfo!.userType == 'CARRIER'">
+                <mat-list-item routerLink="">Deliveries</mat-list-item>
+            </mat-nav-list>
+            <mat-nav-list *ngIf="userInfo && userInfo!.userType == 'CARRIER'">
+                <mat-list-item routerLink="">Update Location</mat-list-item>
+            </mat-nav-list>
+            <mat-nav-list *ngIf="userInfo && userInfo!.userType == 'SELLER'">
+                <mat-list-item routerLink="">Products</mat-list-item>
+            </mat-nav-list>
+            <mat-nav-list>
+                <mat-list-item routerLink="">Information</mat-list-item>
+            </mat-nav-list>
+            <mat-nav-list>
+                <mat-list-item routerLink="">Alerts</mat-list-item>
+            </mat-nav-list>
+            <mat-nav-list>
+                <mat-list-item routerLink="">Orders</mat-list-item>
+            </mat-nav-list>
+            <mat-nav-list>
+                <mat-list-item routerLink="">Security</mat-list-item>
+            </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <router-outlet name="dash-content"></router-outlet>
+            <app-user-info-tab [userInfo]="userInfo"></app-user-info-tab>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
 </div>

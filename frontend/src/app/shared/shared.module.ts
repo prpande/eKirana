@@ -20,6 +20,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     GoogleMapsModule,
     MatTabsModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSidenavModule,
+    MatListModule
   ],
   exports: [
     BrowserModule,
@@ -72,7 +76,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     GoogleMapsModule,
     MatTabsModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSidenavModule,
+    MatListModule
   ],
 })
 export class SharedModule { }

@@ -16,6 +16,7 @@ import { IdFormComponent } from './components/forms/id-form/id-form.component';
 import { UserCredentialsFormComponent } from './components/forms/user-credentials-form/user-credentials-form.component';
 import { UserInfoFormComponent } from './components/forms/user-info-form/user-info-form.component';
 import { VehicleInfoFormComponent } from './components/forms/vehicle-info-form/vehicle-info-form.component';
+import { UserInfoTabComponent } from './components/dashboard-view/user-info-tab/user-info-tab.component';
 
 
 
@@ -36,7 +37,8 @@ import { VehicleInfoFormComponent } from './components/forms/vehicle-info-form/v
     NewUserVehicleInfoStepComponent,
     NewUserCredentialsStepComponent,
     UserCredentialsFormComponent,
-    NewUserIdentificationStepComponent
+    NewUserIdentificationStepComponent,
+    UserInfoTabComponent
   ],
   imports: [
     SharedModule
