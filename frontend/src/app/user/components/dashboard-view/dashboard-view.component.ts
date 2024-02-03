@@ -5,6 +5,7 @@ import { LoggerService } from 'src/app/shared/components/logger/services/logger.
 import { UserService } from '../../services/user.service';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
 import { AuthService } from '../../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-view',
@@ -20,7 +21,8 @@ export class DashboardViewComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private restErrorSvc: RestErrorHandlerService,
-    private logger: LoggerService) { }
+    private logger: LoggerService,
+    private actRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     if (!this.authService.isLoggedIn) {
@@ -30,9 +32,9 @@ export class DashboardViewComponent implements OnInit {
       this.routerService.goToLogin();
     }
 
-    this.userService.getUser().subscribe({
+    this.actRoute.data.subscribe({
       next: data => {
-        this.userInfo = data;
+        this.userInfo = data['userDataResolver'] as User;
         this.content = JSON.stringify(this.userInfo);
       },
       error: err => {

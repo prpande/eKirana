@@ -8,6 +8,7 @@ import { loginGuard } from './shared/guards/login.guard';
 import { NewUserViewComponent } from './user/components/new-user-view/new-user-view.component';
 import { ShopViewComponent } from './shop/components/shop-view/shop-view.component';
 import { preventNavigationGuard } from './shared/guards/prevent-navigation.guard';
+import { UserDataResolver } from './user/components/dashboard-view/user-data-resolver';
 
 const routes: Routes = [
   {
@@ -26,7 +27,10 @@ const routes: Routes = [
   {
     path: "dashboard",
     component: DashboardViewComponent,
-    canActivate: [loginGuard]
+    canActivate: [loginGuard],
+    resolve: {
+      userDataResolver: UserDataResolver
+    }
   },
   {
     path: "shop/:id",

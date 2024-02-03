@@ -10,16 +10,16 @@
                 <app-user-info-form [userInfo]="userInfo"></app-user-info-form>
             </ng-template>
         </mat-tab>
-        <mat-tab *ngIf="userInfo!.userType == 'CUSTOMER'">
+        <mat-tab *ngIf="userInfo && userInfo!.userType != 'SELLER'">
             <ng-template matTabLabel>
                 <mat-icon>person</mat-icon>
                 <p>Mailing Address Details</p>
             </ng-template>
             <ng-template matTabContent>
-                <app-address-form> [userInfo]="userInfo"</app-address-form>
+                <app-address-form [address]="userInfo.address!"></app-address-form>
             </ng-template>
         </mat-tab>
-        <mat-tab *ngIf="userInfo!.userType == 'CUSTOMER'">
+        <mat-tab *ngIf="userInfo && userInfo!.userType == 'CUSTOMER'">
             <ng-template matTabLabel>
                 <mat-icon>person</mat-icon>
                 <p>Delivery Addresses</p>
@@ -28,16 +28,16 @@
 
             </ng-template>
         </mat-tab>
-        <mat-tab *ngIf="userInfo!.userType == 'SELLER'">
+        <mat-tab *ngIf="userInfo && userInfo!.userType == 'SELLER'">
             <ng-template matTabLabel>
                 <mat-icon>person</mat-icon>
                 <p>Business Information</p>
             </ng-template>
             <ng-template matTabContent>
-                <app-address-form [address]="userInfo"></app-address-form>
+                <app-address-form [address]="userInfo.address!"></app-address-form>
             </ng-template>
         </mat-tab>
-        <mat-tab *ngIf="userInfo!.userType != 'CUSTOMER'">
+        <mat-tab *ngIf="userInfo && userInfo!.userType != 'CUSTOMER'">
             <ng-template matTabLabel>
                 <mat-icon>person</mat-icon>
                 <p>Identification Information</p>
@@ -46,7 +46,7 @@
                 <app-id-form [userInfo]="userInfo"></app-id-form>
             </ng-template>
         </mat-tab>
-        <mat-tab *ngIf="userInfo!.userType == 'CARRIER'">
+        <mat-tab *ngIf="userInfo && userInfo!.userType == 'CARRIER'">
             <ng-template matTabLabel>
                 <mat-icon>person</mat-icon>
                 <p>Vehicle Information</p>

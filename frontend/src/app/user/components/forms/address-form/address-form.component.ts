@@ -17,7 +17,7 @@ export class AddressFormComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
 
   mapZoom = 15;
-  mapCenter!: google.maps.LatLng;
+  mapCenter: google.maps.LatLng = new google.maps.LatLng({lat:0,lng:0});
   mapOptions: google.maps.MapOptions = {
     zoomControl: true,
     scrollwheel: true,
@@ -31,7 +31,7 @@ export class AddressFormComponent implements OnInit {
   };
 
   markerInitialized: boolean = false;
-  markerLatLng!: google.maps.LatLng;
+  markerLatLng: google.maps.LatLng= new google.maps.LatLng({lat:0,lng:0});
   markerOptions: google.maps.MarkerOptions = {
     draggable: false,
     animation: google.maps.Animation.DROP,
@@ -41,6 +41,8 @@ export class AddressFormComponent implements OnInit {
 
   @Input()
   address!: Address;
+
+  dataInitialized: boolean = false;
 
   addressFormGroup!: FormGroup;
 
@@ -55,9 +57,9 @@ export class AddressFormComponent implements OnInit {
   get latitude() { return this.addressFormGroup.get("latitude"); }
   get longitude() { return this.addressFormGroup.get("longitude"); }
   get phoneNumber() { return this.addressFormGroup.get("phoneNumber"); }
-  get isDefault() { return this.addressFormGroup.get("fullName"); }
-  get instructions() { return this.addressFormGroup.get("fullName"); }
-  get displayImageUrl() { return this.addressFormGroup.get("fullName"); }
+  get isDefault() { return this.addressFormGroup.get("isDefault"); }
+  get instructions() { return this.addressFormGroup.get("instructions"); }
+  get displayImageUrl() { return this.addressFormGroup.get("displayImageUrl"); }
 
   constructor(private fb: FormBuilder, private idGenerator: IdGeneratorService, private statesService: IndiaStatesService) {
     this.states = statesService.States;
@@ -81,6 +83,7 @@ export class AddressFormComponent implements OnInit {
       displayImageUrl: ['']
     });
 
+    console.log(this.address)
     if (this.address && this.address.addressId) {
       this.addressId?.setValue(this.address.addressId);
       this.fullName?.setValue(this.address.fullName);
@@ -97,6 +100,7 @@ export class AddressFormComponent implements OnInit {
       this.instructions?.setValue(this.address.instructions);
       this.displayImageUrl?.setValue(this.address.displayImageUrl);
     }
+    this.dataInitialized = true;
   }
 
   getAddressObj(): Address {
@@ -116,7 +120,7 @@ export class AddressFormComponent implements OnInit {
         }, null, { enableHighAccuracy: true, }
         );
       }
-      
+
       this.mapCenter = new google.maps.LatLng(point);
       this.setMapMarker(point);
     }
