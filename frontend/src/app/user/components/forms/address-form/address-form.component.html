@@ -54,13 +54,13 @@
                 State is required.
             </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="fill" id="pincode" class="">
+        <mat-form-field appearance="fill" id="pinCode" class="">
             <mat-label>Pincode</mat-label>
-            <input matInput type="text" formControlName="pincode" />
-            <mat-error *ngIf="pincode?.errors?.['required']">
+            <input matInput type="text" formControlName="pinCode" />
+            <mat-error *ngIf="pinCode?.errors?.['required']">
                 Pincode is required.
             </mat-error>
-            <mat-error *ngIf="pincode?.errors?.['pattern']">
+            <mat-error *ngIf="pinCode?.errors?.['pattern']">
                 Enter valid Pincode containing 6 digits.
             </mat-error>
         </mat-form-field>

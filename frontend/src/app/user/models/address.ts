@@ -6,7 +6,7 @@ export class Address {
     landmark?: string;
     city?: string;
     state?: string;
-    pincode?: number;
+    pinCode?: number;
     latitude?: number;
     longitude?: number;
     phoneNumber?: string;

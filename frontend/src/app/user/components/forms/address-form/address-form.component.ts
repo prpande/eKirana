@@ -16,12 +16,18 @@ export class AddressFormComponent implements OnInit {
 
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   
-  mapZoom = 12;
+  mapZoom = 15;
   mapCenter!: google.maps.LatLng;
   mapOptions: google.maps.MapOptions = {
     zoomControl: true,
     scrollwheel: true,
-    disableDoubleClickZoom: false
+    disableDoubleClickZoom: true,
+    clickableIcons: false,
+    disableDefaultUI: true,
+    fullscreenControl: false,
+    keyboardShortcuts: false,
+    mapTypeControl: false,
+    streetViewControl: false
   };
   markerLatLng!: google.maps.LatLng;
   markerOptions: google.maps.MarkerOptions = {
@@ -41,7 +47,7 @@ export class AddressFormComponent implements OnInit {
   get phoneNumber() { return this.addressFormGroup.get("phoneNumber"); }
   get city() { return this.addressFormGroup.get("city"); }
   get state() { return this.addressFormGroup.get("state"); }
-  get pincode() { return this.addressFormGroup.get("pincode"); }
+  get pinCode() { return this.addressFormGroup.get("pinCode"); }
   get latitude() { return this.addressFormGroup.get("latitude"); }
   get longitude() { return this.addressFormGroup.get("longitude"); }
 
@@ -58,7 +64,7 @@ export class AddressFormComponent implements OnInit {
       landmark: [''],
       city: ['', [Validators.required, Validators.minLength(3)]],
       state: ['', [Validators.required]],
-      pincode: ['', [Validators.required, Validators.pattern(/^[1-9]{1}[0-9]{5}$/)]],
+      pinCode: ['', [Validators.required, Validators.pattern(/^[1-9]{1}[0-9]{5}$/)]],
       latitude: [''],
       longitude: [''],
       phoneNumber: ['', [Validators.required]],

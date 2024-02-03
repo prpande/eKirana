@@ -13,6 +13,8 @@ public class Address {
     private String landmark;
     private String city;
     private String state;
+
+    private int pinCode;
     private double latitude;
     private double longitude;
     private String phoneNumber;
@@ -30,6 +32,7 @@ public class Address {
                    String landmark,
                    String city,
                    String state,
+                   int pinCode,
                    double latitude,
                    double longitude,
                    String phoneNumber,
@@ -43,6 +46,7 @@ public class Address {
         this.landmark = landmark;
         this.city = city;
         this.state = state;
+        this.pinCode = pinCode;
         this.latitude = latitude;
         this.longitude = longitude;
         this.phoneNumber = phoneNumber;
@@ -131,6 +135,14 @@ public class Address {
         this.instructions = instructions;
     }
 
+    public int getPinCode() {
+        return pinCode;
+    }
+
+    public void setPinCode(int pinCode) {
+        this.pinCode = pinCode;
+    }
+
     public double getLatitude() {
         return latitude;
     }
@@ -160,18 +172,12 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return  Objects.equals(fullName, address.fullName) &&
-                Objects.equals(line1, address.line1) &&
-                Objects.equals(line2, address.line2) &&
-                Objects.equals(landmark, address.landmark) &&
-                Objects.equals(city, address.city) &&
-                Objects.equals(state, address.state) &&
-                Objects.equals(phoneNumber, address.phoneNumber);
+        return pinCode == address.pinCode && Double.compare(address.latitude, latitude) == 0 && Double.compare(address.longitude, longitude) == 0 && Objects.equals(fullName, address.fullName) && Objects.equals(line1, address.line1) && Objects.equals(line2, address.line2) && Objects.equals(landmark, address.landmark) && Objects.equals(city, address.city) && Objects.equals(state, address.state);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(fullName, line1, line2, landmark, city, state, latitude, longitude, phoneNumber);
+        return Objects.hash(fullName, line1, line2, landmark, city, state, pinCode, latitude, longitude);
     }
 
     @Override
@@ -184,6 +190,7 @@ public class Address {
                 ", landmark='" + landmark + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
+                ", pinCode=" + pinCode +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", phoneNumber='" + phoneNumber + '\'' +
