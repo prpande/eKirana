@@ -14,13 +14,15 @@ import { LoggerService } from './shared/components/logger/services/logger.servic
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './user/services/auth-interceptor.service';
 import { RouterService } from './shared/services/router.service';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    SplashComponent
+    SplashComponent,
+    PageNotFoundComponent
   ],
   imports: [
     SharedModule,

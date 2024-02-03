@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GoogleMap } from '@angular/google-maps';
-import { IdGeneratorService } from 'src/app/services/id-generator.service';
+import { IdGeneratorService } from 'src/app/shared/services/id-generator.service';
 import { IndiaStatesService } from 'src/app/shared/services/india-states.service';
 import { Address } from 'src/app/user/models/address';
 import { User } from 'src/app/user/models/user';

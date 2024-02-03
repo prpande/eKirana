@@ -17,7 +17,7 @@ export class UserCredentialsFormComponent implements OnInit {
   @Input()
   userCredentials!: UserCredential;
 
-  _isTest = true;
+  _isTest = false;
   isUserIdValid: number = -1;
   showPassword: boolean = false;
   done: boolean = false;

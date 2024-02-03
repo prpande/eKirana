@@ -24,7 +24,7 @@ export class SplashComponent implements OnInit {
     }
     this.shopService.getShops().subscribe({
       next: data => {
-        this.shops = data;
+        this.shops = data.filter( shop => shop && shop.fullName != undefined);
       },
       error: err => {
         this.restErrorSvc.processFetchError(err);

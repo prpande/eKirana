@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { IdGeneratorService } from '../services/id-generator.service';
+import { IdGeneratorService } from '../shared/services/id-generator.service';
 
 describe('IdGeneratorService', () => {
   let service: IdGeneratorService;

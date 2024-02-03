@@ -39,7 +39,7 @@ export class LoginViewComponent {
     this.authService.userCredential$.subscribe({
       next: () => {
         if(this.authService.isLoggedIn){
-        // TODO: Route to user dash
+          this.router.goToUserDash();
         }
       },
       error: err => {

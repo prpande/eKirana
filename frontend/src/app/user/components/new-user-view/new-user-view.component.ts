@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
+import { RouterService } from 'src/app/shared/services/router.service';
 
 export type StepperUpdate = {
   state?: StepperUpdateState,
@@ -37,12 +38,14 @@ export class NewUserViewComponent {
   userInfo!: User;
 
   userCredentialGroupCompleted: boolean = false;
+  registrationCompleted: boolean = false;
 
   constructor(private authService: AuthService,
     private userService: UserService,
     private restErrorSvc: RestErrorHandlerService,
     private logger: LoggerService,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private routerService: RouterService) {
     this.stepUpdate$.subscribe({
       next: update => {
         switch (update.state) {
@@ -82,18 +85,19 @@ export class NewUserViewComponent {
         this.logger.info(`User information saved successfully: UserId:[${data.userId}] UserType:[${data.userType}]`)
         this.snackBar.open(`Successfully saved user information UserID: [${data.userId}]`,
           'OK',
-          { duration: 10000, panelClass: ['mat-toolbar', 'mat-primary'], verticalPosition: "top" })
-        // TODO navigate to home
+          { duration: 10000, panelClass: ['mat-toolbar', 'mat-primary'], verticalPosition: "top" });
+        this.registrationCompleted = true;
+        this.routerService.goToHome();
       },
       error: err => {
         this.logger.error(`Error saving information UserId:[${this.userInfo.userId}]`);
         let response = err as HttpErrorResponse;
         if (response.status == 404) {
           this.logger.error(`Not Found UserID:[${this.userInfo.userId}]`);
-          this.snackBar.open(`Unable to save user information!\nUserID:${this.userInfo.userId} was not found!\nPlease try registering again.`,
-            'Try Again',
-            { duration: 20000, panelClass: ['mat-toolbar', 'mat-primary'], verticalPosition: "top" })
-          //window.location.reload();
+          alert(`Unable to save user information!\n
+          UserID:${this.userInfo.userId} was not found!\n
+          Please try registering again.`)
+          window.location.reload();
         }
         else {
           this.restErrorSvc.processPostError(err);
@@ -118,5 +122,15 @@ export class NewUserViewComponent {
 
   login(userCredential: UserCredential) {
     this.authService.login(userCredential);
+  }
+
+  canDeactivate(): boolean {
+    if (!this.registrationCompleted) {
+      let response = confirm("User registration is not complete. Do you still want to leave?")
+      return response;
+    }
+    else {
+      return true;
+    }
   }
 }

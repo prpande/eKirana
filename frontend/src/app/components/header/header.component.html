@@ -5,24 +5,32 @@
     <div class="">
         <div class="container  ">
             <div class="button-container d-inline-block ">
-                <button mat-mini-fab matTooltip="Home" routerLink="splash" class="">
+                <button mat-mini-fab matTooltip="Home" routerLink="" class="">
                     <mat-icon class="">home</mat-icon>
                 </button>
             </div>
             <div class="button-container d-inline-block ">
-                <button *ngIf="loggedIn!==true" mat-mini-fab matTooltip="login" routerLink="login"
-                    class="">
-                    <mat-icon>login</mat-icon>
+                <button mat-fab extended matTooltip="Log In" routerLink="login" *ngIf="loggedIn!=true"
+                    class="container-fluid" color="warn">
+                    <mat-icon class="p-0 m-0">power_settings_new</mat-icon>
+                    <p class="p-0 m-1">
+                        Log In
+                    </p>
                 </button>
-                <button *ngIf="loggedIn===true" mat-mini-fab matTooltip="logout" (click)="logout()"
-                    class="">
+                <button *ngIf="loggedIn==true" mat-mini-fab matTooltip="logout" (click)="logout()" class="">
                     <mat-icon>logout</mat-icon>
                 </button>
             </div>
-            <div class="button-container d-inline-block ">
-                <button *ngIf="loggedIn===true" mat-mini-fab matTooltip="Profile" routerLink="user-view"
-                    class="">
+            <div class="button-container d-inline-block">
+                <button mat-mini-fab matTooltip="Dashboard" routerLink="dashboard" *ngIf="loggedIn==true" class="">
                     <mat-icon class="">person</mat-icon>
+                </button>
+                <button mat-fab extended matTooltip="Register" routerLink="register" *ngIf="loggedIn!=true"
+                    class="container-fluid" color="warn">
+                    <mat-icon class="p-0 m-0">person_add</mat-icon>
+                    <p class="p-0 m-1">
+                        Register
+                    </p>
                 </button>
             </div>
         </div>

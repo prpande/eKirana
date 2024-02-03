@@ -26,6 +26,7 @@ export class AuthService {
 
   private _userCredential$ = new BehaviorSubject<UserCredentialData>({});
   private _userIdValidation$ = new BehaviorSubject<string | undefined>(undefined);
+  private _loggedInStatusStream$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private httpCLient: HttpClient, private restErrorSvc: RestErrorHandlerService, private logger: LoggerService) {
   }
@@ -34,6 +35,7 @@ export class AuthService {
   get UserJwt() { return this.userCredential$.value.jwt; }
   get userCredential$() { return this._userCredential$; }
   get userIdValidation$() { return this._userIdValidation$; }
+  get loggedInStatusStream$() { return this._loggedInStatusStream$; }
 
   get isLoggedIn(): boolean {
     return this.UserJwt != undefined;
@@ -59,8 +61,10 @@ export class AuthService {
             };
             this.logger.info(`Logged in: User:[${userCredential.userId}] UserType:[${userCredential.userType}]`);
             this.userCredential$.next(credentialData);
+            this._loggedInStatusStream$.next(true);
           },
           error: err => {
+            this._loggedInStatusStream$.next(false);
             this.logger.error(`Error logging in: User:[${userCredential.userId}] UserType:[${userCredential.userType}]`);
             let response = err as HttpErrorResponse;
             if (response.status == 401) {
@@ -77,6 +81,7 @@ export class AuthService {
   logout() {
     this.logger.info(`Log Out: User:[${this.UserCredentials?.userId}] UserType:[${this.UserCredentials?.userType}]`)
     this.userCredential$.next({});
+    this._loggedInStatusStream$.next(false);
   }
 
   checkUserId(userId: string) {
