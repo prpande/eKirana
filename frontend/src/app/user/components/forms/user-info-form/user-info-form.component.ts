@@ -19,7 +19,7 @@ export class UserInfoFormComponent implements OnInit {
   get firstName() { return this.userInfoGroup.get("firstName"); }
   get lastName() { return this.userInfoGroup.get("lastName"); }
   get email() { return this.userInfoGroup.get("email"); }
-  get phone() { return this.userInfoGroup.get("phone"); }
+  get phoneNumber() { return this.userInfoGroup.get("phoneNumber"); }
   get dateOfBirth() { return this.userInfoGroup.get("dateOfBirth"); }
   get panCardNumber() { return this.userInfoGroup.get("panCardNumber"); }
   get gstNumber() { return this.userInfoGroup.get("gstNumber"); }
@@ -36,7 +36,7 @@ export class UserInfoFormComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/^[789]\d{9,9}$/)]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^[789]\d{9,9}$/)]],
       dateOfBirth: ['', [Validators.required]],
       userType: [''],
       userId:['']
@@ -47,7 +47,7 @@ export class UserInfoFormComponent implements OnInit {
       this.firstName?.setValue(this.userInfo.firstName);
       this.lastName?.setValue(this.userInfo.lastName);
       this.email?.setValue(this.userInfo.email);
-      this.phone?.setValue(this.userInfo.phoneNumber);
+      this.phoneNumber?.setValue(this.userInfo.phoneNumber);
       this.dateOfBirth?.setValue(this.userInfo.dateOfBirth);
       this.userType?.setValue(this.userInfo.userType);
       this.userId?.setValue(this.userInfo.userId);

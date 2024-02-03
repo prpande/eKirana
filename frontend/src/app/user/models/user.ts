@@ -14,7 +14,7 @@ export class User {
     address?: Address;
     deliveryAddresses?: Address[];
     panCardNumber?: string;
-    gstIdNumber?: string;
+    gstNumber?: string;
     vehicleInfo?: Vehicle;
     alertList?: Alert[];
 

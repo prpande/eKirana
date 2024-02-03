@@ -31,7 +31,7 @@ export class IdFormComponent implements OnInit {
 
     if (this.userInfo.userId) {
       this.panCardNumber?.setValue(this.userInfo.panCardNumber);
-      this.gstNumber?.setValue(this.userInfo.gstIdNumber);
+      this.gstNumber?.setValue(this.userInfo.gstNumber);
     }
   }
 }

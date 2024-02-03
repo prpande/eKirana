@@ -1,1 +1,59 @@
-<p>dashboard-view works!</p>
+<p>{{content}}</p>
+<div class="container card m-4">
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template matTabLabel>
+                <mat-icon>person</mat-icon>
+                <p>Personal Information</p>
+            </ng-template>
+            <ng-template matTabContent>
+                <app-user-info-form [userInfo]="userInfo"></app-user-info-form>
+            </ng-template>
+        </mat-tab>
+        <mat-tab *ngIf="userInfo!.userType == 'CUSTOMER'">
+            <ng-template matTabLabel>
+                <mat-icon>person</mat-icon>
+                <p>Mailing Address Details</p>
+            </ng-template>
+            <ng-template matTabContent>
+                <app-address-form> [userInfo]="userInfo"</app-address-form>
+            </ng-template>
+        </mat-tab>
+        <mat-tab *ngIf="userInfo!.userType == 'CUSTOMER'">
+            <ng-template matTabLabel>
+                <mat-icon>person</mat-icon>
+                <p>Delivery Addresses</p>
+            </ng-template>
+            <ng-template matTabContent>
+
+            </ng-template>
+        </mat-tab>
+        <mat-tab *ngIf="userInfo!.userType == 'SELLER'">
+            <ng-template matTabLabel>
+                <mat-icon>person</mat-icon>
+                <p>Business Information</p>
+            </ng-template>
+            <ng-template matTabContent>
+                <app-address-form [address]="userInfo"></app-address-form>
+            </ng-template>
+        </mat-tab>
+        <mat-tab *ngIf="userInfo!.userType != 'CUSTOMER'">
+            <ng-template matTabLabel>
+                <mat-icon>person</mat-icon>
+                <p>Identification Information</p>
+            </ng-template>
+            <ng-template matTabContent>
+                <app-id-form [userInfo]="userInfo"></app-id-form>
+            </ng-template>
+        </mat-tab>
+        <mat-tab *ngIf="userInfo!.userType == 'CARRIER'">
+            <ng-template matTabLabel>
+                <mat-icon>person</mat-icon>
+                <p>Vehicle Information</p>
+            </ng-template>
+            <ng-template matTabContent>
+                <app-vehicle-info-form [userInfo]="userInfo"></app-vehicle-info-form>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>

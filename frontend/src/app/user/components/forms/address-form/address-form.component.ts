@@ -15,7 +15,7 @@ import { User } from 'src/app/user/models/user';
 export class AddressFormComponent implements OnInit {
 
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
-  
+
   mapZoom = 15;
   mapCenter!: google.maps.LatLng;
   mapOptions: google.maps.MapOptions = {
@@ -40,18 +40,24 @@ export class AddressFormComponent implements OnInit {
   states: string[];
 
   @Input()
-  userInfo!: User;
+  address!: Address;
 
   addressFormGroup!: FormGroup;
 
+  get addressId() { return this.addressFormGroup.get("addressId"); }
   get fullName() { return this.addressFormGroup.get("fullName"); }
   get line1() { return this.addressFormGroup.get("line1"); }
-  get phoneNumber() { return this.addressFormGroup.get("phoneNumber"); }
+  get line2() { return this.addressFormGroup.get("line2"); }
+  get landmark() { return this.addressFormGroup.get("landmark"); }
   get city() { return this.addressFormGroup.get("city"); }
   get state() { return this.addressFormGroup.get("state"); }
   get pinCode() { return this.addressFormGroup.get("pinCode"); }
   get latitude() { return this.addressFormGroup.get("latitude"); }
   get longitude() { return this.addressFormGroup.get("longitude"); }
+  get phoneNumber() { return this.addressFormGroup.get("phoneNumber"); }
+  get isDefault() { return this.addressFormGroup.get("fullName"); }
+  get instructions() { return this.addressFormGroup.get("fullName"); }
+  get displayImageUrl() { return this.addressFormGroup.get("fullName"); }
 
   constructor(private fb: FormBuilder, private idGenerator: IdGeneratorService, private statesService: IndiaStatesService) {
     this.states = statesService.States;
@@ -74,6 +80,23 @@ export class AddressFormComponent implements OnInit {
       instructions: [''],
       displayImageUrl: ['']
     });
+
+    if (this.address && this.address.addressId) {
+      this.addressId?.setValue(this.address.addressId);
+      this.fullName?.setValue(this.address.fullName);
+      this.line1?.setValue(this.address.line1);
+      this.line2?.setValue(this.address.line2);
+      this.landmark?.setValue(this.address.landmark);
+      this.city?.setValue(this.address.city);
+      this.state?.setValue(this.address.state);
+      this.pinCode?.setValue(this.address.pinCode);
+      this.latitude?.setValue(this.address.latitude);
+      this.longitude?.setValue(this.address.longitude);
+      this.phoneNumber?.setValue(this.address.phoneNumber);
+      this.isDefault?.setValue(this.address.isDefault);
+      this.instructions?.setValue(this.address.instructions);
+      this.displayImageUrl?.setValue(this.address.displayImageUrl);
+    }
   }
 
   getAddressObj(): Address {
@@ -81,29 +104,34 @@ export class AddressFormComponent implements OnInit {
   }
 
   doMapStuff() {
-    navigator.geolocation.getCurrentPosition(
-      (position: GeolocationPosition) => {
-        const point: google.maps.LatLngLiteral = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        
-        this.mapCenter = new google.maps.LatLng(point);
-        this.setMapMarker(point);
-      }, null, { enableHighAccuracy: true, }
-      );
-    }
-
-    mapClick(event:any){
-      if (event.latLng) {
-        this.setMapMarker(event.latLng);
+    const point: google.maps.LatLngLiteral = { lat:0, lng:0};
+    if (this.address.latitude != 0 || this.address.longitude != 0) {
+      point.lat = this.address!.latitude!;
+      point.lng = this.address!.longitude!;
+    } else {
+      navigator.geolocation.getCurrentPosition(
+        (position: GeolocationPosition) => {
+          point.lat = position.coords.latitude;
+          point.lng =  position.coords.longitude;
+        }, null, { enableHighAccuracy: true, }
+        );
       }
+      
+      this.mapCenter = new google.maps.LatLng(point);
+      this.setMapMarker(point);
     }
 
-    setMapMarker(data:any){
-      this.markerLatLng = new google.maps.LatLng(data);
-      this.latitude?.setValue(this.markerLatLng.lat());
-      this.longitude?.setValue(this.markerLatLng.lng());
-      this.markerInitialized = true;
+
+  mapClick(event: any) {
+    if (event.latLng) {
+      this.setMapMarker(event.latLng);
     }
   }
+
+  setMapMarker(data: any) {
+    this.markerLatLng = new google.maps.LatLng(data);
+    this.latitude?.setValue(this.markerLatLng.lat());
+    this.longitude?.setValue(this.markerLatLng.lng());
+    this.markerInitialized = true;
+  }
+}

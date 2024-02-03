@@ -24,7 +24,7 @@ public class User {
     private List<Address> deliveryAddresses; // list of delivery addresses for customer
 
     private String panCardNumber; // PAN card # for seller and carrier
-    private String gstIdNumber; // GST IN for seller
+    private String gstNumber; // GST IN for seller
 
     private Vehicle vehicleInfo; // details of carrier vehicle
 
@@ -33,7 +33,7 @@ public class User {
     public User() {
     }
 
-    public User(String userId, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, UserType userType, Address address, List<Address> deliveryAddresses, String panCardNumber, String gstIdNumber, Vehicle vehicleInfo, List<Alert> alertList) {
+    public User(String userId, String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, UserType userType, Address address, List<Address> deliveryAddresses, String panCardNumber, String gstNumber, Vehicle vehicleInfo, List<Alert> alertList) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,7 +44,7 @@ public class User {
         this.address = address;
         this.deliveryAddresses = deliveryAddresses;
         this.panCardNumber = panCardNumber;
-        this.gstIdNumber = gstIdNumber;
+        this.gstNumber = gstNumber;
         this.vehicleInfo = vehicleInfo;
         this.alertList = alertList;
     }
@@ -130,11 +130,11 @@ public class User {
     }
 
     public String getGstIdNumber() {
-        return gstIdNumber;
+        return gstNumber;
     }
 
-    public void setGstIdNumber(String gstIdNumber) {
-        this.gstIdNumber = gstIdNumber;
+    public void setGstIdNumber(String gstNumber) {
+        this.gstNumber = gstNumber;
     }
 
     public Vehicle getVehicleInfo() {
@@ -158,12 +158,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(dateOfBirth, user.dateOfBirth) && userType == user.userType && Objects.equals(address, user.address) && Objects.equals(deliveryAddresses, user.deliveryAddresses) && Objects.equals(panCardNumber, user.panCardNumber) && Objects.equals(gstIdNumber, user.gstIdNumber) && Objects.equals(vehicleInfo, user.vehicleInfo);
+        return Objects.equals(userId, user.userId) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(dateOfBirth, user.dateOfBirth) && userType == user.userType && Objects.equals(address, user.address) && Objects.equals(deliveryAddresses, user.deliveryAddresses) && Objects.equals(panCardNumber, user.panCardNumber) && Objects.equals(gstNumber, user.gstNumber) && Objects.equals(vehicleInfo, user.vehicleInfo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstName, lastName, email, phoneNumber, dateOfBirth, userType, address, deliveryAddresses, panCardNumber, gstIdNumber, vehicleInfo);
+        return Objects.hash(userId, firstName, lastName, email, phoneNumber, dateOfBirth, userType, address, deliveryAddresses, panCardNumber, gstNumber, vehicleInfo);
     }
 
     @Override
@@ -179,7 +179,7 @@ public class User {
                 ", address=" + address +
                 ", deliveryAddresses=" + deliveryAddresses +
                 ", panCardNumber='" + panCardNumber + '\'' +
-                ", gstIdNumber='" + gstIdNumber + '\'' +
+                ", gstNumber='" + gstNumber + '\'' +
                 ", vehicleInfo=" + vehicleInfo +
                 ", alertList=" + alertList +
                 '}';

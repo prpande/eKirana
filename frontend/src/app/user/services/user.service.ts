@@ -24,4 +24,8 @@ export class UserService {
   updateUser(user: User): Observable<User>{
     return this.httpClient.put<User>(UserRestEndpointsService.UPDATE_USER, user);
   }
+
+  getUser(): Observable<User>{
+    return this.httpClient.get<User>(UserRestEndpointsService.GET_USER_BY_ID);
+  }
 }
