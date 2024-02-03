@@ -29,6 +29,8 @@ export class AddressFormComponent implements OnInit {
     mapTypeControl: false,
     streetViewControl: false
   };
+
+  markerInitialized: boolean = false;
   markerLatLng!: google.maps.LatLng;
   markerOptions: google.maps.MarkerOptions = {
     draggable: false,
@@ -72,12 +74,6 @@ export class AddressFormComponent implements OnInit {
       instructions: [''],
       displayImageUrl: ['']
     });
-
-    this.markerLatLng = new google.maps.LatLng({
-      lat:0,
-      lng:0
-    });
-    
   }
 
   getAddressObj(): Address {
@@ -93,17 +89,21 @@ export class AddressFormComponent implements OnInit {
         };
         
         this.mapCenter = new google.maps.LatLng(point);
-        this.markerLatLng =  new google.maps.LatLng(point);
+        this.setMapMarker(point);
       }, null, { enableHighAccuracy: true, }
       );
     }
 
     mapClick(event:any){
       if (event.latLng) {
-        this.markerLatLng = new google.maps.LatLng(event.latLng);
-        this.latitude?.setValue(this.markerLatLng.lat());
-        this.longitude?.setValue(this.markerLatLng.lng());
+        this.setMapMarker(event.latLng);
       }
     }
 
+    setMapMarker(data:any){
+      this.markerLatLng = new google.maps.LatLng(data);
+      this.latitude?.setValue(this.markerLatLng.lat());
+      this.longitude?.setValue(this.markerLatLng.lng());
+      this.markerInitialized = true;
+    }
   }

@@ -68,7 +68,7 @@
     <div class="">
         <div class="">
             <google-map [zoom]="mapZoom" [center]="mapCenter" [options]="mapOptions" (mapInitialized)="doMapStuff()" (mapClick)="mapClick($event)">
-                <map-marker [position]="markerLatLng" [options]="markerOptions"></map-marker>
+                <map-marker *ngIf="markerInitialized" [position]="markerLatLng" [options]="markerOptions"></map-marker>
             </google-map>
         </div>
         <mat-form-field appearance="fill" id="latitude" class="mx-3">
