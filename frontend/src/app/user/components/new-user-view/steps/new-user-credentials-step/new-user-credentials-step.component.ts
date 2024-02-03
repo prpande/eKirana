@@ -45,8 +45,6 @@ export class NewUserCredentialsStepComponent implements AfterViewInit {
               this.userCredentialForm.markDone();
               this.logger.info(`User registered successfully: UserId:[${data.userId}] UserType:[${data.userType}]`)
               let savedCredentials: UserCredential = new UserCredential(data);
-              console.log(data);
-              console.log(savedCredentials);
               this.snackBar.open(`Successfully registered UserID: [${savedCredentials.userId}]`,
                 'OK',
                 { duration: 10000, panelClass: ['mat-toolbar', 'mat-warn'], verticalPosition: "top" })
