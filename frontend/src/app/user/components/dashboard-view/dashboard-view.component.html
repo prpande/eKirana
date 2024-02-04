@@ -2,22 +2,22 @@
     <mat-sidenav-container>
         <mat-sidenav opened="true" mode="side">
             <mat-nav-list *ngIf="userInfo && userInfo!.userType == 'CARRIER'">
-                <mat-list-item routerLink="">Deliveries</mat-list-item>
+                <mat-list-item routerLink="deliveries">Deliveries</mat-list-item>
             </mat-nav-list>
             <mat-nav-list *ngIf="userInfo && userInfo!.userType == 'CARRIER'">
-                <mat-list-item routerLink="">Update Location</mat-list-item>
+                <mat-list-item routerLink="location">Update Location</mat-list-item>
             </mat-nav-list>
             <mat-nav-list *ngIf="userInfo && userInfo!.userType == 'SELLER'">
                 <mat-list-item routerLink="">Products</mat-list-item>
             </mat-nav-list>
             <mat-nav-list>
-                <mat-list-item routerLink="">Information</mat-list-item>
+                <mat-list-item routerLink="information">Information</mat-list-item>
             </mat-nav-list>
             <mat-nav-list>
-                <mat-list-item routerLink="">Alerts</mat-list-item>
+                <mat-list-item routerLink="alerts">Alerts</mat-list-item>
             </mat-nav-list>
             <mat-nav-list>
-                <mat-list-item routerLink="">Orders</mat-list-item>
+                <mat-list-item routerLink="orders">Orders</mat-list-item>
             </mat-nav-list>
             <mat-nav-list>
                 <mat-list-item routerLink="">Security</mat-list-item>

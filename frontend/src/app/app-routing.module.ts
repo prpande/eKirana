@@ -9,6 +9,12 @@ import { NewUserViewComponent } from './user/components/new-user-view/new-user-v
 import { ShopViewComponent } from './shop/components/shop-view/shop-view.component';
 import { preventNavigationGuard } from './shared/guards/prevent-navigation.guard';
 import { UserDataResolver } from './user/components/dashboard-view/user-data-resolver';
+import { UserInfoTabComponent } from './user/components/dashboard-view/user-info-tab/user-info-tab.component';
+import { AlertsTabComponent } from './user/components/dashboard-view/alerts-tab/alerts-tab.component';
+import { DeliveriesTabComponent } from './user/components/dashboard-view/deliveries-tab/deliveries-tab.component';
+import { LocationTabComponent } from './user/components/dashboard-view/location-tab/location-tab.component';
+import { OrdersTabComponent } from './user/components/dashboard-view/orders-tab/orders-tab.component';
+import { ProductFormComponent } from './shop/components/product-form/product-form.component';
 
 const routes: Routes = [
   {
@@ -18,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: "home", 
-    component: SplashComponent
+    component: ProductFormComponent
   },
   {
     path: "login", 
@@ -30,7 +36,32 @@ const routes: Routes = [
     canActivate: [loginGuard],
     resolve: {
       userDataResolver: UserDataResolver
-    }
+    },
+    children: [{
+      path: "dashboard/information",
+      component: UserInfoTabComponent,
+      outlet: "dash-content"
+    },
+    {
+      path: "dashboard/alerts",
+      component: AlertsTabComponent,
+      outlet: "dash-content"
+    },
+    {
+      path: "dashboard/deliveries",
+      component: DeliveriesTabComponent,
+      outlet: "dash-content"
+    },
+    {
+      path: "dashboard/location",
+      component: LocationTabComponent,
+      outlet: "dash-content"
+    },
+    {
+      path: "dashboard/orders",
+      component: OrdersTabComponent,
+      outlet: "dash-content"
+    }]
   },
   {
     path: "shop/:id",

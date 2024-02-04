@@ -4,6 +4,7 @@ import { ShopViewComponent } from './components/shop-view/shop-view.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ShopCardComponent } from './components/shop-card/shop-card.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { ProductFormComponent } from './components/product-form/product-form.component';
 
 
 
@@ -12,7 +13,8 @@ import { ProductDetailsComponent } from './components/product-details/product-de
     ShopViewComponent,
     ProductCardComponent,
     ShopCardComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ProductFormComponent
   ],
   imports: [
     SharedModule

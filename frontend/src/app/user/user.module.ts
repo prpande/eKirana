@@ -17,6 +17,10 @@ import { UserCredentialsFormComponent } from './components/forms/user-credential
 import { UserInfoFormComponent } from './components/forms/user-info-form/user-info-form.component';
 import { VehicleInfoFormComponent } from './components/forms/vehicle-info-form/vehicle-info-form.component';
 import { UserInfoTabComponent } from './components/dashboard-view/user-info-tab/user-info-tab.component';
+import { DeliveriesTabComponent } from './components/dashboard-view/deliveries-tab/deliveries-tab.component';
+import { LocationTabComponent } from './components/dashboard-view/location-tab/location-tab.component';
+import { AlertsTabComponent } from './components/dashboard-view/alerts-tab/alerts-tab.component';
+import { OrdersTabComponent } from './components/dashboard-view/orders-tab/orders-tab.component';
 
 
 
@@ -38,7 +42,11 @@ import { UserInfoTabComponent } from './components/dashboard-view/user-info-tab/
     NewUserCredentialsStepComponent,
     UserCredentialsFormComponent,
     NewUserIdentificationStepComponent,
-    UserInfoTabComponent
+    UserInfoTabComponent,
+    DeliveriesTabComponent,
+    LocationTabComponent,
+    AlertsTabComponent,
+    OrdersTabComponent
   ],
   imports: [
     SharedModule

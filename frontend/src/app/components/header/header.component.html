@@ -3,7 +3,16 @@
         <div class="d-inline-block h1">{{title}}</div>
     </div>
     <div class="">
-        <div class="container  ">
+        <div class="container">
+            <div *ngIf="loggedIn==true && userType=='SELLER'" class="button-container d-inline-block">
+                <button mat-fab extended matTooltip="Store Front" routerLink="shop"
+                    color="warn">
+                    <mat-icon class="p-0 m-0">store</mat-icon>
+                    <p class="p-0 m-1">
+                        Store Front
+                    </p>
+                </button>
+            </div>
             <div class="button-container d-inline-block ">
                 <button mat-mini-fab matTooltip="Home" routerLink="" class="">
                     <mat-icon class="">home</mat-icon>

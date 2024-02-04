@@ -9,5 +9,6 @@ export enum UserType {
     CUSTOMER = "CUSTOMER",
     CARRIER = "CARRIER",
     ADMIN = "ADMIN",
-    SYSTEM = "SYSTEM"
+    SYSTEM = "SYSTEM",
+    PUBLIC="PUBLIC"
 }

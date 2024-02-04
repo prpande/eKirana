@@ -4,7 +4,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SharedModule } from './shared/shared.module';
-import { UserModule } from './user/user.module';
 import { CartModule } from './cart/cart.module';
 import { ShopModule } from './shop/shop.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -15,6 +14,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './user/services/auth-interceptor.service';
 import { RouterService } from './shared/services/router.service';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
