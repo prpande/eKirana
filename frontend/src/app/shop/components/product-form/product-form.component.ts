@@ -38,8 +38,8 @@ export class ProductFormComponent implements OnInit{
       description: ['', [Validators.required]],
       category: ['', [Validators.required]],
       imageUrl: ['', [Validators.required]],
-      available: ['', [Validators.required]],
-      quantity: ['', [Validators.required]],
+      available: ['false', [Validators.required]],
+      quantity: [0, [Validators.required]],
       sellerId: ['', [Validators.required]],
     })
 
@@ -57,4 +57,11 @@ export class ProductFormComponent implements OnInit{
     }
   }
 
+  isQuantityValid(){
+    if( this.quantity && this.quantity?.value > 0){
+      return true;
+    }
+
+    return false;
+  }
 }
