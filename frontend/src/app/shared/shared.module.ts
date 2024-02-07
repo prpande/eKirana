@@ -22,6 +22,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -31,27 +33,7 @@ import { MatListModule } from '@angular/material/list';
     AppRoutingModule,
     BrowserAnimationsModule,
     CommonModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatRippleModule,
-    MatCardModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatSelectModule,
-    MatInputModule,
-    MatStepperModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    GoogleMapsModule,
-    MatTabsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSidenavModule,
-    MatListModule
+    MatDialogModule
   ],
   exports: [
     BrowserModule,
@@ -78,7 +60,9 @@ import { MatListModule } from '@angular/material/list';
     MatTableModule,
     MatPaginatorModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatRadioModule,
+    MatDialogModule
   ],
 })
 export class SharedModule { }

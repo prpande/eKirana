@@ -60,11 +60,11 @@ public class ProductController {
     }
 
     @GetMapping(GET_ALL_PRODUCT_BY_SELLER_ID)
-    public ResponseEntity<?> getAllProductBySellerId(HttpServletRequest request) {
+    public ResponseEntity<?> getAllProductBySellerId(@PathVariable String sellerId, HttpServletRequest request) {
         try {
             String userId = JwtFilter.getUserIdFromRequest(request);
-            logger.info("[getAllProductBySellerId]: User:[{}]", userId);
-            responseEntity = new ResponseEntity<>(productService.getAllProductBySellerId(userId), HttpStatus.OK);
+            logger.info("[getAllProductBySellerId]: Requesting User:[{}] Seller Id:[{}]", userId, sellerId);
+            responseEntity = new ResponseEntity<>(productService.getAllProductBySellerId(sellerId), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("[getAllProductBySellerId]: Error", ex);
             throw ex;

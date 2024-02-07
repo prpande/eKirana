@@ -1,1 +1,37 @@
-<p>product-card works!</p>
+<mat-card>
+    <mat-card-content class="container-fluid">
+        <div class="d-inline-block">
+            <img mat-card-image src="{{product.imageUrl}}" alt="{{product.imageUrl}}">
+        </div>
+        <div class="d-inline-block">
+            <mat-card-title>
+                {{product.name}}
+            </mat-card-title>
+            <mat-card-subtitle class="container justify-content-evenly">
+                <p class="d-inline-block">
+                    &#8377; {{product.price}}
+                </p>
+                <p class="d-inline-block">Stock: {{product.quantity}}</p>
+            </mat-card-subtitle>
+            <p>{{product.description}}</p>
+            <p>{{product.specifications}}</p>
+        </div>
+        <div class="d-inline-block">
+            <mat-card-actions>
+                <div class="" *ngIf="isUserSeller()">
+                    <button mat-button color="primary" (click)="updateProduct()">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-button color="primary" (click)="deleteProduct()">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+                <div class="" *ngIf="!isUserSeller()">
+                    <button mat-button color="primary" (click)="addProductToCart()">
+                        <mat-icon>add_shopping_cart</mat-icon>
+                    </button>
+                </div>
+            </mat-card-actions>
+        </div>
+    </mat-card-content>
+</mat-card>

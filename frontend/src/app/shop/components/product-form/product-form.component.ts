@@ -43,7 +43,7 @@ export class ProductFormComponent implements OnInit{
       sellerId: ['', [Validators.required]],
     })
 
-    if(this.product.productId){
+    if(this.product && this.product.productId){
       this.productId?.setValue(this.product.productId);
       this.name?.setValue(this.product.name);
       this.price?.setValue(this.product.price);

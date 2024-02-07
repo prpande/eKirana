@@ -15,6 +15,7 @@ import { AuthInterceptorService } from './user/services/auth-interceptor.service
 import { RouterService } from './shared/services/router.service';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { UserModule } from './user/user.module';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,15 @@ import { UserModule } from './user/user.module';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
-    }
+    },
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
+    {
+      provide: MAT_DIALOG_DATA,
+      useValue: {}
+    },
   ],
   bootstrap: [AppComponent]
 })

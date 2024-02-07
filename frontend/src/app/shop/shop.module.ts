@@ -5,6 +5,7 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { ShopCardComponent } from './components/shop-card/shop-card.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { ProductFormComponent } from './components/product-form/product-form.component';
+import { EditProductDialogComponent } from './components/edit-product-dialog/edit-product-dialog.component';
 
 
 
@@ -14,7 +15,8 @@ import { ProductFormComponent } from './components/product-form/product-form.com
     ProductCardComponent,
     ShopCardComponent,
     ProductDetailsComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    EditProductDialogComponent
   ],
   imports: [
     SharedModule

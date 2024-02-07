@@ -7,6 +7,8 @@ import java.util.Objects;
 public class Address {
     @Id
     private String addressId;
+
+    private String userId;
     private String fullName;
     private String line1;
     private String line2;
@@ -26,6 +28,7 @@ public class Address {
     }
 
     public Address(String addressId,
+                   String userId,
                    String fullName,
                    String line1,
                    String line2,
@@ -40,6 +43,7 @@ public class Address {
                    String instructions,
                    String displayImageUrl) {
         this.addressId = addressId;
+        this.userId = userId;
         this.fullName = fullName;
         this.line1 = line1;
         this.line2 = line2;
@@ -139,6 +143,14 @@ public class Address {
         return pinCode;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public void setPinCode(int pinCode) {
         this.pinCode = pinCode;
     }
@@ -184,6 +196,7 @@ public class Address {
     public String toString() {
         return "Address{" +
                 "addressId='" + addressId + '\'' +
+                ", userId='" + userId + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", line1='" + line1 + '\'' +
                 ", line2='" + line2 + '\'' +

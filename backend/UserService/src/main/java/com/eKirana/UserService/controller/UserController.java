@@ -78,6 +78,21 @@ public class UserController {
         return responseEntity;
     }
 
+    @GetMapping(GET_ANOTHER_USER_BY_ID)
+    public ResponseEntity<?> getAnotherUserById(@PathVariable String requestedUserId, HttpServletRequest httpServletRequest) throws UserNotFoundException {
+        try {
+            String userId = JwtFilter.getUserIdFromRequest(httpServletRequest);
+            UserType userType = JwtFilter.getUserTypeFromRequest(httpServletRequest);
+            logger.info("[getAnotherUserById]: Requesting User:[{}] UserType:[{}] Requested Id:[{}]", userId, userType, requestedUserId);
+            responseEntity = new ResponseEntity<>(userService.getUserById(requestedUserId), HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("[getAnotherUserById]: Error", ex);
+            throw ex;
+        }
+
+        return responseEntity;
+    }
+
     @GetMapping(GET_ALL_USERS)
     public ResponseEntity<?> getAllUsers() {
         try {

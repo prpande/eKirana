@@ -16,7 +16,7 @@ public class Product {
     private String specifications;
     private String description;
     private String category;
-    private List<String> imageUrl;
+    private String imageUrl;
     private boolean available;
 
     private int quantity; // reflect quantity in stock, also used as item quantity when placing orders
@@ -30,7 +30,7 @@ public class Product {
                    String specifications,
                    String description,
                    String category,
-                   List<String> imageUrl,
+                   String imageUrl,
                    boolean available,
                    int quantity,
                    String sellerId) {
@@ -94,11 +94,11 @@ public class Product {
         this.category = category;
     }
 
-    public List<String> getImageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(List<String> imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 

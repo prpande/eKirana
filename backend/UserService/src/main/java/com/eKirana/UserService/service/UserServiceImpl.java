@@ -29,6 +29,14 @@ public class UserServiceImpl implements IUserService{
             throw new UserAlreadyExistsException();
         }
 
+        Address address = userInfo.getAddress();
+        if(address == null)
+        {
+            address = new Address();
+        }
+
+        address.setUserId(userInfo.getUserId());
+        userInfo.setAddress(address);
         return userRepository.save(userInfo);
     }
 
@@ -62,6 +70,7 @@ public class UserServiceImpl implements IUserService{
         }
 
         if(newUserInfo.getAddress() != null){
+            newUserInfo.getAddress().setUserId(userId);
             user.setAddress(newUserInfo.getAddress());
         }
 
@@ -134,6 +143,7 @@ public class UserServiceImpl implements IUserService{
             }
         }
 
+        address.setUserId(userId);
         addressList.add(address);
         user.setDeliveryAddresses(addressList);
         return userRepository.save(user);
@@ -170,6 +180,7 @@ public class UserServiceImpl implements IUserService{
         }
 
         addressList.remove(foundAddress);
+        address.setUserId(userId);
         addressList.add(address);
         user.setDeliveryAddresses(addressList);
 

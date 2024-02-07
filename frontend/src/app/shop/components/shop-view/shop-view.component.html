@@ -1,1 +1,24 @@
-<p>shop-view works!</p>
+<div class="container">
+    <div class="">
+        <mat-card>
+            <mat-card-content>
+            <img src="{{shopInfo.address?.displayImageUrl}}" alt=" {{shopInfo.address?.displayImageUrl}}">
+            <h2>{{shopInfo.address?.fullName}}</h2>
+                <mat-card-subtitle>
+                    <p>{{shopInfo.address?.line1}}, {{shopInfo.address?.line2}}, {{shopInfo.address?.city}}, {{shopInfo.address?.phoneNumber}}</p>
+                </mat-card-subtitle>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="" *ngIf="userInfo.userType == 'SELLER'">
+        <button mat-raised-button color="accent" (click)="addProduct()">
+            <p>
+                <mat-icon>add</mat-icon>Product
+            </p>
+        </button>
+    </div>
+    <div class="">
+        <app-product-card *ngFor="let product of products" [product]="product" (productUpdatedEvent)="getProductsInShop()"></app-product-card>
+    </div>
+</div>
+

@@ -22,6 +22,7 @@ export class UserRestEndpointsService {
   public static readonly USER_ROOT: string = UserRestEndpointsService.USER_SERVICE_URL + "/api/user";
   public static readonly UPDATE_USER: string = UserRestEndpointsService.USER_ROOT + "/info";
   public static readonly GET_USER_BY_ID: string = UserRestEndpointsService.USER_ROOT + "/info";
+  public static readonly GET_ANOTHER_USER_BY_ID: string = UserRestEndpointsService.USER_ROOT + "/info/other";
   public static readonly GET_ALL_USERS: string = UserRestEndpointsService.USER_ROOT + "/infos";
   public static readonly GET_ALL_SHOPS: string = UserRestEndpointsService.USER_ROOT + "/shops";
   public static readonly ADD_USER_ADDRESS: string = UserRestEndpointsService.USER_ROOT + "/info/address";

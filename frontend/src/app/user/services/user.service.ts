@@ -25,7 +25,11 @@ export class UserService {
     return this.httpClient.put<User>(UserRestEndpointsService.UPDATE_USER, user);
   }
 
-  getUser(): Observable<User>{
+  getLoggedInUserInfo(): Observable<User>{
     return this.httpClient.get<User>(UserRestEndpointsService.GET_USER_BY_ID);
+  }
+
+  getOtherUserInfo(userId: string): Observable<User>{
+    return this.httpClient.get<User>(UserRestEndpointsService.GET_ANOTHER_USER_BY_ID + `/${userId}`);
   }
 }

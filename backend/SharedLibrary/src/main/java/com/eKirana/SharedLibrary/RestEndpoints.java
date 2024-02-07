@@ -16,6 +16,7 @@ public class RestEndpoints {
     public static final String CREATE_USER = "/info";
     public static final String UPDATE_USER = "/info";
     public static final String GET_USER_BY_ID = "/info";
+    public static final String GET_ANOTHER_USER_BY_ID = "/info/other/{requestedUserId}";
     public static final String GET_ALL_USERS = "/infos";
     public static final String GET_ALL_SHOPS = "/shops";
     public static final String ADD_USER_ADDRESS = "/info/address";
@@ -30,7 +31,7 @@ public class RestEndpoints {
     public static final String PRODUCT_ROOT = "/api/product";
     public static final String SAVE_PRODUCT = "";
     public static final String GET_PRODUCT_BY_ID = "/{productId}";
-    public static final String GET_ALL_PRODUCT_BY_SELLER_ID = "/seller";
+    public static final String GET_ALL_PRODUCT_BY_SELLER_ID = "/seller/{sellerId}";
     public static final String GET_ALL_PRODUCTS = "/products";
     public static final String UPDATE_PRODUCT = "/{productId}";
     public static final String UPDATE_PRODUCT_QUANTITY = "/{productId}/quantity";

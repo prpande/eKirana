@@ -7,7 +7,7 @@ import { UserRestEndpointsService } from './user-rest-endpoints.service';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 import { BehaviorSubject, Observable, Subscription, catchError } from 'rxjs';
 
-export type UserCredentialData = {
+export type LoggedInCredentialData = {
   credentials?: UserCredential;
   jwt?: string;
 }
@@ -17,6 +17,12 @@ export type UserCredentialData = {
 })
 export class AuthService {
 
+  PublicCredentials: UserCredential = new UserCredential({
+    userId: "c139c5ce-4ab3-4bc3-81b7-c2256390e0cc",
+    userType: UserType.PUBLIC,
+    password: ''
+  });
+
   SystemCredentials: UserCredential = new UserCredential({
     userId: "1cee9bc9-502d-4fdc-ad0b-960636546fce",
     userType: UserType.SYSTEM,
@@ -24,16 +30,23 @@ export class AuthService {
   });
   SystemToken: string = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxY2VlOWJjOS01MDJkLTRmZGMtYWQwYi05NjA2MzY1NDZmY2UiLCJ1c2VyVHlwZSI6IlNZU1RFTSIsInVzZXJJZCI6IjFjZWU5YmM5LTUwMmQtNGZkYy1hZDBiLTk2MDYzNjU0NmZjZSIsImlhdCI6MTcwNjUwOTg0OX0.7JVolbjedPcrfqMrdN9I002T6uiGpD0Tv-cew1dWgrY";
 
-  private _userCredential$ = new BehaviorSubject<UserCredentialData>({});
+  private _loggedInCredential$ = new BehaviorSubject<LoggedInCredentialData>({});
   private _userIdValidation$ = new BehaviorSubject<string | undefined>(undefined);
   private _loggedInStatusStream$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private httpCLient: HttpClient, private restErrorSvc: RestErrorHandlerService, private logger: LoggerService) {
+
   }
 
-  get UserCredentials() { return this.userCredential$.value.credentials; }
+  get UserCredentials(): UserCredential {
+    if (this.isLoggedIn && this.userCredential$.value.credentials) {
+      return this.userCredential$.value.credentials;
+    } else {
+      return this.PublicCredentials;
+    }
+  }
   get UserJwt() { return this.userCredential$.value.jwt; }
-  get userCredential$() { return this._userCredential$; }
+  get userCredential$() { return this._loggedInCredential$; }
   get userIdValidation$() { return this._userIdValidation$; }
   get loggedInStatusStream$() { return this._loggedInStatusStream$; }
 
@@ -42,7 +55,7 @@ export class AuthService {
   }
 
   private refreshUserCredentialSubject() {
-    this._userCredential$ = new BehaviorSubject<UserCredentialData>({});
+    this._loggedInCredential$ = new BehaviorSubject<LoggedInCredentialData>({});
   }
 
   private refreshUserIdValidationSubject() {
@@ -55,7 +68,7 @@ export class AuthService {
       .subscribe(
         {
           next: data => {
-            let credentialData: UserCredentialData = {
+            let credentialData: LoggedInCredentialData = {
               credentials: userCredential,
               jwt: data
             };

@@ -1,5 +1,6 @@
 export class Address {
     addressId?: string;
+    userId?: string;
     fullName?: string;
     line1?: string;
     line2?: string;

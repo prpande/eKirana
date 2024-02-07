@@ -13,7 +13,7 @@ export class ProductRestEndpointsService {
   public static readonly GET_PRODUCT_BY_ID: string = ProductRestEndpointsService.PRODUCT_ROOT + "/{productId}";
   public static readonly GET_ALL_PRODUCT_BY_SELLER_ID: string = ProductRestEndpointsService.PRODUCT_ROOT + "/seller";
   public static readonly GET_ALL_PRODUCTS: string = ProductRestEndpointsService.PRODUCT_ROOT + "/products";
-  public static readonly UPDATE_PRODUCT: string = ProductRestEndpointsService.PRODUCT_ROOT + "/{productId}";
+  public static readonly UPDATE_PRODUCT: string = ProductRestEndpointsService.PRODUCT_ROOT;
   public static readonly UPDATE_PRODUCT_QUANTITY: string = ProductRestEndpointsService.PRODUCT_ROOT + "/{productId}/quantity";
   public static readonly REMOVE_PRODUCT: string = ProductRestEndpointsService.PRODUCT_ROOT + "/{productId}";
   public static readonly ENABLE_PRODUCT: string = ProductRestEndpointsService.PRODUCT_ROOT + "/{productId}/enable";

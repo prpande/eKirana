@@ -6,5 +6,5 @@ import { UserService } from "../../services/user.service";
 export const UserDataResolver: ResolveFn<any> =
     (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> => {
         const userService = inject(UserService);
-        return userService.getUser();
+        return userService.getLoggedInUserInfo();
     }

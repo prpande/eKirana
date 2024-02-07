@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterService } from 'src/app/shared/services/router.service';
+import { UserCredential } from 'src/app/user/models/userCredential';
 import { UserType } from 'src/app/user/models/userType';
 import { AuthService } from 'src/app/user/services/auth.service';
 
@@ -11,21 +12,22 @@ import { AuthService } from 'src/app/user/services/auth.service';
 export class HeaderComponent {
   title: string;
   loggedIn: boolean = false;
-  userType: UserType = UserType.PUBLIC;
+  userCredentials: UserCredential;
 
   constructor(private routerService: RouterService, private authService: AuthService) {
     this.title = "e-Kirana";
+    this.userCredentials = authService.UserCredentials;
     authService.loggedInStatusStream$.subscribe({
       next: (data) => {
         this.loggedIn = data;
-        this.userType = authService.UserCredentials?.userType!;
+        this.userCredentials = authService.UserCredentials;
       }
     })
   }
 
   logout() {
     this.loggedIn = false;
-    this.userType = UserType.PUBLIC;
+    this.userCredentials = this.authService.UserCredentials;
     this.authService.logout();
     this.routerService.goToLogin();
   }

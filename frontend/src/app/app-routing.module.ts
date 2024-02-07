@@ -15,6 +15,9 @@ import { DeliveriesTabComponent } from './user/components/dashboard-view/deliver
 import { LocationTabComponent } from './user/components/dashboard-view/location-tab/location-tab.component';
 import { OrdersTabComponent } from './user/components/dashboard-view/orders-tab/orders-tab.component';
 import { ProductFormComponent } from './shop/components/product-form/product-form.component';
+import { EditProductDialogComponent } from './shop/components/edit-product-dialog/edit-product-dialog.component';
+import { ProductCardComponent } from './shop/components/product-card/product-card.component';
+import { preventRegistrationGuard } from './shared/guards/prevent-registration.guard';
 
 const routes: Routes = [
   {
@@ -24,11 +27,12 @@ const routes: Routes = [
   },
   {
     path: "home", 
-    component: ProductFormComponent
+    component: SplashComponent
   },
   {
     path: "login", 
-    component: LoginViewComponent
+    component: LoginViewComponent,
+    canActivate: [preventRegistrationGuard]
   },
   {
     path: "dashboard",
@@ -64,12 +68,14 @@ const routes: Routes = [
     }]
   },
   {
-    path: "shop/:id",
-    component: ShopViewComponent
+    path: "shop/:shopId",
+    component: ShopViewComponent,
+    canActivate: [loginGuard]
   },
   {
     path: "register",
     component: NewUserViewComponent,
+    canActivate: [preventRegistrationGuard],
     canDeactivate: [preventNavigationGuard]
   },
   {
