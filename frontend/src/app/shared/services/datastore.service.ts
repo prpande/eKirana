@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import  *  as CryptoJS from  'crypto-js';
+import *  as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +16,19 @@ export class DatastoreService {
     return CryptoJS.AES.decrypt(txtToDecrypt, this.key).toString(CryptoJS.enc.Utf8);
   }
 
-  saveData(key: string, value: any){
+  saveData(key: string, value: any) {
+    console.log(value);
     let dataStr = JSON.stringify(value);
     let encDataStr = this.encrypt(dataStr);
     localStorage.setItem(key, encDataStr);
   }
 
-  getData<T>(key:string): T | undefined{
+  getData<T>(key: string): T | undefined {
     let encDataStr = localStorage.getItem(key);
-    if(encDataStr)
-    {
+    if (encDataStr) {
       let dataStr = this.decrypt(encDataStr);
       let value = JSON.parse(dataStr) as T
+      console.log(value);
       return value;
     }
 
@@ -35,7 +36,8 @@ export class DatastoreService {
     return undefined;
   }
 
-  removeData(key: string){
+  removeData(key: string) {
+    localStorage.setItem(key, "");
     localStorage.removeItem(key);
   }
 }
