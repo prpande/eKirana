@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
+import { CartService } from 'src/app/cart/services/cart.service';
 import { RouterService } from 'src/app/shared/services/router.service';
 import { UserCredential } from 'src/app/user/models/userCredential';
 import { UserType } from 'src/app/user/models/userType';
@@ -10,11 +12,17 @@ import { AuthService } from 'src/app/user/services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+
+  @Input()
+  cartDrawer!: MatDrawer;
+
   title: string;
   loggedIn: boolean = false;
   userCredentials: UserCredential;
 
-  constructor(private routerService: RouterService, private authService: AuthService) {
+  constructor(private routerService: RouterService,
+    private authService: AuthService,
+    private cartService: CartService) {
     this.title = "e-Kirana";
     this.userCredentials = authService.UserCredentials;
     authService.loggedInStatusStream$.subscribe({
@@ -23,6 +31,14 @@ export class HeaderComponent {
         this.userCredentials = authService.UserCredentials;
       }
     })
+  }
+
+  toggleCartDrawer() {
+    this.cartDrawer.toggle();
+  }
+
+  getCartCount() : number{
+    return this.cartService.getCount();
   }
 
   logout() {

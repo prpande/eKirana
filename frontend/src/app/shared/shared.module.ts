@@ -24,6 +24,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSidenavModule,
     MatListModule,
     MatRadioModule,
-    MatDialogModule
+    MatDialogModule,
+    MatBadgeModule
   ],
 })
 export class SharedModule { }

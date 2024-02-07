@@ -7,6 +7,7 @@ import { EditProductDialogComponent } from '../edit-product-dialog/edit-product-
 import { ProductService } from '../../services/product.service';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
+import { CartService } from 'src/app/cart/services/cart.service';
 
 @Component({
   selector: 'app-product-card',
@@ -25,7 +26,8 @@ export class ProductCardComponent {
     private authService: AuthService,
     private productService: ProductService,
     private logger: LoggerService,
-    private restErrorSvc: RestErrorHandlerService) {
+    private restErrorSvc: RestErrorHandlerService,
+    private cartService: CartService) {
     this.product = new Product();
   }
 
@@ -42,7 +44,7 @@ export class ProductCardComponent {
   isCustomer(): boolean{
     return (this.authService.UserCredentials.userType == UserType.CUSTOMER)
   }
-  
+
   updateProduct() {
     const dialogRef = this.productDialog.open(EditProductDialogComponent, {
       data: {
@@ -78,5 +80,7 @@ export class ProductCardComponent {
     })
   }
 
-  addProductToCart() { }
+  addProductToCart() { 
+    this.cartService.addToCart(this.product);
+  }
 }

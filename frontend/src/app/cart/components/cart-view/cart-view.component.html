@@ -1,1 +1,13 @@
-<p>cart-view works!</p>
+<div class="container">
+    <div class="h4 my-5 py-5 text-center" *ngIf="cartCount == 0">No items added to the cart</div>
+    <div class="" *ngIf="cartCount != 0">
+        <div class="h3 text-center" >Cart ({{cartCount}} Items)</div>
+        <div class="">
+            <app-cart-item *ngFor="let item of cartItems" [item]="item"></app-cart-item>
+        </div>
+        <mat-divider class="border-1"></mat-divider>
+        <div class="h4 text-center">
+            Total: &#8377; {{cartTotal}}
+        </div>
+    </div>
+</div>

@@ -14,6 +14,9 @@ import { CartTotalComponent } from './components/cart-total/cart-total.component
   ],
   imports: [
     SharedModule
+  ],
+  exports: [
+    CartViewComponent
   ]
 })
 export class CartModule { }

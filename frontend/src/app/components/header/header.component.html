@@ -44,7 +44,9 @@
             </div>
             <div *ngIf="loggedIn==true && userCredentials.userType =='CUSTOMER'"
                 class="button-container d-inline-block">
-                <button mat-fab extended matTooltip="Cart" color="warn">
+                <button mat-fab extended matTooltip="Cart" color="warn" (click)="toggleCartDrawer()"
+                    [matBadge]="getCartCount()" matBadgePosition="after" matBadgeColor="primary" matBadgeSize="large"
+                    [matBadgeHidden]="getCartCount()==0">
                     <mat-icon class="p-0 m-0">shopping_cart</mat-icon>
                     <p class="p-0 m-1">
                         Cart
