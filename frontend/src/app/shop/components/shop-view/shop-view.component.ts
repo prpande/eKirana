@@ -89,19 +89,29 @@ export class ShopViewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(info => {
-      console.log(info);
-      this.productService.createProduct(info).subscribe({
-        next: savedProduct => {
-          if (savedProduct) {
-            console.log(savedProduct);
-            this.logger.info(`Saved product:[${savedProduct.productId}]`);
-            this.products.push(savedProduct);
+      if (info) {
+        this.productService.createProduct(info).subscribe({
+          next: savedProduct => {
+            if (savedProduct) {
+              console.log(savedProduct);
+              this.logger.info(`Saved product:[${savedProduct.productId}]`);
+              this.products.push(savedProduct);
+            }
+          },
+          error: err => {
+            this.restErrorSvc.processPostError(err);
           }
-        },
-        error: err => {
-          this.restErrorSvc.processPostError(err);
-        }
-      })
+        })
+      }
     })
+
+  }
+
+  isShopOwner(): boolean {
+    if (this.userInfo.userType == UserType.SELLER && this.shopInfo.userId === this.userInfo.userId) {
+      return true;
+    }
+
+    return false;
   }
 }

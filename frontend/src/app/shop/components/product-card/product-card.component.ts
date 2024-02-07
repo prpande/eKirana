@@ -30,10 +30,19 @@ export class ProductCardComponent {
   }
 
 
-  isUserSeller(): boolean {
-    return this.authService.UserCredentials.userType == UserType.SELLER
+  isShopOwner(): boolean{
+    if(this.authService.UserCredentials.userType == UserType.SELLER && this.product.sellerId === this.authService.UserCredentials.userId)
+    {
+      return true;
+    }
+
+    return false;
   }
 
+  isCustomer(): boolean{
+    return (this.authService.UserCredentials.userType == UserType.CUSTOMER)
+  }
+  
   updateProduct() {
     const dialogRef = this.productDialog.open(EditProductDialogComponent, {
       data: {
@@ -43,17 +52,17 @@ export class ProductCardComponent {
     });
 
     dialogRef.afterClosed().subscribe(info => {
-      console.log(info);
-      this.productService.updateProduct(this.product.productId!, info).subscribe({
-        next: savedProduct => {
-          console.log(savedProduct);
-          this.logger.info(`Saved product:[${savedProduct.productId}]`);
-          this.productUpdatedEvent.emit(true);
-        },
-        error: err => {
-          this.restErrorSvc.processPostError(err);
-        }
-      })
+      if (info) {
+        this.productService.updateProduct(this.product.productId!, info).subscribe({
+          next: savedProduct => {
+            this.logger.info(`Saved product:[${savedProduct.productId}]`);
+            this.productUpdatedEvent.emit(true);
+          },
+          error: err => {
+            this.restErrorSvc.processPostError(err);
+          }
+        })
+      }
     })
   }
 

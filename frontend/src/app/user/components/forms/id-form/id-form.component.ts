@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/user/models/user';
+import { UserType } from 'src/app/user/models/userType';
 
 @Component({
   selector: 'app-id-form',
@@ -32,6 +33,10 @@ export class IdFormComponent implements OnInit {
     if (this.userInfo.userId) {
       this.panCardNumber?.setValue(this.userInfo.panCardNumber);
       this.gstNumber?.setValue(this.userInfo.gstNumber);
+      if(this.userInfo.userType != UserType.SELLER){
+        this.gstNumber?.clearValidators();
+        this.gstNumber?.updateValueAndValidity();
+      }
     }
   }
 }

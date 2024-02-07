@@ -3,7 +3,7 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline" id="userId" class="d-block">
             <mat-label>UserId</mat-label>
-            <input matInput type="text" formControlName="userId" />
+            <input matInput type="text" formControlName="userId" (input)="forceLower()" autocomplete="off"/>
             <mat-error *ngIf="userId?.errors?.['required']">
                 UserId is required.
             </mat-error>

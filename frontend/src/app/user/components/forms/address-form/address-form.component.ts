@@ -16,7 +16,7 @@ export class AddressFormComponent implements OnInit {
 
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
 
-  mapZoom = 15;
+  mapZoom = 16;
   mapCenter: google.maps.LatLng = new google.maps.LatLng({lat:0,lng:0});
   mapOptions: google.maps.MapOptions = {
     zoomControl: true,

@@ -1,17 +1,15 @@
 <mat-card class="my-2">
-    <mat-card-content class="container ">
-        <div class="d-inline-block col-8 col-md-9 col-lg-10">
-            <div class="d-inline-block">
-                <img mat-card-image src="{{product.imageUrl}}" alt="{{product.imageUrl}}">
+    <mat-card-content class="d-flex flex-row">
+        <div class="d-inline-block">
+            <img src="{{product.imageUrl}}" alt="{{product.imageUrl}}">
+        </div>
+        <div class="d-inline-block me-auto">
+            <div class="h4">
+                {{product.name}}
             </div>
-            <mat-card-title>
-                <div class="h4">
-                    {{product.name}}
-                </div>
-            </mat-card-title>
-            <mat-card-subtitle class="">
+            <div class="">
                 <p>{{product.category}}</p>
-            </mat-card-subtitle>
+            </div>
             <div class="d-none d-md-block">
                 <p>{{product.description}}</p>
                 <p>{{product.specifications}}</p>
@@ -26,25 +24,23 @@
             <div class="">
                 <p class="">Stock: {{product.quantity}}</p>
             </div>
-            <mat-card-actions>
-                <div class="" *ngIf="isUserSeller()">
-                    <div class="button-container d-inline-block">
-                        <button mat-mini-fab color="primary" (click)="updateProduct()">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                    </div>
-                    <div class="button-container d-inline-block">
-                        <button mat-mini-fab color="primary" (click)="deleteProduct()">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="" *ngIf="!isUserSeller()">
-                    <button mat-button color="primary" (click)="addProductToCart()">
-                        <mat-icon>add_shopping_cart</mat-icon>
+            <div class="" *ngIf="isShopOwner()">
+                <div class="button-container d-inline-block">
+                    <button mat-mini-fab color="primary" (click)="updateProduct()">
+                        <mat-icon>edit</mat-icon>
                     </button>
                 </div>
-            </mat-card-actions>
+                <div class="button-container d-inline-block">
+                    <button mat-mini-fab color="primary" (click)="deleteProduct()">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="button-container align-self-center ps-5" *ngIf="isCustomer()">
+            <button mat-mini-fab color="primary" (click)="addProductToCart()">
+                <mat-icon>add_shopping_cart</mat-icon>
+            </button>
         </div>
     </mat-card-content>
 </mat-card>

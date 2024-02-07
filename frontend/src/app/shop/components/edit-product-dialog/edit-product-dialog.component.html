@@ -4,7 +4,7 @@
         <app-product-form [product]="dialogData.productInfo" #productForm></app-product-form>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button mat-raised-button color="primary" (click)="dialogRef.close()" cdkFocusInitial>Cancel</button>
+        <button mat-raised-button color="primary" (click)="dialogRef.close(undefined)" cdkFocusInitial>Cancel</button>
         <button mat-raised-button color="primary" (click)="submitFormData()">Save</button>
     </mat-dialog-actions>
 </div>

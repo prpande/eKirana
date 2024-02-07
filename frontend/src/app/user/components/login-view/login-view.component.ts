@@ -49,9 +49,12 @@ export class LoginViewComponent {
         this.loginForm.reset();
       }
     })
-
   }
 
+  forceLower() {
+    this.userId?.setValue((this.userId.value as string).toLowerCase());
+  }
+  
   toggleShowPassword() {
     this.showPassword = !this.showPassword;
   }
