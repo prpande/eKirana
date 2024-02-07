@@ -44,7 +44,6 @@ export class ShopViewComponent implements OnInit {
       let errorMsg = `Error fetching shop details for :[${id}]`;
       this.userService.getOtherUserInfo(id).subscribe({
         next: info => {
-          console.log(info)
           if (!info.userId) {
             this.handleRestErrorAndGoHome(errorMsg);
           }

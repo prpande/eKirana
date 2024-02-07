@@ -6,16 +6,22 @@ import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-hand
 import { UserRestEndpointsService } from './user-rest-endpoints.service';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 import { BehaviorSubject, Observable, Subscription, catchError } from 'rxjs';
+import { DatastoreService } from 'src/app/shared/services/datastore.service';
+import { GlobalConstants } from 'src/app/app.module';
 
 export type LoggedInCredentialData = {
   credentials?: UserCredential;
   jwt?: string;
+  timeStamp?: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  private dataStorCredKey = "eKiranaCreds";
+  private loginExpiryMilliSeconds = 1000 * 60 * 10;
 
   PublicCredentials: UserCredential = new UserCredential({
     userId: "c139c5ce-4ab3-4bc3-81b7-c2256390e0cc",
@@ -34,7 +40,10 @@ export class AuthService {
   private _userIdValidation$ = new BehaviorSubject<string | undefined>(undefined);
   private _loggedInStatusStream$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpCLient: HttpClient, private restErrorSvc: RestErrorHandlerService, private logger: LoggerService) {
+  constructor(private httpCLient: HttpClient,
+    private restErrorSvc: RestErrorHandlerService,
+    private logger: LoggerService,
+    private dataStore: DatastoreService) {
 
   }
 
@@ -46,12 +55,30 @@ export class AuthService {
     }
   }
   get UserJwt() { return this.userCredential$.value.jwt; }
+  get LogInTimeStamp() { return this.userCredential$.value.timeStamp; }
   get userCredential$() { return this._loggedInCredential$; }
   get userIdValidation$() { return this._userIdValidation$; }
   get loggedInStatusStream$() { return this._loggedInStatusStream$; }
 
   get isLoggedIn(): boolean {
-    return this.UserJwt != undefined;
+    if (this.UserJwt == undefined && !GlobalConstants.IS_TEST_ENV) {
+      let dataStoreData = this.dataStore.getData<LoggedInCredentialData>(this.dataStorCredKey);
+      if (dataStoreData && dataStoreData.timeStamp) {
+        if (Date.now() - Date.parse(dataStoreData.timeStamp) > this.loginExpiryMilliSeconds) {
+          this.userCredential$.next({});
+          this.loggedInStatusStream$.next(false);
+          return false;
+        }
+
+        this.userCredential$.next(dataStoreData);
+        this.loggedInStatusStream$.next(true);
+        return true;
+      }
+
+      return false;
+    }
+
+    return true;
   }
 
   private refreshUserCredentialSubject() {
@@ -70,9 +97,11 @@ export class AuthService {
           next: data => {
             let credentialData: LoggedInCredentialData = {
               credentials: userCredential,
-              jwt: data
+              jwt: data,
+              timeStamp: Date.now().toString()
             };
             this.logger.info(`Logged in: User:[${userCredential.userId}] UserType:[${userCredential.userType}]`);
+            this.dataStore.saveData(this.dataStorCredKey, credentialData);
             this.userCredential$.next(credentialData);
             this._loggedInStatusStream$.next(true);
           },
@@ -93,6 +122,7 @@ export class AuthService {
 
   logout() {
     this.logger.info(`Log Out: User:[${this.UserCredentials?.userId}] UserType:[${this.UserCredentials?.userType}]`)
+    this.dataStore.removeData(this.dataStorCredKey);
     this.userCredential$.next({});
     this._loggedInStatusStream$.next(false);
   }
