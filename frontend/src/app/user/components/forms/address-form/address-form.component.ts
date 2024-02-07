@@ -106,22 +106,24 @@ export class AddressFormComponent implements OnInit {
     return new Address(this.addressFormGroup.value);
   }
 
-  doMapStuff() {
+  setUpMap() {
     const point: google.maps.LatLngLiteral = { lat:0, lng:0};
-    if (this.address.latitude != 0 || this.address.longitude != 0) {
+    if (this.address && this.address.addressId) {
       point.lat = this.address!.latitude!;
       point.lng = this.address!.longitude!;
+      this.mapCenter = new google.maps.LatLng(point);
+      this.setMapMarker(point);
     } else {
       navigator.geolocation.getCurrentPosition(
         (position: GeolocationPosition) => {
           point.lat = position.coords.latitude;
           point.lng =  position.coords.longitude;
+          this.mapCenter = new google.maps.LatLng(point);
+          this.setMapMarker(point);
         }, null, { enableHighAccuracy: true, }
         );
       }
 
-      this.mapCenter = new google.maps.LatLng(point);
-      this.setMapMarker(point);
     }
 
 

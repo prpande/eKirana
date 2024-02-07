@@ -67,7 +67,7 @@
     </div>
     <div class="">
         <div class="">
-            <google-map [zoom]="mapZoom" [center]="mapCenter" [options]="mapOptions" (mapInitialized)="doMapStuff()" (mapClick)="mapClick($event)">
+            <google-map [zoom]="mapZoom" [center]="mapCenter" [options]="mapOptions" (mapInitialized)="setUpMap()" (mapClick)="mapClick($event)">
                 <map-marker *ngIf="markerInitialized" [position]="markerLatLng" [options]="markerOptions"></map-marker>
             </google-map>
         </div>

@@ -55,5 +55,5 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export class AppModule { }
 export const GlobalConstants = Object.freeze({
-  IS_TEST_ENV: false
+  IS_TEST_ENV: true
 });
