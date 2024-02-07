@@ -42,6 +42,15 @@
                     </p>
                 </button>
             </div>
+            <div *ngIf="loggedIn==true && userCredentials.userType =='CUSTOMER'"
+                class="button-container d-inline-block">
+                <button mat-fab extended matTooltip="Cart" color="warn">
+                    <mat-icon class="p-0 m-0">shopping_cart</mat-icon>
+                    <p class="p-0 m-1">
+                        Cart
+                    </p>
+                </button>
+            </div>
         </div>
     </div>
 </mat-toolbar>
