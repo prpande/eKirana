@@ -2,7 +2,7 @@ import { Product } from "../../shop/models/product";
 import { Address } from "../../user/models/address";
 import { OrderStatus } from "./orderStatus";
 
-export type Order = {
+export class Order {
     orderId?: string;
     orderedItems?: Product[];
     totalAmount?: number;
@@ -14,4 +14,12 @@ export type Order = {
     sellerId?: string;
     carrierId?: string;
     comments?: string;
+
+    constructor(init?: Partial<Order>){
+        this.setValues(init);
+    }
+
+    setValues(init?: Partial<Order>) {
+        Object.assign(this, init);
+    }
 }

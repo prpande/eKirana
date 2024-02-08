@@ -25,16 +25,42 @@ import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule } from '@angular/material/badge';
+import { QuantityFormComponent } from './components/quantity-form/quantity-form.component';
 
 @NgModule({
   declarations: [
+  
+    QuantityFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     CommonModule,
-    MatDialogModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatRippleModule,
+    MatCardModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatInputModule,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    GoogleMapsModule,
+    MatTabsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSidenavModule,
+    MatListModule,
+    MatRadioModule,
+    MatDialogModule,
+    MatBadgeModule,
   ],
   exports: [
     BrowserModule,
@@ -64,7 +90,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatListModule,
     MatRadioModule,
     MatDialogModule,
-    MatBadgeModule
+    MatBadgeModule,
+    QuantityFormComponent
   ],
 })
 export class SharedModule { }

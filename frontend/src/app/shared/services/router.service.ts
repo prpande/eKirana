@@ -23,4 +23,8 @@ export class RouterService {
   goToUserDash(){
     this.router.navigate(["dashboard"]);
   }
+
+  goToCheckOut(){
+    this.router.navigate(["checkout"]);
+  }
 }

@@ -18,6 +18,7 @@ import { ProductFormComponent } from './shop/components/product-form/product-for
 import { EditProductDialogComponent } from './shop/components/edit-product-dialog/edit-product-dialog.component';
 import { ProductCardComponent } from './shop/components/product-card/product-card.component';
 import { preventRegistrationGuard } from './shared/guards/prevent-registration.guard';
+import { CheckoutComponent } from './order/components/checkout/checkout.component';
 
 const routes: Routes = [
   {
@@ -70,6 +71,11 @@ const routes: Routes = [
   {
     path: "shop/:shopId",
     component: ShopViewComponent,
+    canActivate: [loginGuard]
+  },
+  {
+    path: "checkout",
+    component: CheckoutComponent,
     canActivate: [loginGuard]
   },
   {

@@ -16,6 +16,7 @@ import { RouterService } from './shared/services/router.service';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { UserModule } from './user/user.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { OrderModule } from './order/order.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
     UserModule,
     CartModule,
     ShopModule,
+    OrderModule,
     MatToolbarModule
   ],
   providers: [

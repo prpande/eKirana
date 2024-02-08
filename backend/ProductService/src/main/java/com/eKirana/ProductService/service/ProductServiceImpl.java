@@ -40,12 +40,7 @@ public class ProductServiceImpl implements IProductService{
             throw new ProductNotFoundException();
         }
 
-        Product product = optProduct.get();
-        if(!product.getSellerId().equals(userId) && !userId.equals(SYSTEM_USER_ID) ){
-            throw new UserIsNotOwnerException();
-        }
-
-        return product;
+        return optProduct.get();
     }
 
     @Override

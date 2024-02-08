@@ -1,0 +1,15 @@
+<form class="">
+    <div class="text-center">
+        <mat-form-field class="w-75">
+            <mat-label class="mx-auto">Quantity</mat-label>
+            <input type="number" matInput [formControl]="itemQuantityControl" (input)="checkQuantity()"
+                class="text-center">
+            <button mat-icon-button matPrefix (click)="decrementQuantity()">
+                <mat-icon color="primary">{{shouldDelete()? 'delete_forever' : 'remove_circle'}}</mat-icon>
+            </button>
+            <button mat-icon-button matSuffix (click)="incrementQuantity()" [disabled]="!shouldIncrement()" color="primary">
+                <mat-icon>add_circle</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+</form>

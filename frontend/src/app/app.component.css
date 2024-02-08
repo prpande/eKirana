@@ -2,3 +2,8 @@ mat-drawer{
     width: 15vw;
     min-width: 250px;
 }
+.splash-image{
+    background-size:auto; 
+    width:auto;
+    background-image: url("/assets/bg.png");
+}

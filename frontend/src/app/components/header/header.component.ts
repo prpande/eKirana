@@ -1,9 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { CartService } from 'src/app/cart/services/cart.service';
 import { RouterService } from 'src/app/shared/services/router.service';
 import { UserCredential } from 'src/app/user/models/userCredential';
-import { UserType } from 'src/app/user/models/userType';
 import { AuthService } from 'src/app/user/services/auth.service';
 
 @Component({
@@ -11,7 +10,7 @@ import { AuthService } from 'src/app/user/services/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
 
   @Input()
   cartDrawer!: MatDrawer;
@@ -29,6 +28,16 @@ export class HeaderComponent {
       next: (data) => {
         this.loggedIn = data;
         this.userCredentials = authService.UserCredentials;
+      }
+    })
+  }
+
+  ngOnInit(): void {
+    this.cartService.cart$.subscribe({
+      next: () => {
+        if(this.cartService.cartItems.length > 0){
+          this.cartDrawer.open();
+        }
       }
     })
   }

@@ -1,27 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CartService } from '../../services/cart.service';
-import { Product } from 'src/app/shop/models/product';
+import { CartItem } from '../../models/cart';
+import { RouterService } from 'src/app/shared/services/router.service';
 
 @Component({
   selector: 'app-cart-view',
   templateUrl: './cart-view.component.html',
   styleUrls: ['./cart-view.component.css']
 })
-export class CartViewComponent implements OnInit{
+export class CartViewComponent{
 
-  cartItems: Product[] = [];
+  cartItems: CartItem[] = [];
   cartTotal: number = 0;
   cartCount: number = 0;
-  constructor(private cartService: CartService){
+  constructor(private cartService: CartService, private routerService: RouterService){
     cartService.cart$.subscribe(items =>{
       if(items && items.length > 0){
-        this.cartItems = items;
+        this.cartItems = [...items];
       }
       this.cartTotal = cartService.getTotal();
       this.cartCount = cartService.getCount();
     })
   }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+
+  checkOut(){
+    this.routerService.goToCheckOut();
   }
 }

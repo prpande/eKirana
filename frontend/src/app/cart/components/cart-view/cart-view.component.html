@@ -1,13 +1,22 @@
 <div class="container">
     <div class="h4 my-5 py-5 text-center" *ngIf="cartCount == 0">No items added to the cart</div>
     <div class="" *ngIf="cartCount != 0">
-        <div class="h3 text-center" >Cart ({{cartCount}} Items)</div>
-        <div class="">
-            <app-cart-item *ngFor="let item of cartItems" [item]="item"></app-cart-item>
-        </div>
-        <mat-divider class="border-1"></mat-divider>
-        <div class="h4 text-center">
+        <div class="h3 text-center mt-3">Cart ({{cartCount}} Items)</div>
+        <mat-divider class="border-2"></mat-divider>
+        <div class="h5 text-center my-3">
             Total: &#8377; {{cartTotal}}
+        </div>
+        <mat-divider class="border-2"></mat-divider>
+        <div class="">
+            <app-cart-item *ngFor="let item of cartItems" [cartItem]="item"></app-cart-item>
+        </div>
+        <div class="button-container">
+            <button mat-fab extended matTooltip="Checkout" color="accent" (click)="checkOut()">
+                <mat-icon class="m-0">payment</mat-icon>
+                <p class="m-1 h5">
+                    Checkout
+                </p>
+            </button>
         </div>
     </div>
 </div>

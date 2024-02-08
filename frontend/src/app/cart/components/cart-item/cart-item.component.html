@@ -1,14 +1,8 @@
-<div class="card">
-    <div class="">
-        {{item.name}}
+<div class="card container mx-auto my-3 pt-2">
+    <div class="h5 text-center">
+        {{cartItem.item?.name}}
     </div>
     <div class="">
-        {{item.quantity}}
-    </div>
-    <div class="">
-        {{item.price}}
-    </div>
-    <div class="">
-        {{item.quantity! * item.price!}}
+        <app-quantity-form [cartItem]="cartItem"></app-quantity-form>
     </div>
 </div>

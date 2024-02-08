@@ -202,7 +202,8 @@ public class OrderServiceImpl implements IOrderService {
             throw new UserIsNotOwnerException();
         }
 
-        order.setComments(newComments);
+        String comments = order.getComments() + "; " + newComments;
+        order.setComments(comments);
         return orderRepository.save(order);
     }
 

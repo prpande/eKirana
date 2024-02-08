@@ -1,1 +1,6 @@
-<p>checkout works!</p>
+<div class="container card my-5 p-4">
+    <div class="card-title h3 text-center">Checkout</div>
+    <div class="d-flex flex-column">
+        <app-checkout-item-card *ngFor="let item of cart" [cartItem]="item"></app-checkout-item-card>
+    </div>
+</div>

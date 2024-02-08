@@ -10,16 +10,35 @@ export class OrderRestEndpointsService {
 
   public static readonly ORDER_ROOT: string = OrderRestEndpointsService.ORDER_SERVICE_URL + "/api/order";
   public static readonly PLACE_ORDER: string = OrderRestEndpointsService.ORDER_ROOT + "/";
-  public static readonly GET_ALL_ORDERS_BY_USER_ID: string = OrderRestEndpointsService.ORDER_ROOT + "/user/{userId}";
   public static readonly GET_ALL_ORDERS: string = OrderRestEndpointsService.ORDER_ROOT + "/orders";
   public static readonly GET_ORDERS_AVAILABLE_FOR_DELIVERY: string = OrderRestEndpointsService.ORDER_ROOT + "/delivery";
-  public static readonly GET_ORDER_BY_ID: string = OrderRestEndpointsService.ORDER_ROOT + "/{orderId}";
-  public static readonly CANCEL_ORDER: string = OrderRestEndpointsService.ORDER_ROOT + "/{orderId}";
-  public static readonly UPDATE_ORDER_STATUS: string = OrderRestEndpointsService.ORDER_ROOT + "/{orderId}/status";
-  public static readonly UPDATE_ORDER_CARRIER: string = OrderRestEndpointsService.ORDER_ROOT + "/{orderId}/carrier";
-  public static readonly UPDATE_ORDER_COMMENTS: string = OrderRestEndpointsService.ORDER_ROOT + "/{orderId}/comments";
-  public static readonly UPDATE_ORDER_DELIVERY_DATE: string = OrderRestEndpointsService.ORDER_ROOT + "/{orderId}/deliveryDate";
   public static readonly ORDER_SECURE_PATTERNS: string[] = [OrderRestEndpointsService.ORDER_ROOT + "/*"];
 
-  constructor() { }
+  static GET_ALL_ORDERS_BY_USER_ID(userId: string): string{
+    return `${OrderRestEndpointsService.ORDER_ROOT}/user/${userId}`
+  }
+
+  static GET_ORDER_BY_ID(orderId: string): string{
+    return `${OrderRestEndpointsService.ORDER_ROOT}/${orderId}`
+  }
+
+  static CANCEL_ORDER(orderId: string): string{
+    return `${OrderRestEndpointsService.ORDER_ROOT}/${orderId}`
+  }
+
+  static UPDATE_ORDER_STATUS(orderId: string): string{
+    return `${OrderRestEndpointsService.ORDER_ROOT}/${orderId}/status`
+  }
+
+  static UPDATE_ORDER_CARRIER(orderId: string): string{
+    return `${OrderRestEndpointsService.ORDER_ROOT}/${orderId}/carrier`
+  }
+
+  static UPDATE_ORDER_COMMENTS(orderId: string): string{
+    return `${OrderRestEndpointsService.ORDER_ROOT}/${orderId}/comments`
+  }
+
+  static UPDATE_ORDER_DELIVERY_DATE(orderId: string): string{
+    return `${OrderRestEndpointsService.ORDER_ROOT}/${orderId}/deliveryDate`
+  }
 }

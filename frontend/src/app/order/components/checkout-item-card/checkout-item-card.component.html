@@ -1,0 +1,23 @@
+<div class="">
+    <mat-card>
+        <mat-card-content>
+            <div class="d-flex flex-row">
+                <div class="">
+                    <img src="{{cartItem.item?.imageUrl}}" alt="{{cartItem.item?.imageUrl}}">
+                </div>
+                <div class="me-auto">
+                    <mat-card-title>
+                        <div class="">{{cartItem.item?.name}}</div>
+                    </mat-card-title>
+                    <mat-card-subtitle>Seller: {{cartItem.item?.sellerId}}</mat-card-subtitle>
+                </div>
+                <div class="">
+                    <app-quantity-form [cartItem]="cartItem"></app-quantity-form>
+                </div>
+                <div class="text-center w-25">
+                    &#8377; {{cartItem.item?.price! * cartItem.quantity!}}
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
