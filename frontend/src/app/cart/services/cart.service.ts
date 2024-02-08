@@ -46,8 +46,11 @@ export class CartService {
   incrementItem(productId: string) {
     let index = this.findProductId(productId);
     let items = this.cartItems;
-    items.at(index)!.quantity!++;
-    this.updateCart(items);
+    let cartItem = items.at(index);
+    if(cartItem?.quantity! < cartItem?.item?.quantity!){
+      items.at(index)!.quantity!++;
+      this.updateCart(items);
+    }
   }
 
   decrementItem(productId: string) {
@@ -62,9 +65,16 @@ export class CartService {
   }
 
   getTotal(): number {
-    return this.cartItems.reduce((total, item) => {
+    
+    let total = this.cartItems.reduce((total, item) => {
       return total + item.quantity! * item.item?.price!;
     }, 0);
+
+    let strArr = `${total}`.split('.')
+    let dec = Math.round(Number.parseFloat(`.${strArr[1]}`) * 100)
+    let totalFmt = Number.parseFloat(`${strArr[0]}.${dec}`)
+
+    return totalFmt;
   }
 
   getCount(): number {
@@ -73,5 +83,7 @@ export class CartService {
     }, 0);
   }
 
-  placeOrder() { }
+  clearCart(){
+    this.updateCart([]);
+  }
 }

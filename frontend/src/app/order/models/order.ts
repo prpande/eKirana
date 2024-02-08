@@ -15,11 +15,27 @@ export class Order {
     carrierId?: string;
     comments?: string;
 
-    constructor(init?: Partial<Order>){
+    constructor(init?: Partial<Order>) {
         this.setValues(init);
     }
 
     setValues(init?: Partial<Order>) {
         Object.assign(this, init);
+    }
+
+    getTotal(): number {
+        let bill = this.orderedItems?.reduce((total, item) => {
+            return total + item.quantity! * item.price!;
+        }, 0);
+
+        if (bill) {
+            return bill;
+        }
+
+        return 0;
+    }
+
+    setTotal(){
+        this.totalAmount = this.getTotal();
     }
 }

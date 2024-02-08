@@ -15,10 +15,10 @@ export class Address {
     instructions?: string;
     displayImageUrl?: string;
 
-    constructor(init?: Partial<Address>){
+    constructor(init?: Partial<Address>) {
         this.setValues(init);
     }
-    
+
     setValues(init?: Partial<Address>) {
         Object.assign(this, init);
     }

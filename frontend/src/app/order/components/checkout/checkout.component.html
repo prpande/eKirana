@@ -1,6 +1,41 @@
 <div class="container card my-5 p-4">
     <div class="card-title h3 text-center">Checkout</div>
-    <div class="d-flex flex-column">
-        <app-checkout-item-card *ngFor="let item of cart" [cartItem]="item"></app-checkout-item-card>
+    <mat-divider class="border-4 my-3"></mat-divider>
+    <div class="h4 text-center" *ngIf="isCartEmpty()">
+        Your cart is empty! No items to checkout.
+    </div>
+    <div *ngIf="!isCartEmpty()">
+        <app-address-selector></app-address-selector>
+        <mat-divider class="border-1 my-3"></mat-divider>
+        <div class="container card p-3">
+            <div class="h4 mb-3">Cart</div>
+            <div class="d-flex flex-column">
+                <app-checkout-item-card *ngFor="let item of cart" [cartItem]="item"></app-checkout-item-card>
+                <mat-divider class="border-1 my-3"></mat-divider>
+                <div class="">
+                    <mat-card-content>
+                        <div class="d-flex flex-row "> 
+                            <div class="h4 text-center w-25 ms-auto">
+                                Total:
+                            </div>
+                            <div class="h4 text-center total-items">
+                                {{cartCount}}
+                            </div>
+                            <div class="h4 text-center w-25">
+                                &#8377; {{cartTotal}}
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </div>
+            </div>
+        </div>
+        <div class="button-container mt-5">
+            <button mat-fab extended matTooltip="Checkout" color="warn" (click)="proceedToPayment()">
+                <mat-icon class="m-0">payment</mat-icon>
+                <p class="m-1 h5">
+                    Proceed To Payment
+                </p>
+            </button>
+        </div>
     </div>
 </div>

@@ -1,1 +1,24 @@
-<p>address-card works!</p>
+<div class="">
+    <mat-card>
+        <mat-card-content>
+            <div class="h6">
+                {{address.fullName}}
+            </div>
+            <div class="h6">
+                {{address.line1}}<span *ngIf="isLine2()">, {{address.line2}}</span>
+            </div>
+            <div class="h6" *ngIf="isLandmark()">
+                Landmark: {{address.landmark}}
+            </div>
+            <div class="h6">
+                {{address.city}} 
+            </div>
+            <div class="h6">
+                {{address.state}} - {{address.pinCode}}
+            </div>
+            <div class="h6 d-flex">
+                <mat-icon>phone</mat-icon> {{address.phoneNumber}}
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

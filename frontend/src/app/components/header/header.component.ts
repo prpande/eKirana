@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit{
   title: string;
   loggedIn: boolean = false;
   userCredentials: UserCredential;
+  canOpenCartDrawer: boolean = true;
 
   constructor(private routerService: RouterService,
     private authService: AuthService,
@@ -36,14 +37,22 @@ export class HeaderComponent implements OnInit{
     this.cartService.cart$.subscribe({
       next: () => {
         if(this.cartService.cartItems.length > 0){
-          this.cartDrawer.open();
+          if(this.canOpenCartDrawer){
+            this.cartDrawer.open();
+          }
         }
+      }
+    })
+    this.routerService.checkoutStarted.subscribe(isCheckout =>{
+      this.canOpenCartDrawer = !this.routerService.checkoutStarted.value;
+      if(!this.canOpenCartDrawer){
+        this.cartDrawer.close();
       }
     })
   }
 
   toggleCartDrawer() {
-    this.cartDrawer.toggle();
+      this.cartDrawer.toggle();
   }
 
   getCartCount() : number{

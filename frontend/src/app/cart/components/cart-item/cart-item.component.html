@@ -2,6 +2,9 @@
     <div class="h5 text-center">
         {{cartItem.item?.name}}
     </div>
+    <div class="h6 text-center">
+        &#8377; {{cartItem.item?.price!}}
+    </div>
     <div class="">
         <app-quantity-form [cartItem]="cartItem"></app-quantity-form>
     </div>

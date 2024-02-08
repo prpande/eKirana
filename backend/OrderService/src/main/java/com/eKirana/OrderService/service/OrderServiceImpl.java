@@ -49,9 +49,10 @@ public class OrderServiceImpl implements IOrderService {
         order.setSellerId(order.getOrderedItems().get(0).getSellerId());
         order.setCarrierId(null);
         order.setPlacedOn(new Date());
+        order.setStatus(OrderStatus.INITIALIZED);
         Order savedOrder = orderRepository.save(order);
         messagePublisher.publishOrder(savedOrder);
-        return systemUpdateOrderStatus(savedOrder.getOrderId(), OrderStatus.INITIALIZED);
+        return savedOrder;
     }
 
     @Override

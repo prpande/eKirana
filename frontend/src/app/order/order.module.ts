@@ -4,6 +4,8 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { SharedModule } from '../shared/shared.module';
 import { CheckoutItemCardComponent } from './components/checkout-item-card/checkout-item-card.component';
+import { AddressSelectorComponent } from './components/address-selector/address-selector.component';
+import { UserModule } from '../user/user.module';
 
 
 
@@ -12,10 +14,12 @@ import { CheckoutItemCardComponent } from './components/checkout-item-card/check
     OrderCardComponent,
     CheckoutComponent,
     PaymentComponent,
-    CheckoutItemCardComponent
+    CheckoutItemCardComponent,
+    AddressSelectorComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    UserModule
   ]
 })
 export class OrderModule { }
