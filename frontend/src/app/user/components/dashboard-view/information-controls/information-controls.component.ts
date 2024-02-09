@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { User } from 'src/app/user/models/user';
 
 @Component({
   selector: 'app-information-controls',
@@ -24,16 +25,19 @@ export class InformationControlsComponent {
     this.inEditMode = true;
     this.emitEditModeEvent();
   }
+  
   cancelClick() {
     this.inEditMode = false;
-    this.emitEditModeEvent();
     this.cancelClickedEvent.emit();
   }
+
   saveClick() {
     this.inEditMode = false;
-    this.formGroup.dirty;
-    this.emitEditModeEvent();
-    this.saveClickedEvent.emit()
+    if(this.formGroup.dirty){
+      this.saveClickedEvent.emit(this.formGroup.value);
+    } else {
+      this.cancelClick();
+    }
   }
 
   emitEditModeEvent() {

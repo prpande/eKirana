@@ -14,7 +14,7 @@
                     <div class="text-center">
                         <app-information-controls class="d-inline-block" (editModeEvent)="editClick()"
                             (cancelClickedEvent)="cancelClick()"
-                            (saveClickedEvent)="saveClick()"></app-information-controls>
+                            (saveClickedEvent)="saveClick($event)"></app-information-controls>
                     </div>
                 </div>
             </ng-template>
@@ -28,11 +28,12 @@
             </ng-template>
             <ng-template matTabContent>
                 <div class="p-2 input-form my-3">
-                    <app-address-form [address]="userInfo.address!" [appearance]="defaultAppearance()"></app-address-form>
+                    <app-address-form [address]="userInfo.address!"
+                        [appearance]="defaultAppearance()"></app-address-form>
                     <div class="text-center">
                         <app-information-controls class="d-inline-block" (editModeEvent)="editClick()"
                             (cancelClickedEvent)="cancelClick()"
-                            (saveClickedEvent)="saveClick()"></app-information-controls>
+                            (saveClickedEvent)="saveClick($event)"></app-information-controls>
                     </div>
                 </div>
             </ng-template>
@@ -57,11 +58,12 @@
             </ng-template>
             <ng-template matTabContent>
                 <div class="p-2 input-form my-3">
-                    <app-address-form [address]="userInfo.address!" [appearance]="defaultAppearance()"></app-address-form>
+                    <app-address-form [address]="userInfo.address!"
+                        [appearance]="defaultAppearance()"></app-address-form>
                     <div class="text-center">
                         <app-information-controls class="d-inline-block" (editModeEvent)="editClick()"
                             (cancelClickedEvent)="cancelClick()"
-                            (saveClickedEvent)="saveClick()"></app-information-controls>
+                            (saveClickedEvent)="saveClick($event)"></app-information-controls>
                     </div>
                 </div>
             </ng-template>
@@ -79,7 +81,7 @@
                     <div class="text-center">
                         <app-information-controls class="d-inline-block" (editModeEvent)="editClick()"
                             (cancelClickedEvent)="cancelClick()"
-                            (saveClickedEvent)="saveClick()"></app-information-controls>
+                            (saveClickedEvent)="saveClick($event)"></app-information-controls>
                     </div>
                 </div>
             </ng-template>
@@ -91,14 +93,17 @@
                     <p class="h5 p-0 m-0 mx-2">Vehicle Information</p>
                 </div>
             </ng-template>
+            <ng-template matTabContent>
                 <div class="p-2 input-form my-3">
-                    <app-vehicle-info-form [userInfo]="userInfo" [appearance]="defaultAppearance()"></app-vehicle-info-form>
+                    <app-vehicle-info-form [userInfo]="userInfo"
+                        [appearance]="defaultAppearance()"></app-vehicle-info-form>
                     <div class="text-center">
                         <app-information-controls class="d-inline-block" (editModeEvent)="editClick()"
                             (cancelClickedEvent)="cancelClick()"
-                            (saveClickedEvent)="saveClick()"></app-information-controls>
+                            (saveClickedEvent)="saveClick($event)"></app-information-controls>
                     </div>
                 </div>
+            </ng-template>
         </mat-tab>
     </mat-tab-group>
 </div>
