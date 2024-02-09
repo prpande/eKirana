@@ -129,11 +129,11 @@ public class User {
         this.panCardNumber = panCardNumber;
     }
 
-    public String getGstIdNumber() {
+    public String getGstNumber() {
         return gstNumber;
     }
 
-    public void setGstIdNumber(String gstNumber) {
+    public void setGstNumber(String gstNumber) {
         this.gstNumber = gstNumber;
     }
 

@@ -104,7 +104,11 @@ export class UserInfoTabComponent {
       next: user => {
         this.logger.info(`Successfully updated User:[${user.userId}]`);
         this.userInfo = user;
-        this.getCurrentTabForm().userInfo = user;
+        if(this.tabGroup.selectedIndex == 1){
+          this.getCurrentTabForm().address = user.address;
+        } else{
+          this.getCurrentTabForm().userInfo = user;
+        }
         this.getCurrentTabForm().ngOnInit();
       },
       error: err => {

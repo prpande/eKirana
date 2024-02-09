@@ -82,8 +82,8 @@ public class UserServiceImpl implements IUserService{
             user.setPanCardNumber(newUserInfo.getPanCardNumber());
         }
 
-        if (newUserInfo.getGstIdNumber() != null){
-            user.setGstIdNumber(newUserInfo.getGstIdNumber());
+        if (newUserInfo.getGstNumber() != null){
+            user.setGstNumber(newUserInfo.getGstNumber());
         }
 
         if(newUserInfo.getVehicleInfo() != null){

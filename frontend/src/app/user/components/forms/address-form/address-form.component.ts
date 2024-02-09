@@ -15,34 +15,35 @@ import { User } from 'src/app/user/models/user';
 
 export class AddressFormComponent implements OnInit {
 
-  @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
-
   @Input()
   isReadOnly: boolean = true;
 
   @Input()
   appearance = "fill" as MatFormFieldAppearance;
 
-  mapZoom = 16;
-  mapCenter: google.maps.LatLng = new google.maps.LatLng({lat:0,lng:0});
-  mapOptions: google.maps.MapOptions = {
-    zoomControl: true,
-    scrollwheel: true,
-    disableDoubleClickZoom: true,
-    clickableIcons: false,
-    disableDefaultUI: true,
-    fullscreenControl: false,
-    keyboardShortcuts: false,
-    mapTypeControl: false,
-    streetViewControl: false
-  };
+  @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
 
-  markerInitialized: boolean = false;
-  markerLatLng: google.maps.LatLng= new google.maps.LatLng({lat:0,lng:0});
-  markerOptions: google.maps.MarkerOptions = {
-    draggable: false,
-    animation: google.maps.Animation.DROP,
-  };
+
+  // mapZoom = 16;
+  // mapCenter: google.maps.LatLng = new google.maps.LatLng({lat:0,lng:0});
+  // mapOptions: google.maps.MapOptions = {
+  //   zoomControl: true,
+  //   scrollwheel: true,
+  //   disableDoubleClickZoom: true,
+  //   clickableIcons: false,
+  //   disableDefaultUI: true,
+  //   fullscreenControl: false,
+  //   keyboardShortcuts: false,
+  //   mapTypeControl: false,
+  //   streetViewControl: false
+  // };
+
+  // markerInitialized: boolean = false;
+  // markerLatLng: google.maps.LatLng= new google.maps.LatLng({lat:0,lng:0});
+  // markerOptions: google.maps.MarkerOptions = {
+  //   draggable: false,
+  //   animation: google.maps.Animation.DROP,
+  // };
 
   states: string[];
 
@@ -114,37 +115,37 @@ export class AddressFormComponent implements OnInit {
     return new Address(this.addressFormGroup.value);
   }
 
-  setUpMap() {
-    const point: google.maps.LatLngLiteral = { lat:0, lng:0};
-    if (this.address && this.address.addressId) {
-      point.lat = this.address!.latitude!;
-      point.lng = this.address!.longitude!;
-      this.mapCenter = new google.maps.LatLng(point);
-      this.setMapMarker(point);
-    } else {
-      navigator.geolocation.getCurrentPosition(
-        (position: GeolocationPosition) => {
-          point.lat = position.coords.latitude;
-          point.lng =  position.coords.longitude;
-          this.mapCenter = new google.maps.LatLng(point);
-          this.setMapMarker(point);
-        }, null, { enableHighAccuracy: true, }
-        );
-      }
+  // setUpMap() {
+  //   const point: google.maps.LatLngLiteral = { lat:0, lng:0};
+  //   if (this.address && this.address.addressId) {
+  //     point.lat = this.address!.latitude!;
+  //     point.lng = this.address!.longitude!;
+  //     this.mapCenter = new google.maps.LatLng(point);
+  //     this.setMapMarker(point);
+  //   } else {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position: GeolocationPosition) => {
+  //         point.lat = position.coords.latitude;
+  //         point.lng =  position.coords.longitude;
+  //         this.mapCenter = new google.maps.LatLng(point);
+  //         this.setMapMarker(point);
+  //       }, null, { enableHighAccuracy: true, }
+  //       );
+  //     }
 
-    }
+  //   }
 
 
-  mapClick(event: any) {
-    if (event.latLng && !this.isReadOnly) {
-      this.setMapMarker(event.latLng);
-    }
-  }
+  // mapClick(event: any) {
+  //   if (event.latLng && !this.isReadOnly) {
+  //     this.setMapMarker(event.latLng);
+  //   }
+  // }
 
-  setMapMarker(data: any) {
-    this.markerLatLng = new google.maps.LatLng(data);
-    this.latitude?.setValue(this.markerLatLng.lat());
-    this.longitude?.setValue(this.markerLatLng.lng());
-    this.markerInitialized = true;
-  }
+  // setMapMarker(data: any) {
+  //   this.markerLatLng = new google.maps.LatLng(data);
+  //   this.latitude?.setValue(this.markerLatLng.lat());
+  //   this.longitude?.setValue(this.markerLatLng.lng());
+  //   this.markerInitialized = true;
+  // }
 }

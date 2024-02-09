@@ -25,7 +25,7 @@ export class InformationControlsComponent {
     this.inEditMode = true;
     this.emitEditModeEvent();
   }
-  
+
   cancelClick() {
     this.inEditMode = false;
     this.cancelClickedEvent.emit();
@@ -46,7 +46,7 @@ export class InformationControlsComponent {
 
   isSaveDisabled(): boolean {
     if (this.formGroup) {
-      return !this.formGroup.valid;
+      return !this.formGroup.valid || !this.formGroup.dirty;
     }
     return true;
   }
