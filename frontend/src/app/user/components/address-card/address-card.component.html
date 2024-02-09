@@ -1,24 +1,34 @@
-<div class="">
-    <mat-card>
-        <mat-card-content>
-            <div class="h6">
-                {{address.fullName}}
+<mat-card class="d-inline-block address-card">
+    <mat-card-content>
+        <div class="h6">
+            {{address.fullName}}
+        </div>
+        <div class="h6">
+            {{address.line1}}<span *ngIf="isLine2()">, {{address.line2}}</span>
+        </div>
+        <div class="h6" *ngIf="isLandmark()">
+            Landmark: {{address.landmark}}
+        </div>
+        <div class="h6">
+            {{address.city}}
+        </div>
+        <div class="h6">
+            {{address.state}} - {{address.pinCode}}
+        </div>
+        <div class="h6 d-flex">
+            <mat-icon>phone</mat-icon> {{address.phoneNumber}}
+        </div>
+        <mat-card-actions class="card-actions p-0 text-center">
+            <div class="button-container d-inline-block mx-2">
+                <button (click)="editAddress()" mat-icon-button color="primary">
+                    <mat-icon>edit</mat-icon>
+                </button>
             </div>
-            <div class="h6">
-                {{address.line1}}<span *ngIf="isLine2()">, {{address.line2}}</span>
+            <div class="button-container d-inline-block mx-2">
+                <button (click)="deleteAddress()" mat-icon-button color="warn">
+                    <mat-icon>delete</mat-icon>
+                </button>
             </div>
-            <div class="h6" *ngIf="isLandmark()">
-                Landmark: {{address.landmark}}
-            </div>
-            <div class="h6">
-                {{address.city}} 
-            </div>
-            <div class="h6">
-                {{address.state}} - {{address.pinCode}}
-            </div>
-            <div class="h6 d-flex">
-                <mat-icon>phone</mat-icon> {{address.phoneNumber}}
-            </div>
-        </mat-card-content>
-    </mat-card>
-</div>
+        </mat-card-actions>
+    </mat-card-content>
+</mat-card>

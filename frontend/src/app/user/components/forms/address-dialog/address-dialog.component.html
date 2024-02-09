@@ -1,7 +1,7 @@
 <div class="">
-    <h3 mat-dialog-title>{{dialogData.operation}} Product Details</h3>
+    <h3 mat-dialog-title>{{dialogData.operation}} Address Details</h3>
     <mat-dialog-content>
-        <app-product-form [product]="dialogData.productInfo" #productForm></app-product-form>
+        <app-address-form [address]="dialogData.address" [isReadOnly]="false"></app-address-form>
     </mat-dialog-content>
     <mat-dialog-actions>
         <div class="text-center mx-auto py-2">

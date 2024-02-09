@@ -131,7 +131,9 @@ export class NewUserViewComponent {
       let deliveryAddress = new Address(this.userInfo.address);
       deliveryAddress.addressId = this.idGenerator.generateId();
       deliveryAddress.isDefault = true;
+      console.log(deliveryAddress);
       this.userInfo.deliveryAddresses = [deliveryAddress];
+      console.log(this.userInfo);
     }
   }
 

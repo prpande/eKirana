@@ -22,6 +22,8 @@ import { LocationTabComponent } from './components/dashboard-view/location-tab/l
 import { AlertsTabComponent } from './components/dashboard-view/alerts-tab/alerts-tab.component';
 import { OrdersTabComponent } from './components/dashboard-view/orders-tab/orders-tab.component';
 import { InformationControlsComponent } from './components/dashboard-view/information-controls/information-controls.component';
+import { DeliveryAddressManagerComponent } from './components/dashboard-view/user-info-tab/delivery-address-manager/delivery-address-manager.component';
+import { AddressDialogComponent } from './components/forms/address-dialog/address-dialog.component';
 
 
 
@@ -48,7 +50,9 @@ import { InformationControlsComponent } from './components/dashboard-view/inform
     LocationTabComponent,
     AlertsTabComponent,
     OrdersTabComponent,
-    InformationControlsComponent
+    InformationControlsComponent,
+    DeliveryAddressManagerComponent,
+    AddressDialogComponent
   ],
   imports: [
     SharedModule

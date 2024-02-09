@@ -1,0 +1,8 @@
+.card-actions{
+    display: none;
+}
+.address-card:hover{
+    .card-actions{
+        display: block;
+    }
+}

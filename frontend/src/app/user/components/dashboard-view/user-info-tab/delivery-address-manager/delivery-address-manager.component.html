@@ -1,13 +1,7 @@
-<div class="container card p-3">
-    <div class="h4 mb-3">Select your delivery Address</div>
+<div class="card p-2">
     <div class="d-flex">
-
-        <div class="mb-3">
-            <mat-radio-group [formControl]="addressSelector">
-                <mat-radio-button *ngFor="let address of addresses" [value]="address.addressId">
-                    <app-address-card [address]="address" (addressUpdatedEvent)="onAddressModified()"></app-address-card>
-                </mat-radio-button>
-            </mat-radio-group>
+        <div *ngFor="let address of addresses" class="m-3 d-inline-block">
+            <app-address-card [address]="address" (addressUpdatedEvent)="onAddressModified()"></app-address-card>
         </div>
         <div class="d-inline-block ">
             <mat-card class="d-inline-block p-5 m-3">

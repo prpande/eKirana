@@ -27,10 +27,12 @@ export class UserRestEndpointsService {
   public static readonly GET_ALL_SHOPS: string = UserRestEndpointsService.USER_ROOT + "/shops";
   public static readonly ADD_USER_ADDRESS: string = UserRestEndpointsService.USER_ROOT + "/info/address";
   public static readonly UPDATE_USER_ADDRESS: string = UserRestEndpointsService.USER_ROOT + "/info/address";
-  public static readonly DELETE_USER_ADDRESS: string = UserRestEndpointsService.USER_ROOT + "/info/address/{addressId}";
   public static readonly SET_DELIVERY_STATUS: string = UserRestEndpointsService.USER_ROOT + "/info/deliveryStatus";
   public static readonly UPDATE_VEHICLE_INFO: string = UserRestEndpointsService.USER_ROOT + "/info/vehicle";
   public static readonly USER_SECURE_PATTERNS: string[] = [`${UserRestEndpointsService.USER_ROOT}${UserRestEndpointsService.UPDATE_USER}/*`];
   
+  static DELETE_USER_ADDRESS(addressId: string): string{
+    return `${UserRestEndpointsService.USER_ROOT}/info/address/${addressId}`;
+  }
   constructor() { }
 }

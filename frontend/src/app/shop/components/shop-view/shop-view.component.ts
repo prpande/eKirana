@@ -93,7 +93,6 @@ export class ShopViewComponent implements OnInit {
         this.productService.createProduct(info).subscribe({
           next: savedProduct => {
             if (savedProduct) {
-              console.log(savedProduct);
               this.logger.info(`Saved product:[${savedProduct.productId}]`);
               this.products.push(savedProduct);
             }

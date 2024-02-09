@@ -34,13 +34,13 @@ export class ProductFormComponent implements OnInit{
       productId: [this.idGenerator.generateId()],
       name: ['', [Validators.required, Validators.minLength(2)]],
       price: ['', [Validators.required]],
-      specifications: ['', [Validators.required]],
+      specifications: [''],
       description: ['', [Validators.required]],
       category: ['', [Validators.required]],
-      imageUrl: ['', [Validators.required]],
+      imageUrl: [''],
       available: ['false', [Validators.required]],
-      quantity: [0, [Validators.required]],
-      sellerId: ['', [Validators.required]],
+      quantity: [0, [Validators.required, Validators.min(1)]],
+      sellerId: [''],
     })
 
     if(this.product && this.product.productId){

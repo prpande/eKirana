@@ -1,5 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Address } from '../../models/address';
+import { UserService } from '../../services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
+import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
+import { AddressDialogComponent } from '../forms/address-dialog/address-dialog.component';
 
 @Component({
   selector: 'app-address-card',
@@ -9,6 +14,17 @@ import { Address } from '../../models/address';
 export class AddressCardComponent {
   @Input()
   address!: Address;
+
+  @Output()
+  addressUpdatedEvent: EventEmitter<any> = new EventEmitter<any>();
+
+  constructor(private addressDialog: MatDialog,
+    private logger: LoggerService,
+    private restErrorSvc: RestErrorHandlerService,
+    private userService: UserService
+  ) {
+    this.address = new Address();
+  }
 
   isLine2(): boolean {
     if (this.address.line2?.trim().length! > 0) {
@@ -23,5 +39,40 @@ export class AddressCardComponent {
     }
 
     return false;
+  }
+
+  editAddress() { 
+    const dialogRef = this.addressDialog.open(AddressDialogComponent, {
+      data: {
+        operation: "Edit",
+        address: this.address
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(addressInfo =>{
+      if(addressInfo){
+        this.userService.updateUserDeliveryAddress(addressInfo).subscribe({
+          next: savedAddress => {
+            this.logger.info(`Updated Address:[${addressInfo.addressId}]`);
+            this.addressUpdatedEvent.emit(addressInfo.addressId);
+          },
+          error: err =>{
+            this.restErrorSvc.processPostError(err);
+          }
+        })
+      }
+    })
+  }
+
+  deleteAddress() { 
+    this.userService.deleteUserDeliveryAddress(this.address.addressId!).subscribe({
+      next: data => {
+        console.log(`Address delete successfully:[${this.address.addressId}]`);
+        this.addressUpdatedEvent.emit(undefined);
+      },
+      error: err => {
+        this.restErrorSvc.processPostError(err);
+      }
+    })
   }
 }
