@@ -1,19 +1,19 @@
-<div class="container">
+<div class="container p-2">
     <form [formGroup]="userInfoGroup" class="">
-        <div class="">
-            <mat-form-field appearance="fill" id="userId" class="d-inline-block">
+        <div class="d-flex flex-wrap">
+            <mat-form-field appearance="outline"id="userId" class="me-auto half-width-input">
                 <mat-label>User ID</mat-label>
                 <input matInput type="text" id="userId" formControlName="userId" readonly />
             </mat-form-field>
-            <mat-form-field appearance="fill" id="userType" class="d-inline-block">
+            <mat-form-field appearance="outline" id="userType" class="half-width-input">
                 <mat-label>User Type</mat-label>
                 <input matInput type="text" id="userType" formControlName="userType" readonly />
             </mat-form-field>
         </div>
-        <div class="">
-            <mat-form-field appearance="fill" class="d-inline-block">
+        <div class="d-flex flex-wrap">
+            <mat-form-field [appearance]="appearance" class="d-inline-block" class="me-auto half-width-input">
                 <mat-label>First Name</mat-label>
-                <input matInput type="text" id="firstName" formControlName="firstName" />
+                <input matInput type="text" id="firstName" formControlName="firstName" [readonly]="isReadOnly"/>
                 <mat-error *ngIf="firstName?.errors?.['required']">
                     First Name is required
                 </mat-error>
@@ -21,15 +21,15 @@
                     Minimum 2 character required
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="fill" class="d-inline-block">
+            <mat-form-field [appearance]="appearance" class="half-width-input">
                 <mat-label>Last Name</mat-label>
-                <input matInput type="text" id="lastName" formControlName="lastName" />
+                <input matInput type="text" id="lastName" formControlName="lastName" [readonly]="isReadOnly"/>
             </mat-form-field>
         </div>
-        <div class="">
-            <mat-form-field appearance="fill" class="d-inline-block">
+        <div class="d-flex flex-wrap">
+            <mat-form-field [appearance]="appearance" class="me-auto half-width-input">
                 <mat-label>Email</mat-label>
-                <input matInput type="text" id="email" formControlName="email" />
+                <input matInput type="text" id="email" formControlName="email" [readonly]="isReadOnly"/>
                 <mat-error *ngIf="email?.errors?.['required']">
                     Email is required
                 </mat-error>
@@ -37,22 +37,22 @@
                     Enter valid email address
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="fill" class="d-inline-block">
+            <mat-form-field [appearance]="appearance" class="half-width-input">
                 <mat-label>Phone Number</mat-label>
-                <input matInput type="number" formControlName="phoneNumber" id="phoneNumber">
+                <input matInput type="number" formControlName="phoneNumber" id="phoneNumber" [readonly]="isReadOnly">
                 <mat-error *ngIf="phoneNumber?.errors?.['pattern']">
                     Valid phone number contains 10 digits starting with 7/8/9
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="">
-            <mat-form-field appearance="fill" id="dateOfBirth" class="d-inline-block">
+        <div class="d-flex">
+            <mat-form-field [appearance]="appearance" id="dateOfBirth" class="half-width-input">
                 <mat-label>Date 0f Birth</mat-label>
-                <input [max]="maxDateOfBirth" matInput [matDatepicker]="dobPicker" formControlName="dateOfBirth">
+                <input [max]="maxDateOfBirth" matInput [matDatepicker]="dobPicker" formControlName="dateOfBirth" [readonly]="isReadOnly">
                 <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
                 <mat-datepicker #dobPicker></mat-datepicker>
                 <mat-error *ngIf="dateOfBirth?.errors?.['required']">
-                    Delivery Date is required
+                    Date of Birth is required
                 </mat-error>
             </mat-form-field>
         </div>

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { User } from 'src/app/user/models/user';
 import { Vehicle } from 'src/app/user/models/vehicle';
 
@@ -12,6 +13,12 @@ export class VehicleInfoFormComponent implements OnInit {
   @Input()
   userInfo!: User;
 
+  @Input()
+  isReadOnly: boolean = true;
+
+  @Input()
+  appearance = "fill" as MatFormFieldAppearance;
+
   vehicleInfoGroup!: FormGroup;
   get registrationNumber() { return this.vehicleInfoGroup.get("registrationNumber"); }
   get drivingLicenseNumber() { return this.vehicleInfoGroup.get("drivingLicenseNumber"); }
@@ -19,6 +26,7 @@ export class VehicleInfoFormComponent implements OnInit {
   get model() { return this.vehicleInfoGroup.get("model"); }
   get vehicleType() { return this.vehicleInfoGroup.get("vehicleType"); }
   get capacity() { return this.vehicleInfoGroup.get("capacity"); }
+  get formGroup(): FormGroup { return this.vehicleInfoGroup; }
 
   constructor(private fb: FormBuilder) { }
 

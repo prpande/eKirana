@@ -21,6 +21,7 @@ import { DeliveriesTabComponent } from './components/dashboard-view/deliveries-t
 import { LocationTabComponent } from './components/dashboard-view/location-tab/location-tab.component';
 import { AlertsTabComponent } from './components/dashboard-view/alerts-tab/alerts-tab.component';
 import { OrdersTabComponent } from './components/dashboard-view/orders-tab/orders-tab.component';
+import { InformationControlsComponent } from './components/dashboard-view/information-controls/information-controls.component';
 
 
 
@@ -46,7 +47,8 @@ import { OrdersTabComponent } from './components/dashboard-view/orders-tab/order
     DeliveriesTabComponent,
     LocationTabComponent,
     AlertsTabComponent,
-    OrdersTabComponent
+    OrdersTabComponent,
+    InformationControlsComponent
   ],
   imports: [
     SharedModule

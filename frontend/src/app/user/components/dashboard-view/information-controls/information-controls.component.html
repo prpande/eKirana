@@ -1,0 +1,17 @@
+<div class="">
+    <div class="button-container d-inline-block m-0" *ngIf="!inEditMode">
+        <button mat-mini-fab matTooltip="Edit" (click)="editClick()" class="">
+            <mat-icon class="">create</mat-icon>
+        </button>
+    </div>
+    <div class="button-container d-inline-block" *ngIf="inEditMode">
+        <button mat-mini-fab matTooltip="Cancel" (click)="cancelClick()" class="" color="primary">
+            <mat-icon class="">cancel</mat-icon>
+        </button>
+    </div>
+    <div class="button-container d-inline-block" *ngIf="inEditMode">
+        <button mat-mini-fab matTooltip="Save" (click)="saveClick()" class="" color="warn" [disabled]="isSaveDisabled()">
+            <mat-icon class="">save</mat-icon>
+        </button>
+    </div>
+</div>

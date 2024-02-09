@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GoogleMap } from '@angular/google-maps';
+import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { IdGeneratorService } from 'src/app/shared/services/id-generator.service';
 import { IndiaStatesService } from 'src/app/shared/services/india-states.service';
 import { Address } from 'src/app/user/models/address';
@@ -15,6 +16,12 @@ import { User } from 'src/app/user/models/user';
 export class AddressFormComponent implements OnInit {
 
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
+
+  @Input()
+  isReadOnly: boolean = true;
+
+  @Input()
+  appearance = "fill" as MatFormFieldAppearance;
 
   mapZoom = 16;
   mapCenter: google.maps.LatLng = new google.maps.LatLng({lat:0,lng:0});
@@ -60,6 +67,7 @@ export class AddressFormComponent implements OnInit {
   get isDefault() { return this.addressFormGroup.get("isDefault"); }
   get instructions() { return this.addressFormGroup.get("instructions"); }
   get displayImageUrl() { return this.addressFormGroup.get("displayImageUrl"); }
+  get formGroup(): FormGroup { return this.addressFormGroup; }
 
   constructor(private fb: FormBuilder, private idGenerator: IdGeneratorService, private statesService: IndiaStatesService) {
     this.states = statesService.States;
@@ -128,7 +136,7 @@ export class AddressFormComponent implements OnInit {
 
 
   mapClick(event: any) {
-    if (event.latLng) {
+    if (event.latLng && !this.isReadOnly) {
       this.setMapMarker(event.latLng);
     }
   }

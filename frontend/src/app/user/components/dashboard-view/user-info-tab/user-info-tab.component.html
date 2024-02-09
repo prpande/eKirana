@@ -2,57 +2,103 @@
     <mat-tab-group>
         <mat-tab>
             <ng-template matTabLabel>
-                <mat-icon>person</mat-icon>
-                <p>Personal Information</p>
+                <div class="tab-label">
+                    <mat-icon class="p-0 m-0">person</mat-icon>
+                    <p class="h5 p-0 m-0 mx-2">
+                        Personal Information</p>
+                </div>
             </ng-template>
             <ng-template matTabContent>
-                <app-user-info-form [userInfo]="userInfo"></app-user-info-form>
+                <div class="p-2 input-form my-3">
+                    <app-user-info-form [userInfo]="userInfo" [appearance]="defaultAppearance()"></app-user-info-form>
+                    <div class="text-center">
+                        <app-information-controls class="d-inline-block" (editModeEvent)="editClick()"
+                            (cancelClickedEvent)="cancelClick()"
+                            (saveClickedEvent)="saveClick()"></app-information-controls>
+                    </div>
+                </div>
             </ng-template>
         </mat-tab>
         <mat-tab *ngIf="userInfo && userInfo!.userType != 'SELLER'">
             <ng-template matTabLabel>
-                <mat-icon>person</mat-icon>
-                <p>Mailing Address Details</p>
+                <div class="tab-label">
+                    <mat-icon class="p-0 m-0">mail</mat-icon>
+                    <p class="h5 p-0 m-0 mx-2">Mailing Address Details</p>
+                </div>
             </ng-template>
             <ng-template matTabContent>
-                <app-address-form [address]="userInfo.address!"></app-address-form>
+                <div class="p-2 input-form my-3">
+                    <app-address-form [address]="userInfo.address!" [appearance]="defaultAppearance()"></app-address-form>
+                    <div class="text-center">
+                        <app-information-controls class="d-inline-block" (editModeEvent)="editClick()"
+                            (cancelClickedEvent)="cancelClick()"
+                            (saveClickedEvent)="saveClick()"></app-information-controls>
+                    </div>
+                </div>
             </ng-template>
         </mat-tab>
         <mat-tab *ngIf="userInfo && userInfo!.userType == 'CUSTOMER'">
             <ng-template matTabLabel>
-                <mat-icon>person</mat-icon>
-                <p>Delivery Addresses</p>
+                <div class="tab-label">
+                    <mat-icon class="p-0 m-0">home</mat-icon>
+                    <p class="h5 p-0 m-0 mx-2">Delivery Addresses</p>
+                </div>
             </ng-template>
             <ng-template matTabContent>
-
+                <div class="p-2 input-form my-3"></div>
             </ng-template>
         </mat-tab>
         <mat-tab *ngIf="userInfo && userInfo!.userType == 'SELLER'">
             <ng-template matTabLabel>
-                <mat-icon>person</mat-icon>
-                <p>Business Information</p>
+                <div class="tab-label">
+                    <mat-icon class="p-0 m-0">store</mat-icon>
+                    <p class="h5 p-0 m-0 mx-2">Business Information</p>
+                </div>
             </ng-template>
             <ng-template matTabContent>
-                <app-address-form [address]="userInfo.address!"></app-address-form>
+                <div class="p-2 input-form my-3">
+                    <app-address-form [address]="userInfo.address!" [appearance]="defaultAppearance()"></app-address-form>
+                    <div class="text-center">
+                        <app-information-controls class="d-inline-block" (editModeEvent)="editClick()"
+                            (cancelClickedEvent)="cancelClick()"
+                            (saveClickedEvent)="saveClick()"></app-information-controls>
+                    </div>
+                </div>
             </ng-template>
         </mat-tab>
         <mat-tab *ngIf="userInfo && userInfo!.userType != 'CUSTOMER'">
             <ng-template matTabLabel>
-                <mat-icon>person</mat-icon>
-                <p>Identification Information</p>
+                <div class="tab-label">
+                    <mat-icon class="p-0 m-0">store</mat-icon>
+                    <p class="h5 p-0 m-0 mx-2">Identification Information</p>
+                </div>
             </ng-template>
             <ng-template matTabContent>
-                <app-id-form [userInfo]="userInfo"></app-id-form>
+                <div class="p-2 input-form my-3">
+                    <app-id-form [userInfo]="userInfo" [appearance]="defaultAppearance()"></app-id-form>
+                    <div class="text-center">
+                        <app-information-controls class="d-inline-block" (editModeEvent)="editClick()"
+                            (cancelClickedEvent)="cancelClick()"
+                            (saveClickedEvent)="saveClick()"></app-information-controls>
+                    </div>
+                </div>
             </ng-template>
         </mat-tab>
         <mat-tab *ngIf="userInfo && userInfo!.userType == 'CARRIER'">
             <ng-template matTabLabel>
-                <mat-icon>person</mat-icon>
-                <p>Vehicle Information</p>
+                <div class="tab-label">
+                    <mat-icon class="p-0 m-0">person</mat-icon>
+                    <p class="h5 p-0 m-0 mx-2">Vehicle Information</p>
+                </div>
             </ng-template>
-            <ng-template matTabContent>
-                <app-vehicle-info-form [userInfo]="userInfo"></app-vehicle-info-form>
-            </ng-template>
+                <div class="p-2 input-form my-3">
+                    <app-vehicle-info-form [userInfo]="userInfo" [appearance]="defaultAppearance()"></app-vehicle-info-form>
+                    <div class="text-center">
+                        <app-information-controls class="d-inline-block" (editModeEvent)="editClick()"
+                            (cancelClickedEvent)="cancelClick()"
+                            (saveClickedEvent)="saveClick()"></app-information-controls>
+                    </div>
+                </div>
         </mat-tab>
     </mat-tab-group>
 </div>

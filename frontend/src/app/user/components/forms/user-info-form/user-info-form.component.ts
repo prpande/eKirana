@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { User } from 'src/app/user/models/user';
 
 @Component({
@@ -13,7 +14,13 @@ export class UserInfoFormComponent implements OnInit {
 
   @Input()
   userInfo!: User;
-  
+
+  @Input()
+  isReadOnly: boolean = true;
+
+  @Input()
+  appearance = "fill" as MatFormFieldAppearance;
+
   userInfoGroup!: FormGroup;
 
   get firstName() { return this.userInfoGroup.get("firstName"); }
@@ -21,10 +28,9 @@ export class UserInfoFormComponent implements OnInit {
   get email() { return this.userInfoGroup.get("email"); }
   get phoneNumber() { return this.userInfoGroup.get("phoneNumber"); }
   get dateOfBirth() { return this.userInfoGroup.get("dateOfBirth"); }
-  get panCardNumber() { return this.userInfoGroup.get("panCardNumber"); }
-  get gstNumber() { return this.userInfoGroup.get("gstNumber"); }
   get userType() { return this.userInfoGroup.get("userType"); }
   get userId() { return this.userInfoGroup.get("userId"); }
+  get formGroup(): FormGroup { return this.userInfoGroup; }
 
   constructor(private fb: FormBuilder) {
     this.maxDateOfBirth = new Date();
@@ -39,7 +45,7 @@ export class UserInfoFormComponent implements OnInit {
       phoneNumber: ['', [Validators.required, Validators.pattern(/^[789]\d{9,9}$/)]],
       dateOfBirth: ['', [Validators.required]],
       userType: [''],
-      userId:['']
+      userId: ['']
     });
 
 

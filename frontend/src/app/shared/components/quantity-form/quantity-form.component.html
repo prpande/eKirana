@@ -1,6 +1,6 @@
 <form class="">
     <div class="text-center">
-        <mat-form-field class="quantity-form">
+        <mat-form-field class="quantity-form" appearance="outline">
             <input type="number" matInput [formControl]="itemQuantityControl" (input)="checkQuantity()"
                 class="text-center p-0" readonly>
             <button mat-icon-button matPrefix (click)="decrementQuantity()" class="p-0 m-0">

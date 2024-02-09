@@ -1,5 +1,5 @@
 <div class="">
-    <app-address-form></app-address-form>
+    <app-address-form [isReadOnly]="false"></app-address-form>
     <div class="container my-3">
         <button mat-raised-button color="primary" (click)="onBack()">Back</button>
         <button mat-raised-button color="primary" [disabled]="checkNextDisabled()" (click)="onNext()">{{nextButtonText}}</button>

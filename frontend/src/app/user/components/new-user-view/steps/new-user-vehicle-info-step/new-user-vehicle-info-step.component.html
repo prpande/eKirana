@@ -1,5 +1,5 @@
 <div class="">
-    <app-vehicle-info-form ></app-vehicle-info-form>
+    <app-vehicle-info-form [isReadOnly]="false"></app-vehicle-info-form>
     <button mat-raised-button color="primary" (click)="onBack()">Back</button>
     <button mat-raised-button color="primary" [disabled]="checkNextDisabled()" (click)="onNext()">Register</button>
 </div>

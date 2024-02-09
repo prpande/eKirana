@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { User } from 'src/app/user/models/user';
 import { UserType } from 'src/app/user/models/userType';
 
@@ -12,9 +13,16 @@ export class IdFormComponent implements OnInit {
   @Input()
   userInfo!: User;
 
+  @Input()
+  isReadOnly: boolean = true;
+
+  @Input()
+  appearance = "fill" as MatFormFieldAppearance;
+
   userIdGroup!: FormGroup;
   get panCardNumber() { return this.userIdGroup.get("panCardNumber"); }
   get gstNumber() { return this.userIdGroup.get("gstNumber"); }
+  get formGroup(): FormGroup { return this.userIdGroup; }
 
   constructor(private fb: FormBuilder) { }
 
