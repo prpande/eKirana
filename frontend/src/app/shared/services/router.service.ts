@@ -9,6 +9,8 @@ export class RouterService {
 
   readonly checkoutStarted: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+  readonly dashStarted: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   constructor(private router:Router) { }
 
   goToHome(){
@@ -29,5 +31,9 @@ export class RouterService {
 
   goToCheckOut(){
     this.router.navigate(["checkout"]);
+  }
+
+  goToOrders(){
+    this.router.navigate(["orders"]);
   }
 }

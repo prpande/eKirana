@@ -149,4 +149,16 @@ export class AuthService {
         }
       );
   }
+
+  get isCarrier(): boolean{
+    return this.UserCredentials.userType == UserType.CARRIER;
+  }
+
+  get isCustomer(): boolean{
+    return this.UserCredentials.userType == UserType.CUSTOMER;
+  }
+
+  get isSeller(): boolean{
+    return this.UserCredentials.userType == UserType.SELLER;
+  }
 }

@@ -45,12 +45,14 @@ public class RestEndpoints {
     //region Order Service endpoints
     public static final String ORDER_ROOT = "/api/order";
     public static final String PLACE_ORDER = "/";
-    public static final String GET_ALL_ORDERS_BY_USER_ID = "/user/{userId}";
+    public static final String GET_ALL_ORDERS_BY_USER_ID = "/user";
     public static final String GET_ALL_ORDERS = "/orders";
     public static final String GET_ORDERS_AVAILABLE_FOR_DELIVERY = "/delivery";
     public static final String GET_ORDER_BY_ID = "/{orderId}";
-    public static final String CANCEL_ORDER = "/{orderId}";
-    public static final String UPDATE_ORDER_STATUS = "/{orderId}/status";
+    public static final String CANCEL_ORDER = "/cancel/{orderId}";
+    public static final String CONFIRM_ORDER = "/confirm/{orderId}";
+    public static final String SHIP_ORDER = "/ship/{orderId}";
+    public static final String DELIVER_ORDER = "/deliver/{orderId}";
     public static final String UPDATE_ORDER_CARRIER = "/{orderId}/carrier";
     public static final String UPDATE_ORDER_COMMENTS = "/{orderId}/comments";
     public static final String UPDATE_ORDER_DELIVERY_DATE = "/{orderId}/deliveryDate";

@@ -14,8 +14,8 @@ export class OrderRestEndpointsService {
   public static readonly GET_ORDERS_AVAILABLE_FOR_DELIVERY: string = OrderRestEndpointsService.ORDER_ROOT + "/delivery";
   public static readonly ORDER_SECURE_PATTERNS: string[] = [OrderRestEndpointsService.ORDER_ROOT + "/*"];
 
-  static GET_ALL_ORDERS_BY_USER_ID(userId: string): string{
-    return `${OrderRestEndpointsService.ORDER_ROOT}/user/${userId}`
+  static GET_ALL_ORDERS_BY_USER_ID(): string{
+    return `${OrderRestEndpointsService.ORDER_ROOT}/user`
   }
 
   static GET_ORDER_BY_ID(orderId: string): string{
@@ -23,11 +23,19 @@ export class OrderRestEndpointsService {
   }
 
   static CANCEL_ORDER(orderId: string): string{
-    return `${OrderRestEndpointsService.ORDER_ROOT}/${orderId}`
+    return `${OrderRestEndpointsService.ORDER_ROOT}/cancel/${orderId}`
   }
 
-  static UPDATE_ORDER_STATUS(orderId: string): string{
-    return `${OrderRestEndpointsService.ORDER_ROOT}/${orderId}/status`
+  static CONFIRM_ORDER(orderId: string): string{
+    return `${OrderRestEndpointsService.ORDER_ROOT}/confirm/${orderId}`
+  }
+
+  static SHIP_ORDER(orderId: string): string{
+    return `${OrderRestEndpointsService.ORDER_ROOT}/ship/${orderId}`
+  }
+
+  static DELIVER_ORDER(orderId: string): string{
+    return `${OrderRestEndpointsService.ORDER_ROOT}/deliver/${orderId}`
   }
 
   static UPDATE_ORDER_CARRIER(orderId: string): string{

@@ -47,6 +47,7 @@ public class UserMessenger {
                 userVehicle.setDelivering(true);
                 updatedUser.setVehicleInfo(userVehicle);
             }
+            logger.info("[alertQueueListener]: Adding Alert:[{}] for User[{}]", alertQMessage.getAlert().getAlertId(), alertQMessage.getUserId());
             userService.updateUser(alertQMessage.getUserId(), updatedUser);
         } catch (Exception ex){
             logger.error("[alertQueueListener]: Failed adding Alert:[{}] for User[{}]", alertQMessage.getAlert().getAlertId(), alertQMessage.getUserId(), ex);

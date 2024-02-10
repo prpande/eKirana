@@ -15,6 +15,9 @@ export class HeaderComponent implements OnInit{
   @Input()
   cartDrawer!: MatDrawer;
 
+  @Input()
+  dashDrawer!: MatDrawer;
+
   title: string;
   loggedIn: boolean = false;
   userCredentials: UserCredential;
@@ -43,12 +46,17 @@ export class HeaderComponent implements OnInit{
         }
       }
     })
-    this.routerService.checkoutStarted.subscribe(isCheckout =>{
+    
+    this.routerService.checkoutStarted.subscribe(() =>{
       this.canOpenCartDrawer = !this.routerService.checkoutStarted.value;
       if(!this.canOpenCartDrawer){
         this.cartDrawer.close();
       }
     })
+
+    this.routerService.dashStarted.subscribe(() =>{
+      this.routerService.dashStarted.value ? this.dashDrawer.open(): this.dashDrawer.close();
+    });
   }
 
   toggleCartDrawer() {

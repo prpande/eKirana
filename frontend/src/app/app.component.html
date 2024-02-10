@@ -1,12 +1,19 @@
-<app-header [cartDrawer]="sideNav"></app-header>
+<app-header [cartDrawer]="cartDrawer" [dashDrawer]="dashDrawer"></app-header>
 <mat-drawer-container>
-    <mat-drawer #sideNav mode="side" position="end">
+    <mat-drawer #cartDrawer mode="side" position="end">
         <app-cart-view></app-cart-view>
     </mat-drawer>
     <mat-drawer-content>
-        <div class="">
-            <router-outlet></router-outlet>
-        </div>
+        <mat-drawer-container>
+            <mat-drawer #dashDrawer mode="side" opened="true">
+                <app-dash-nav></app-dash-nav>
+            </mat-drawer>
+            <mat-drawer-content>
+                <div class="">
+                    <router-outlet></router-outlet>
+                </div>
+            </mat-drawer-content>
+        </mat-drawer-container>
     </mat-drawer-content>
 </mat-drawer-container>
 <app-footer></app-footer>

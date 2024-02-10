@@ -9,4 +9,7 @@ import { CartItem } from 'src/app/cart/models/cart';
 export class CheckoutItemCardComponent {
   @Input()
   cartItem!: CartItem;  
+
+  @Input()
+  isReadOnly: boolean = false;
 }

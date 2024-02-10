@@ -3,10 +3,10 @@
         <mat-form-field class="quantity-form" appearance="outline">
             <input type="number" matInput [formControl]="itemQuantityControl" (input)="checkQuantity()"
                 class="text-center p-0" readonly>
-            <button mat-icon-button matPrefix (click)="decrementQuantity()" class="p-0 m-0">
+            <button mat-icon-button matPrefix (click)="decrementQuantity()" class="p-0 m-0" *ngIf="!isReadOnly">
                 <mat-icon color="primary">{{shouldDelete()? 'delete_forever' : 'remove_circle'}}</mat-icon>
             </button>
-            <button mat-icon-button matSuffix (click)="incrementQuantity()" [disabled]="!shouldIncrement()" color="primary" class="p-0 m-0">
+            <button mat-icon-button matSuffix (click)="incrementQuantity()" [disabled]="!shouldIncrement()" color="primary" class="p-0 m-0" *ngIf="!isReadOnly">
                 <mat-icon>add_circle</mat-icon>
             </button>
         </mat-form-field>

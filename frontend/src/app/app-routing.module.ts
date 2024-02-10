@@ -9,23 +9,27 @@ import { NewUserViewComponent } from './user/components/new-user-view/new-user-v
 import { ShopViewComponent } from './shop/components/shop-view/shop-view.component';
 import { preventNavigationGuard } from './shared/guards/prevent-navigation.guard';
 import { UserDataResolver } from './user/components/dashboard-view/user-data-resolver';
-import { UserInfoTabComponent } from './user/components/dashboard-view/user-info-tab/user-info-tab.component';
 import { AlertsTabComponent } from './user/components/dashboard-view/alerts-tab/alerts-tab.component';
 import { DeliveriesTabComponent } from './user/components/dashboard-view/deliveries-tab/deliveries-tab.component';
 import { LocationTabComponent } from './user/components/dashboard-view/location-tab/location-tab.component';
-import { OrdersTabComponent } from './user/components/dashboard-view/orders-tab/orders-tab.component';
-import { ProductFormComponent } from './shop/components/product-form/product-form.component';
-import { EditProductDialogComponent } from './shop/components/edit-product-dialog/edit-product-dialog.component';
-import { ProductCardComponent } from './shop/components/product-card/product-card.component';
+import { OrdersTabComponent } from './order/components/orders-tab/orders-tab.component';
 import { preventRegistrationGuard } from './shared/guards/prevent-registration.guard';
 import { CheckoutComponent } from './order/components/checkout/checkout.component';
 import { checkoutBeginGuard } from './shared/guards/checkout-begin.guard';
 import { checkoutEndGuard } from './shared/guards/checkout-end.guard';
+import { dashStartGuard } from './shared/guards/dash-start.guard';
+import { dashEndGuard } from './shared/guards/dash-end.guard';
+import { OrderPageComponent } from './order/components/order-page/order-page.component';
 
 const routes: Routes = [
   {
     path: "", 
     redirectTo: "/home",
+    pathMatch: "full"
+  },
+  {
+    path: "dashboard", 
+    redirectTo: "/information",
     pathMatch: "full"
   },
   {
@@ -38,37 +42,55 @@ const routes: Routes = [
     canActivate: [preventRegistrationGuard]
   },
   {
-    path: "dashboard",
+    path: "information",
     component: DashboardViewComponent,
-    canActivate: [loginGuard],
+    canActivate: [loginGuard, dashStartGuard],
+    canDeactivate: [dashEndGuard],
     resolve: {
       userDataResolver: UserDataResolver
-    },
-    children: [{
-      path: "dashboard/information",
-      component: UserInfoTabComponent,
-      outlet: "dash-content"
-    },
-    {
-      path: "dashboard/alerts",
-      component: AlertsTabComponent,
-      outlet: "dash-content"
-    },
-    {
-      path: "dashboard/deliveries",
-      component: DeliveriesTabComponent,
-      outlet: "dash-content"
-    },
-    {
-      path: "dashboard/location",
-      component: LocationTabComponent,
-      outlet: "dash-content"
-    },
-    {
-      path: "dashboard/orders",
-      component: OrdersTabComponent,
-      outlet: "dash-content"
-    }]
+    }
+  },
+  {
+    path: "alerts",
+    component: AlertsTabComponent,
+    canActivate: [loginGuard, dashStartGuard],
+    canDeactivate: [dashEndGuard],
+    resolve: {
+      userDataResolver: UserDataResolver
+    }
+  },
+  {
+    path: "deliveries",
+    component: DeliveriesTabComponent,
+    canActivate: [loginGuard, dashStartGuard],
+    canDeactivate: [dashEndGuard],
+    resolve: {
+      userDataResolver: UserDataResolver
+    }
+  },
+  {
+    path: "location",
+    component: LocationTabComponent,
+    canActivate: [loginGuard, dashStartGuard],
+    canDeactivate: [dashEndGuard],
+    resolve: {
+      userDataResolver: UserDataResolver
+    }
+  },
+  {
+    path: "orders",
+    component: OrdersTabComponent,
+    canActivate: [loginGuard, dashStartGuard],
+    canDeactivate: [dashEndGuard],
+    resolve: {
+      userDataResolver: UserDataResolver
+    }
+  },
+  {
+    path: "orders/:orderId",
+    component: OrderPageComponent,
+    canActivate: [loginGuard, dashStartGuard],
+    canDeactivate: [dashEndGuard]
   },
   {
     path: "shop/:shopId",

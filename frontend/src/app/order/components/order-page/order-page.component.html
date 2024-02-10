@@ -1,0 +1,116 @@
+<div class="card container my-3 p-3">
+    <div class="h4 mb-0">
+        Order Details [ID:{{orderInfo.orderId}}]
+    </div>
+    <mat-divider class="border-3 my-3"></mat-divider>
+    <div class="d-flex">
+        <div class="card mx-4 p-3">
+            <div> Status:
+                <span class="h6">
+                    {{orderInfo.status}}
+                </span>
+            </div>
+            <div class=""> Order Date:
+                <span class="h6">
+                    {{placedOn}}
+                </span>
+            </div>
+            <div *ngIf="!isCustomer" class=""> Customer ID:
+                <span class="h6">
+                    {{orderInfo.customerId}}
+                </span>
+            </div>
+            <div *ngIf="!isSeller" class=""> Seller ID:
+                <span class="h6">
+                    {{orderInfo.sellerId}}
+                </span>
+            </div>
+            <div *ngIf="!isCarrier && isCarrierAssigned" class=""> Carrier ID:
+                <span class="h6">
+                    {{orderInfo.carrierId}}
+                </span>
+            </div>
+            <div *ngIf="isComments" class=""> Comments:
+                <span class="h6">
+                    {{orderInfo.comments}}
+                </span>
+            </div>
+        </div>
+        <div class="card mx-4 p-3">
+            <div class=""> Delivery Address:</div>
+            <div class="">
+                <app-address-card [address]="deliveryAddress"></app-address-card>
+            </div>
+        </div>
+        <div *ngIf="!isCustomer" class="card mx-4 p-3">
+            <div class=""> Customer Info:</div>
+            <div class="">
+                <app-address-card [address]="customer"></app-address-card>
+            </div>
+        </div>
+        <div *ngIf="!isSeller" class="card mx-4 p-3">
+            <div class=""> Seller Address:</div>
+            <div class="">
+                <app-address-card [address]="seller"></app-address-card>
+            </div>
+        </div>
+        <div *ngIf="!isCarrier && isCarrierAssigned" class="card mx-4 p-3">
+            <div class=""> Carrier Info:</div>
+            <div class="">
+                <app-address-card [address]="carrier"></app-address-card>
+            </div>
+        </div>
+    </div>
+    <mat-divider class="border-1 my-3"></mat-divider>
+    <div class="container card p-3">
+        <div class="h4 mb-3">Items</div>
+        <div class="d-flex flex-column">
+            <div *ngFor="let item of items">
+                <div class="my-2">
+                    <mat-card>
+                        <mat-card-content>
+                            <div class="d-flex flex-row">
+                                <div class="">
+                                    <img src="{{item?.imageUrl}}" alt="{{item?.imageUrl}}">
+                                </div>
+                                <div class="me-auto">
+                                    <mat-card-title>
+                                        <div class="">{{item?.name}}</div>
+                                    </mat-card-title>
+                                    <mat-card-subtitle>
+                                        <div class="h6">
+                                            &#8377; {{item?.price!}}
+                                        </div>
+                                    </mat-card-subtitle>
+                                    <mat-card-subtitle>Product Id: {{item?.productId}}</mat-card-subtitle>
+                                </div>
+                                <div class="h5">
+                                    Qty: {{item?.quantity}}
+                                </div>
+                                <div class="h5 text-center w-25">
+                                    &#8377; {{item?.price! * item.quantity!}}
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <mat-divider class="border-1 my-3"></mat-divider>
+            <div class="">
+                <mat-card-content>
+                    <div class="d-flex flex-row ">
+                        <div class="h4 text-center w-25 ms-auto">
+                            Total:
+                        </div>
+                        <div class="h4 text-center total-items">
+                            Qty: {{itemCount}}
+                        </div>
+                        <div class="h4 text-center w-25">
+                            &#8377; {{orderInfo.totalAmount}}
+                        </div>
+                    </div>
+                </mat-card-content>
+            </div>
+        </div>
+    </div>
+</div>

@@ -49,10 +49,11 @@ public class OrderServiceImpl implements IOrderService {
         order.setSellerId(order.getOrderedItems().get(0).getSellerId());
         order.setCarrierId(null);
         order.setPlacedOn(new Date());
-        order.setStatus(OrderStatus.INITIALIZED);
+        order.setStatus(null);
         Order savedOrder = orderRepository.save(order);
         messagePublisher.publishOrder(savedOrder);
-        return savedOrder;
+        messagePublisher.publishOrder(savedOrder);
+        return systemUpdateOrderStatus(savedOrder.getOrderId(), OrderStatus.INITIALIZED);
     }
 
     @Override
@@ -112,13 +113,33 @@ public class OrderServiceImpl implements IOrderService {
             throw new UserIsNotOwnerException();
         }
 
-        Order savedOrder = systemUpdateOrderStatus(order.getOrderId(), OrderStatus.CANCELLATION_REQUESTED);
-        // TODO - confirm cancellation from seller using amqp
-        return savedOrder;
+        OrderStatus newStatus = OrderStatus.CANCELLATION_REQUESTED;
+        if (isSellerOrAdmin(order, userId)) {
+            newStatus = OrderStatus.CANCELLED;
+        }
+
+        return systemUpdateOrderStatus(order.getOrderId(), newStatus);
     }
 
     @Override
-    public Order updateOrderStatus(String orderId, OrderStatus newStatus, String userId) throws OrderNotFoundException, UserIsNotOwnerException {
+    public Order confirmOrder(String orderId, String userId) throws OrderNotFoundException, UserIsNotOwnerException {
+        Optional<Order> optOrder = orderRepository.findById(orderId);
+        if (optOrder.isEmpty()) {
+            throw new OrderNotFoundException();
+        }
+
+        Order order = optOrder.get();
+        if (!isSellerOrAdmin(order, userId)) {
+            throw new UserIsNotOwnerException();
+        }
+
+        OrderStatus newStatus = OrderStatus.CONFIRMED;
+        return systemUpdateOrderStatus(order.getOrderId(), newStatus);
+    }
+
+
+    @Override
+    public Order shipOrder(String orderId, String userId) throws OrderNotFoundException, UserIsNotOwnerException {
         Optional<Order> optOrder = orderRepository.findById(orderId);
         if (optOrder.isEmpty()) {
             throw new OrderNotFoundException();
@@ -129,16 +150,23 @@ public class OrderServiceImpl implements IOrderService {
             throw new UserIsNotOwnerException();
         }
 
+        OrderStatus newStatus = OrderStatus.SHIPPED;
+        return systemUpdateOrderStatus(order.getOrderId(), newStatus);
+    }
 
-        if(newStatus == OrderStatus.CANCELLED) {
-            List<Product> items = order.getOrderedItems();
-            for(Product item : items){
-                item.setQuantity(-item.getQuantity());
-            }
-            order.setOrderedItems(items);
-            messagePublisher.publishOrder(order);
+    @Override
+    public Order deliverOrder(String orderId, String userId) throws OrderNotFoundException, UserIsNotOwnerException {
+        Optional<Order> optOrder = orderRepository.findById(orderId);
+        if (optOrder.isEmpty()) {
+            throw new OrderNotFoundException();
         }
 
+        Order order = optOrder.get();
+        if (!isSellerCarrierOrAdmin(order, userId)) {
+            throw new UserIsNotOwnerException();
+        }
+
+        OrderStatus newStatus = OrderStatus.DELIVERED;
         return systemUpdateOrderStatus(order.getOrderId(), newStatus);
     }
 
@@ -238,6 +266,11 @@ public class OrderServiceImpl implements IOrderService {
     private boolean isSellerCarrierOrAdmin(Order order, String userId) {
         return userId.equals(order.getSellerId()) ||
                 userId.equals(order.getCarrierId()) ||
+                userId.equals(SYSTEM_USER_ID);
+    }
+
+    private boolean isSellerOrAdmin(Order order, String userId) {
+        return userId.equals(order.getSellerId()) ||
                 userId.equals(SYSTEM_USER_ID);
     }
 

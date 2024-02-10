@@ -20,10 +20,10 @@ import { UserInfoTabComponent } from './components/dashboard-view/user-info-tab/
 import { DeliveriesTabComponent } from './components/dashboard-view/deliveries-tab/deliveries-tab.component';
 import { LocationTabComponent } from './components/dashboard-view/location-tab/location-tab.component';
 import { AlertsTabComponent } from './components/dashboard-view/alerts-tab/alerts-tab.component';
-import { OrdersTabComponent } from './components/dashboard-view/orders-tab/orders-tab.component';
 import { InformationControlsComponent } from './components/dashboard-view/information-controls/information-controls.component';
 import { DeliveryAddressManagerComponent } from './components/dashboard-view/user-info-tab/delivery-address-manager/delivery-address-manager.component';
 import { AddressDialogComponent } from './components/forms/address-dialog/address-dialog.component';
+import { DashNavComponent } from './components/dashboard-view/dash-nav/dash-nav.component';
 
 
 
@@ -49,13 +49,13 @@ import { AddressDialogComponent } from './components/forms/address-dialog/addres
     DeliveriesTabComponent,
     LocationTabComponent,
     AlertsTabComponent,
-    OrdersTabComponent,
     InformationControlsComponent,
     DeliveryAddressManagerComponent,
-    AddressDialogComponent
+    AddressDialogComponent,
+    DashNavComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
   ],
   exports: [
     LoginViewComponent,
@@ -63,7 +63,8 @@ import { AddressDialogComponent } from './components/forms/address-dialog/addres
     NewUserViewComponent,
     UserDetailsViewComponent,
     AddressCardComponent,
-    AlertCardComponent
+    AlertCardComponent,
+    DashNavComponent
   ]
 })
 export class UserModule { }

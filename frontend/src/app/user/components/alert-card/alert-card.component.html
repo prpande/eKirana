@@ -1,1 +1,18 @@
-<p>alert-card works!</p>
+<mat-card class="container my-2 py-2">
+    <div class="d-flex flex-row">
+        <div class="">
+            <mat-icon class="p-0 m-0" color="primary" *ngIf="isLow">low</mat-icon>
+            <mat-icon class="p-0 m-0" color="primary" *ngIf="isMedium">medium</mat-icon>
+            <mat-icon class="p-0 m-0" color="primary" *ngIf="isCritical">critical</mat-icon>
+        </div>
+        <div class="mx-5">
+            {{timeStamp}}
+        </div>
+        <div class="">
+            {{alert.message}}
+        </div>
+        <div class="mx-5">
+            {{alert.cleared}}
+        </div>
+    </div>
+</mat-card>

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Alert } from '../../models/alert';
+import { AlertLevel } from '../../models/alertLevel';
 
 @Component({
   selector: 'app-alert-card',
@@ -7,4 +9,24 @@ import { Component } from '@angular/core';
 })
 export class AlertCardComponent {
 
+  @Input()
+  alert!: Alert;
+  constructor(){
+  }
+
+  get isLow(): boolean{
+    return this.alert.level == AlertLevel.LOW;
+  }
+
+  get isMedium(): boolean{
+    return this.alert.level == AlertLevel.MEDIUM;
+  }
+
+  get isCritical(): boolean{
+    return this.alert.level == AlertLevel.CRITICAL;
+  }
+
+  get timeStamp(): string{
+    return (new Date(this.alert.timeStamp!.toString())).toUTCString();
+  }
 }

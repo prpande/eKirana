@@ -12,6 +12,9 @@ export class QuantityFormComponent implements OnInit{
   @Input()
   cartItem!: CartItem;
 
+  @Input()
+  isReadOnly: boolean = false;
+  
   itemQuantityControl: FormControl = new FormControl('');
 
 

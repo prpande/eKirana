@@ -1,28 +1,29 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Order } from 'src/app/order/models/order';
+import { OrderService } from 'src/app/order/services/order.service';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
 import { RouterService } from 'src/app/shared/services/router.service';
-import { Alert } from 'src/app/user/models/alert';
 import { User } from 'src/app/user/models/user';
 import { AuthService } from 'src/app/user/services/auth.service';
-import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
-  selector: 'app-alerts-tab',
-  templateUrl: './alerts-tab.component.html',
-  styleUrls: ['./alerts-tab.component.css']
+  selector: 'app-orders-tab',
+  templateUrl: './orders-tab.component.html',
+  styleUrls: ['./orders-tab.component.css']
 })
-export class AlertsTabComponent {
+export class OrdersTabComponent {
   userInfo!: User;
-  alerts: Alert[] = [];
+
+  orders: Order[] = [];
 
   constructor(private routerService: RouterService,
     private authService: AuthService,
     private restErrorSvc: RestErrorHandlerService,
     private logger: LoggerService,
     private actRoute: ActivatedRoute,
-    private userService: UserService) { }
+    private orderService: OrderService) { }
 
   ngOnInit(): void {
     if (!this.authService.isLoggedIn) {
@@ -32,29 +33,18 @@ export class AlertsTabComponent {
       this.routerService.goToLogin();
     }
 
-    this.actRoute.data.subscribe({
-      next: data => {
-        this.userInfo = data['userDataResolver'] as User;
-        this.alerts = [...this.userInfo.alertList!].reverse();
-      },
-      error: err => {
-        this.logger.error(`AlertsTabComponent: Error getting user information UserId:[${this.authService.UserCredentials?.userId}]`);
-        this.restErrorSvc.processFetchError(err);
-        this.authService.logout();
-        this.routerService.goToLogin();
-      }
-    })
+    this.refreshOrders();
   }
 
-  refreshAlerts() {
-    this.userService.getLoggedInUserInfo().subscribe({
-      next: info => {
-        this.userInfo = info;
-        this.alerts = [...this.userInfo.alertList!].reverse();
+  refreshOrders(){
+    this.orderService.getAllOrdersByUser().subscribe({
+      next: orderInfos => {
+        this.orders = [...orderInfos].reverse();
       },
-      error: err => {
+      error: err =>{
+        this.logger.error(`OrdersTabComponent: Error getting orders for UserId:[${this.authService.UserCredentials?.userId}]`);
         this.restErrorSvc.processFetchError(err);
       }
-    });
+    })
   }
 }

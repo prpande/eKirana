@@ -12,7 +12,7 @@
                     <mat-card-subtitle>Seller: {{cartItem.item?.sellerId}}</mat-card-subtitle>
                 </div>
                 <div class="">
-                    <app-quantity-form [cartItem]="cartItem"></app-quantity-form>
+                    <app-quantity-form [cartItem]="cartItem" [isReadOnly]="isReadOnly"></app-quantity-form>
                 </div>
                 <div class="h5 text-center w-25">
                     &#8377; {{cartItem.item?.price! * cartItem.quantity!}}

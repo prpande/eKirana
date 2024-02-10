@@ -20,8 +20,8 @@ export class OrderService {
     return this.httpCLient.get<Order>(OrderRestEndpointsService.GET_ORDER_BY_ID(orderId));
   }
 
-  getAllOrdersByUser(userId: string): Observable<Order[]> {
-    return this.httpCLient.get<Order[]>(OrderRestEndpointsService.GET_ALL_ORDERS_BY_USER_ID(userId));
+  getAllOrdersByUser(): Observable<Order[]> {
+    return this.httpCLient.get<Order[]>(OrderRestEndpointsService.GET_ALL_ORDERS_BY_USER_ID());
   }
 
   getOrdersAvailableForDelivery(): Observable<Order[]> {
@@ -32,8 +32,16 @@ export class OrderService {
     return this.httpCLient.put<Order>(OrderRestEndpointsService.CANCEL_ORDER(orderId), OrderStatus.CANCELLED);
   }
 
-  updateOrderStatus(orderId: string, status: OrderStatus): Observable<Order> {
-    return this.httpCLient.put<Order>(OrderRestEndpointsService.UPDATE_ORDER_STATUS(orderId), status);
+  confirmOrder(orderId: string): Observable<Order> {
+    return this.httpCLient.put<Order>(OrderRestEndpointsService.CONFIRM_ORDER(orderId), OrderStatus.CONFIRMED);
+  }
+
+  shipOrder(orderId: string): Observable<Order> {
+    return this.httpCLient.put<Order>(OrderRestEndpointsService.SHIP_ORDER(orderId), OrderStatus.SHIPPED);
+  }
+
+  deliverOrder(orderId: string): Observable<Order> {
+    return this.httpCLient.put<Order>(OrderRestEndpointsService.DELIVER_ORDER(orderId), OrderStatus.DELIVERED);
   }
 
   updateOrderCarrier(orderId: string, carrierId: string): Observable<Order> {

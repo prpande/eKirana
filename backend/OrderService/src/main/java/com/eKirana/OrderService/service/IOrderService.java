@@ -26,7 +26,11 @@ public interface IOrderService {
 
     Order cancelOrder(String orderId, String userId) throws OrderNotFoundException, UserIsNotOwnerException;
 
-    Order updateOrderStatus(String orderId, OrderStatus newStatus, String userId) throws OrderNotFoundException, UserIsNotOwnerException;
+    Order confirmOrder(String orderId, String userId) throws OrderNotFoundException, UserIsNotOwnerException;
+
+    Order shipOrder(String orderId, String userId) throws OrderNotFoundException, UserIsNotOwnerException;
+
+    Order deliverOrder(String orderId, String userId) throws OrderNotFoundException, UserIsNotOwnerException;
 
     Order systemUpdateOrderStatus(String orderId, OrderStatus newStatus);
 

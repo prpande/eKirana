@@ -48,10 +48,11 @@ public class OrderController {
     }
 
     @GetMapping(GET_ALL_ORDERS_BY_USER_ID)
-    public ResponseEntity<?> getAllOrdersByUserId(@PathVariable String userId, HttpServletRequest httpServletRequest) throws UnauthorizedUserTypeException {
+    public ResponseEntity<?> getAllOrdersByUserId(HttpServletRequest httpServletRequest) throws UnauthorizedUserTypeException {
         try {
-            logger.info("[getAllOrdersByUserId]: " + userId);
+            String userId = JwtFilter.getUserIdFromRequest(httpServletRequest);
             UserType userType = JwtFilter.getUserTypeFromRequest(httpServletRequest);
+            logger.info("[getAllOrdersByUserId]: User:[{}] UserType:[{}]", userId, userType);
             responseEntity = new ResponseEntity<>(orderService.getAllOrdersByUserId(userId, userType), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("[getAllOrdersByUserId]: Error", ex);
@@ -100,7 +101,7 @@ public class OrderController {
         return responseEntity;
     }
 
-    @DeleteMapping(CANCEL_ORDER)
+    @PutMapping(CANCEL_ORDER)
     public ResponseEntity<?> cancelOrder(@PathVariable String orderId, HttpServletRequest httpServletRequest) throws OrderNotFoundException, UserIsNotOwnerException {
         try {
             String userId = JwtFilter.getUserIdFromRequest(httpServletRequest);
@@ -113,17 +114,43 @@ public class OrderController {
         return responseEntity;
     }
 
-    @PutMapping(UPDATE_ORDER_STATUS)
-    public ResponseEntity<?> updateOrderStatus(@PathVariable String orderId, @RequestBody OrderStatus newStatus, HttpServletRequest httpServletRequest) throws OrderNotFoundException, UserIsNotOwnerException {
+    @PutMapping(CONFIRM_ORDER)
+    public ResponseEntity<?> confirmOrder(@PathVariable String orderId, HttpServletRequest httpServletRequest) throws OrderNotFoundException, UserIsNotOwnerException {
         try {
             String userId = JwtFilter.getUserIdFromRequest(httpServletRequest);
-            logger.info("[updateOrderStatus]: User:[{}] Order:[{}]", userId, orderId);
-            responseEntity = new ResponseEntity<>(orderService.updateOrderStatus(orderId, newStatus, userId), HttpStatus.OK);
-            return responseEntity;
+            logger.info("[confirmOrder]: User:[{}] Order:[{}]", userId, orderId);
+            responseEntity = new ResponseEntity<>(orderService.confirmOrder(orderId, userId), HttpStatus.ACCEPTED);
         } catch (Exception ex) {
-            logger.error("[updateOrderStatus]: Error", ex);
+            logger.error("[confirmOrder]: Error", ex);
             throw ex;
         }
+        return responseEntity;
+    }
+
+    @PutMapping(SHIP_ORDER)
+    public ResponseEntity<?> shipOrder(@PathVariable String orderId, HttpServletRequest httpServletRequest) throws OrderNotFoundException, UserIsNotOwnerException {
+        try {
+            String userId = JwtFilter.getUserIdFromRequest(httpServletRequest);
+            logger.info("[shipOrder]: User:[{}] Order:[{}]", userId, orderId);
+            responseEntity = new ResponseEntity<>(orderService.shipOrder(orderId, userId), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            logger.error("[shipOrder]: Error", ex);
+            throw ex;
+        }
+        return responseEntity;
+    }
+
+    @PutMapping(DELIVER_ORDER)
+    public ResponseEntity<?> deliverOrder(@PathVariable String orderId, HttpServletRequest httpServletRequest) throws OrderNotFoundException, UserIsNotOwnerException {
+        try {
+            String userId = JwtFilter.getUserIdFromRequest(httpServletRequest);
+            logger.info("[deliverOrder]: User:[{}] Order:[{}]", userId, orderId);
+            responseEntity = new ResponseEntity<>(orderService.deliverOrder(orderId, userId), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            logger.error("[deliverOrder]: Error", ex);
+            throw ex;
+        }
+        return responseEntity;
     }
 
     @PutMapping(UPDATE_ORDER_CARRIER)
