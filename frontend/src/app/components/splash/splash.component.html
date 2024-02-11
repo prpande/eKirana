@@ -1,5 +1,6 @@
-<app-image-input [isReadOnly]="false"></app-image-input>
 <div class="container h2">Shops</div>
 <div id="shop-container" class="container text-center">
-    <app-shop-card *ngFor="let shop of shops" [shop]="shop"></app-shop-card>
+    <div class="d-inline-flex align-items-center">
+        <app-shop-card *ngFor="let shop of shops" [shop]="shop"></app-shop-card>
+    </div>
 </div>

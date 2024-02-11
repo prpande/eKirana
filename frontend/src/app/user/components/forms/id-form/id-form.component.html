@@ -1,26 +1,30 @@
-<div class="">
+<div class="container p-2">
     <form [formGroup]="userIdGroup" class="">
-        <mat-form-field [appearance]="appearance" class="d-inline-block mx-3">
-            <mat-label>PAN Card Number</mat-label>
-            <input matInput type="text" id="panCardNumber" formControlName="panCardNumber" [readonly]="isReadOnly"/>
-            <mat-error *ngIf="panCardNumber?.errors?.['required']">
-                PAN Card number is required
-            </mat-error>
-            <mat-error
-                *ngIf="panCardNumber?.errors?.['minlength'] || panCardNumber?.errors?.['maxlength'] || panCardNumber?.errors?.['pattern']">
-                Invalid PAN Card number
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field *ngIf="userInfo && userInfo.userType == 'SELLER'" [appearance]="appearance" class="d-inline-block">
-            <mat-label>GST Number</mat-label>
-            <input matInput type="text" id="gstNumber" formControlName="gstNumber" [readonly]="isReadOnly"/>
-            <mat-error *ngIf="gstNumber?.errors?.['required']">
-                GST Number is required
-            </mat-error>
-            <mat-error
-                *ngIf="gstNumber?.errors?.['minlength'] || gstNumber?.errors?.['maxlength'] || gstNumber?.errors?.['pattern']">
-                Invalid GST number
-            </mat-error>
-        </mat-form-field>
+        <div class="d-flex">
+            <mat-form-field [appearance]="appearance" class="me-auto half-width-input">
+                <mat-label>PAN Card Number</mat-label>
+                <input matInput type="text" id="panCardNumber" formControlName="panCardNumber"
+                    [readonly]="isReadOnly" />
+                <mat-error *ngIf="panCardNumber?.errors?.['required']">
+                    PAN Card number is required
+                </mat-error>
+                <mat-error
+                    *ngIf="panCardNumber?.errors?.['minlength'] || panCardNumber?.errors?.['maxlength'] || panCardNumber?.errors?.['pattern']">
+                    Invalid PAN Card number
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="userInfo && userInfo.userType == 'SELLER'" [appearance]="appearance"
+                class="half-width-input">
+                <mat-label>GST Number</mat-label>
+                <input matInput type="text" id="gstNumber" formControlName="gstNumber" [readonly]="isReadOnly" />
+                <mat-error *ngIf="gstNumber?.errors?.['required']">
+                    GST Number is required
+                </mat-error>
+                <mat-error
+                    *ngIf="gstNumber?.errors?.['minlength'] || gstNumber?.errors?.['maxlength'] || gstNumber?.errors?.['pattern']">
+                    Invalid GST number
+                </mat-error>
+            </mat-form-field>
+        </div>
     </form>
 </div>

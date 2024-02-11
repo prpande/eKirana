@@ -2,10 +2,13 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GoogleMap } from '@angular/google-maps';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
+import { Image } from 'src/app/shared/image-manager/models/Image';
+import { ImageWrapper } from 'src/app/shared/image-manager/models/ImageWrapper';
+import { ImageService } from 'src/app/shared/image-manager/services/image.service';
 import { IdGeneratorService } from 'src/app/shared/services/id-generator.service';
 import { IndiaStatesService } from 'src/app/shared/services/india-states.service';
 import { Address } from 'src/app/user/models/address';
-import { User } from 'src/app/user/models/user';
+import { AuthService } from 'src/app/user/services/auth.service';
 
 @Component({
   selector: 'app-address-form',
@@ -23,27 +26,30 @@ export class AddressFormComponent implements OnInit {
 
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
 
+  isSeller: boolean = false;
+  shopImg!: ImageWrapper;
+  displayInput: boolean = false;
 
-  // mapZoom = 16;
-  // mapCenter: google.maps.LatLng = new google.maps.LatLng({lat:0,lng:0});
-  // mapOptions: google.maps.MapOptions = {
-  //   zoomControl: true,
-  //   scrollwheel: true,
-  //   disableDoubleClickZoom: true,
-  //   clickableIcons: false,
-  //   disableDefaultUI: true,
-  //   fullscreenControl: false,
-  //   keyboardShortcuts: false,
-  //   mapTypeControl: false,
-  //   streetViewControl: false
-  // };
+  mapZoom = 16;
+  mapCenter: google.maps.LatLng = new google.maps.LatLng({ lat: 0, lng: 0 });
+  mapOptions: google.maps.MapOptions = {
+    zoomControl: true,
+    scrollwheel: true,
+    disableDoubleClickZoom: true,
+    clickableIcons: false,
+    disableDefaultUI: true,
+    fullscreenControl: false,
+    keyboardShortcuts: false,
+    mapTypeControl: false,
+    streetViewControl: false
+  };
 
-  // markerInitialized: boolean = false;
-  // markerLatLng: google.maps.LatLng= new google.maps.LatLng({lat:0,lng:0});
-  // markerOptions: google.maps.MarkerOptions = {
-  //   draggable: false,
-  //   animation: google.maps.Animation.DROP,
-  // };
+  markerInitialized: boolean = false;
+  markerLatLng: google.maps.LatLng = new google.maps.LatLng({ lat: 0, lng: 0 });
+  markerOptions: google.maps.MarkerOptions = {
+    draggable: false,
+    animation: google.maps.Animation.DROP,
+  };
 
   states: string[];
 
@@ -70,7 +76,11 @@ export class AddressFormComponent implements OnInit {
   get displayImageUrl() { return this.addressFormGroup.get("displayImageUrl"); }
   get formGroup(): FormGroup { return this.addressFormGroup; }
 
-  constructor(private fb: FormBuilder, private idGenerator: IdGeneratorService, private statesService: IndiaStatesService) {
+  constructor(private fb: FormBuilder,
+    private idGenerator: IdGeneratorService,
+    private statesService: IndiaStatesService,
+    private authService: AuthService,
+    private imageService: ImageService) {
     this.states = statesService.States;
   }
 
@@ -109,43 +119,61 @@ export class AddressFormComponent implements OnInit {
       this.displayImageUrl?.setValue(this.address.displayImageUrl);
     }
     this.dataInitialized = true;
+    this.isSeller = this.authService.isSeller;
+    if (this.displayImageUrl?.value) {
+      this.imageService.getImage(this.displayImageUrl?.value).subscribe(image => {
+        if (image) {
+          this.shopImg = new ImageWrapper();
+          this.shopImg.imgData = new Image(image);
+          this.shopImg.setInitialized();
+          this.displayInput = true;
+        }
+      })
+    } else {
+      this.displayInput = true;
+    }
   }
 
   getAddressObj(): Address {
     return new Address(this.addressFormGroup.value);
   }
 
-  // setUpMap() {
-  //   const point: google.maps.LatLngLiteral = { lat:0, lng:0};
-  //   if (this.address && this.address.addressId) {
-  //     point.lat = this.address!.latitude!;
-  //     point.lng = this.address!.longitude!;
-  //     this.mapCenter = new google.maps.LatLng(point);
-  //     this.setMapMarker(point);
-  //   } else {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position: GeolocationPosition) => {
-  //         point.lat = position.coords.latitude;
-  //         point.lng =  position.coords.longitude;
-  //         this.mapCenter = new google.maps.LatLng(point);
-  //         this.setMapMarker(point);
-  //       }, null, { enableHighAccuracy: true, }
-  //       );
-  //     }
+  setUpMap() {
+    const point: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
+    if (this.address && this.address.addressId) {
+      point.lat = this.address!.latitude!;
+      point.lng = this.address!.longitude!;
+      this.mapCenter = new google.maps.LatLng(point);
+      this.setMapMarker(point);
+    } else {
+      navigator.geolocation.getCurrentPosition(
+        (position: GeolocationPosition) => {
+          point.lat = position.coords.latitude;
+          point.lng = position.coords.longitude;
+          this.mapCenter = new google.maps.LatLng(point);
+          this.setMapMarker(point);
+        }, null, { enableHighAccuracy: true, }
+      );
+    }
+  }
 
-  //   }
 
+  mapClick(event: any) {
+    if (event.latLng && !this.isReadOnly) {
+      this.setMapMarker(event.latLng);
+    }
+  }
 
-  // mapClick(event: any) {
-  //   if (event.latLng && !this.isReadOnly) {
-  //     this.setMapMarker(event.latLng);
-  //   }
-  // }
+  setMapMarker(data: any) {
+    this.markerLatLng = new google.maps.LatLng(data);
+    this.latitude?.setValue(this.markerLatLng.lat());
+    this.longitude?.setValue(this.markerLatLng.lng());
+    this.markerInitialized = true;
+  }
 
-  // setMapMarker(data: any) {
-  //   this.markerLatLng = new google.maps.LatLng(data);
-  //   this.latitude?.setValue(this.markerLatLng.lat());
-  //   this.longitude?.setValue(this.markerLatLng.lng());
-  //   this.markerInitialized = true;
-  // }
+  onLoadingShopImage(imageId: string) {
+    this.displayImageUrl?.setValue(imageId);
+    this.addressFormGroup.markAsDirty();
+  }
+
 }

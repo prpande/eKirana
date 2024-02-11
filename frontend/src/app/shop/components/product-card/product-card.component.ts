@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Product } from '../../models/product';
 import { AuthService } from 'src/app/user/services/auth.service';
@@ -8,27 +8,45 @@ import { ProductService } from '../../services/product.service';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
 import { CartService } from 'src/app/cart/services/cart.service';
+import { ImageService } from 'src/app/shared/image-manager/services/image.service';
 
 @Component({
   selector: 'app-product-card',
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.css']
 })
-export class ProductCardComponent {
+export class ProductCardComponent implements OnInit{
 
   @Input()
   product: Product;
-
+  
   @Output()
   productUpdatedEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+  
+  imgSrc!: string;
+  
   constructor(public productDialog: MatDialog,
     private authService: AuthService,
     private productService: ProductService,
     private logger: LoggerService,
     private restErrorSvc: RestErrorHandlerService,
-    private cartService: CartService) {
+    private cartService: CartService,
+    private imageService: ImageService) {
     this.product = new Product();
+  }
+  ngOnInit(): void {
+    if(this.product && this.product.imageUrl){
+      this.imageService.getImage(this.product.imageUrl).subscribe({
+        next: imgData =>{
+          if(imgData){
+            this.imgSrc = this.imageService.getImageSrcString(imgData);
+          }
+        },
+        error: err =>{
+          this.logger.error(err);
+        }
+      });
+    }
   }
 
 

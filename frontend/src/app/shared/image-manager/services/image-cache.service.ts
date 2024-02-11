@@ -12,7 +12,9 @@ export class ImageCacheService {
 
   addImage(img: Image) {
     if (img && img.imageId) {
-      this._imageCache.set(img.imageId, img);
+      if (!this._imageCache.get(img.imageId)) {
+        this._imageCache.set(img.imageId, img);
+      }
     }
   }
 
@@ -28,7 +30,7 @@ export class ImageCacheService {
     this._imageCache.clear();
   }
 
-  addImages(images: Image[]){
+  addImages(images: Image[]) {
     images.forEach(image => {
       this.addImage(image);
     })

@@ -18,7 +18,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; min-width: 
 }
 .half-width-input{
     width: 47%;
-    min-width: 275px;
 }
 
 input::-webkit-outer-spin-button,

@@ -41,7 +41,7 @@
         <mat-tab *ngIf="userInfo && userInfo!.userType == 'CUSTOMER'">
             <ng-template matTabLabel>
                 <div class="tab-label">
-                    <mat-icon class="p-0 m-0">home</mat-icon>
+                    <mat-icon class="p-0 m-0">add_location</mat-icon>
                     <p class="h5 p-0 m-0 mx-2">Delivery Addresses</p>
                 </div>
             </ng-template>
@@ -73,7 +73,7 @@
         <mat-tab *ngIf="userInfo && userInfo!.userType != 'CUSTOMER'">
             <ng-template matTabLabel>
                 <div class="tab-label">
-                    <mat-icon class="p-0 m-0">store</mat-icon>
+                    <mat-icon class="p-0 m-0">assignment_ind</mat-icon>
                     <p class="h5 p-0 m-0 mx-2">Identification Information</p>
                 </div>
             </ng-template>
@@ -91,7 +91,7 @@
         <mat-tab *ngIf="userInfo && userInfo!.userType == 'CARRIER'">
             <ng-template matTabLabel>
                 <div class="tab-label">
-                    <mat-icon class="p-0 m-0">person</mat-icon>
+                    <mat-icon class="p-0 m-0">local_shipping</mat-icon>
                     <p class="h5 p-0 m-0 mx-2">Vehicle Information</p>
                 </div>
             </ng-template>

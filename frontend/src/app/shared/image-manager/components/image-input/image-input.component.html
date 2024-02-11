@@ -2,6 +2,7 @@
     <div class="">
         <div class="mt-2">
             <mat-form-field appearance="outline">
+                <mat-label>Image</mat-label>
                 <input matInput type="text" id="imagePath" [formControl]="imagePathFormControl" readonly />
                 <mat-icon matSuffix class="color-green" *ngIf="imageInitialized">check_circle</mat-icon>
                 <mat-icon matSuffix *ngIf="!imageInitialized">icon</mat-icon>
@@ -13,11 +14,11 @@
             <img [src]="imageSrcString" height="70px">
         </div>
     </div>
-    <div class="button-container">
+    <div class="button-container" *ngIf="!isReadOnly">
         <div class="my-3">
             <label for="file-upload" class="custom-file-upload">
-                <button mat-mini-fab matTooltip="Add New Address" class="" color="accent" (click)="fileInput.click()" [disabled]="isReadOnly">
-                    <mat-icon class="">image</mat-icon>
+                <button mat-mini-fab matTooltip="Add Image" class="" color="accent" (click)="fileInput.click()" [disabled]="isReadOnly">
+                    <mat-icon class="">add_photo_alternate</mat-icon>
                 </button>
             </label>
         </div>

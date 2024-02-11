@@ -1,20 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Address } from '../models/address';
 import { UserRestEndpointsService } from './user-rest-endpoints.service';
 import { UserCredential } from '../models/userCredential';
 import { User } from '../models/user';
+import { ImageService } from 'src/app/shared/image-manager/services/image.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private imageService: ImageService) { }
 
   getShops(): Observable<Address[]> {
-    return this.httpClient.get<Address[]>(UserRestEndpointsService.GET_ALL_SHOPS);
+    return this.httpClient.get<Address[]>(UserRestEndpointsService.GET_ALL_SHOPS).pipe(
+      tap((addresses)=>{
+        addresses.forEach(address =>{
+          this.imageService.getImage(address.displayImageUrl!);
+        })
+      })
+    );
   }
 
   createUserCredentials(userCredentials: UserCredential): Observable<UserCredential> {
@@ -22,6 +29,9 @@ export class UserService {
   }
 
   updateUser(user: User): Observable<User> {
+    if(user.address?.displayImageUrl){
+      this.imageService.saveCachedImage(user.address?.displayImageUrl);
+    }
     return this.httpClient.put<User>(UserRestEndpointsService.UPDATE_USER, user);
   }
 

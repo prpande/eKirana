@@ -12,6 +12,7 @@ import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProductDialogComponent } from '../edit-product-dialog/edit-product-dialog.component';
+import { ImageService } from 'src/app/shared/image-manager/services/image.service';
 
 @Component({
   selector: 'app-shop-view',
@@ -23,6 +24,7 @@ export class ShopViewComponent implements OnInit {
   userInfo: UserCredential;
   shopInfo: User;
   products: Product[];
+  imgSrc!: string;
 
   constructor(private logger: LoggerService,
     private authService: AuthService,
@@ -31,7 +33,8 @@ export class ShopViewComponent implements OnInit {
     private restErrorSvc: RestErrorHandlerService,
     private routerService: RouterService,
     private productService: ProductService,
-    public productDialog: MatDialog) {
+    public productDialog: MatDialog,
+    private imageService: ImageService) {
     this.userInfo = authService.UserCredentials;
     this.shopInfo = new User();
     this.products = [];
@@ -49,6 +52,7 @@ export class ShopViewComponent implements OnInit {
           }
           this.logger.info(`Fetched shop details:[${info.userId}]`);
           this.shopInfo = info;
+          this.getShopImage();
           this.getProductsInShop();
         },
         error: err => {
@@ -75,6 +79,21 @@ export class ShopViewComponent implements OnInit {
         this.handleRestErrorAndGoHome(err);
       }
     })
+  }
+
+  getShopImage() {
+    if (this.shopInfo && this.shopInfo.address && this.shopInfo.address.displayImageUrl) {
+      this.imageService.getImage(this.shopInfo.address.displayImageUrl).subscribe({
+        next: imgData => {
+          if (imgData) {
+            this.imgSrc = this.imageService.getImageSrcString(imgData);
+          }
+        },
+        error: err => {
+          this.logger.error(err);
+        }
+      })
+    }
   }
 
   addProduct() {

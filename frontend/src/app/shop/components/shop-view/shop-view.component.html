@@ -1,10 +1,10 @@
 <div class="container mt-5">
     <mat-card>
         <mat-card-content class="d-flex flex-row">
-            <div class="">
-                <img src="{{shopInfo.address?.displayImageUrl}}" alt="{{shopInfo.address?.displayImageUrl}}">
+            <div class="shop-title me-4" *ngIf="imgSrc">
+                <img class="img-thumbnail" [src]="imgSrc" alt="{{shopInfo.address?.displayImageUrl}}">
             </div>
-            <div class="d-inline-block me-auto">
+            <div class="me-auto align-self-center">
                 <div class="h2">{{shopInfo.address?.fullName}}</div>
                 <mat-card-subtitle>
                     <p>{{shopInfo.address?.line1}}, {{shopInfo.address?.line2}}, {{shopInfo.address?.city}},

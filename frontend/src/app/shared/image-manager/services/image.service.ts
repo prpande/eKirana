@@ -13,27 +13,40 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class ImageService {
 
-  constructor(private httpCLient: HttpClient, private imageCache: ImageCacheService, private sanitizer:DomSanitizer) { 
+  constructor(private httpCLient: HttpClient, 
+    private imageCache: ImageCacheService, 
+    private sanitizer: DomSanitizer,
+    private logger: LoggerService) {
   }
 
-  getImageSrcString(imageObj: Image): any{
-    if(imageObj && imageObj.imageData){
+  getImageSrcString(imageObj: Image): any {
+    if (imageObj && imageObj.imageData) {
       return this.sanitizer.bypassSecurityTrustResourceUrl(imageObj.imageData);
     }
   }
 
-  saveImage(image: Image): Observable<Image> {
-    return this.httpCLient.post<Image>(ImageRestEndpointsService.SAVE_IMAGE, image).pipe(
-      tap( image => {
-        this.imageCache.addImage(image);
-      })
-    );
+  saveCachedImage(imageId: string) {
+    if (imageId) {
+      let cachedImg = this.imageCache.getImage(imageId);
+      this.saveImage(cachedImg!).subscribe({
+        next: imageId => {
+          this.logger.info(`Successfully saved cached image in DB:[${imageId}]`);
+        },
+        error: err => {
+          this.logger.error(err);
+        }
+      });
+    }
+  }
+
+  saveImage(image: Image): Observable<string> {
+    return this.httpCLient.post(ImageRestEndpointsService.SAVE_IMAGE, image, { responseType: 'text' });
   }
 
   getImage(imageId: string): Observable<Image> {
     let cachedImg = this.imageCache.getImage(imageId);
-    if(cachedImg && cachedImg.isInitialized) {
-      const obs = new Observable<Image>( observer => {
+    if (cachedImg) {
+      const obs = new Observable<Image>(observer => {
         observer.next(cachedImg);
       })
 
@@ -41,13 +54,10 @@ export class ImageService {
     }
 
     return this.httpCLient.get<Image>(ImageRestEndpointsService.GET_IMAGE_BY_ID(imageId)).pipe(
-      map( image => {
-        image.setInitialized();
-        return image;
-      }),
-      tap( image =>{
+      tap(image => {
         this.imageCache.addImage(image);
       })
     );
   }
+
 }

@@ -62,8 +62,8 @@
                 </mat-radio-group>
             </div>
         </div>
-        <div class="">
-            <input type="file"/>
+        <div class="" *ngIf="displayInput">
+            <app-image-input [imgObj]="productImg" [isReadOnly]="false" (imageLoadedEvent)="onLoadingProductImage($event)"></app-image-input>
         </div>
     </form>
 </div>

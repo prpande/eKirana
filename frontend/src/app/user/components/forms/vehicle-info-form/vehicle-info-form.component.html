@@ -1,46 +1,52 @@
-<div class="">
-    <form [formGroup]="vehicleInfoGroup" class="">        
-        <mat-form-field [appearance]="appearance" class="d-block">
-            <mat-label>Driving License No.</mat-label>
-            <input matInput type="text" id="drivingLicenseNumber" formControlName="drivingLicenseNumber" [readonly]="isReadOnly"/>
-            <mat-error *ngIf="drivingLicenseNumber?.errors?.['required']">
-                Driving License is required
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field [appearance]="appearance" class="d-block">
-            <mat-label>Vehicle Registration No.</mat-label>
-            <input matInput type="text" id="registrationNumber" formControlName="registrationNumber" [readonly]="isReadOnly"/>
-            <mat-error *ngIf="registrationNumber?.errors?.['required']">
-                Registration Number is required
-            </mat-error>
-        </mat-form-field>
+<div class="container p-2">
+    <form [formGroup]="vehicleInfoGroup" class="">
         <div class="">
-            <mat-form-field [appearance]="appearance" class="d-inline-block">
+            <mat-form-field [appearance]="appearance" class="me-auto half-width-input">
+                <mat-label>Driving License No.</mat-label>
+                <input matInput type="text" id="drivingLicenseNumber" formControlName="drivingLicenseNumber"
+                    [readonly]="isReadOnly" />
+                <mat-error *ngIf="drivingLicenseNumber?.errors?.['required']">
+                    Driving License is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="">
+            <mat-form-field [appearance]="appearance" class="me-auto half-width-input">
+                <mat-label>Vehicle Registration No.</mat-label>
+                <input matInput type="text" id="registrationNumber" formControlName="registrationNumber"
+                    [readonly]="isReadOnly" />
+                <mat-error *ngIf="registrationNumber?.errors?.['required']">
+                    Registration Number is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="d-flex flex-wrap">
+            <mat-form-field [appearance]="appearance" class="me-auto half-width-input">
                 <mat-label>Vehicle Make</mat-label>
-                <input matInput type="text" id="make" formControlName="make" [readonly]="isReadOnly"/>
+                <input matInput type="text" id="make" formControlName="make" [readonly]="isReadOnly" />
                 <mat-error *ngIf="make?.errors?.['required']">
                     Make is required
                 </mat-error>
             </mat-form-field>
-            <mat-form-field [appearance]="appearance" class="d-inline-block">
+            <mat-form-field [appearance]="appearance" class="half-width-input">
                 <mat-label>Vehicle Model</mat-label>
-                <input matInput type="text" id="model" formControlName="model" [readonly]="isReadOnly"/>
+                <input matInput type="text" id="model" formControlName="model" [readonly]="isReadOnly" />
                 <mat-error *ngIf="model?.errors?.['required']">
                     Model is required
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="">
-            <mat-form-field [appearance]="appearance" class="d-inline-block">
+        <div class="d-flex flex-wrap">
+            <mat-form-field [appearance]="appearance" class="me-auto half-width-input">
                 <mat-label>Vehicle Type</mat-label>
-                <input matInput type="text" id="vehicleType" formControlName="vehicleType" [readonly]="isReadOnly"/>
+                <input matInput type="text" id="vehicleType" formControlName="vehicleType" [readonly]="isReadOnly" />
                 <mat-error *ngIf="vehicleType?.errors?.['required']">
                     Type is required
                 </mat-error>
             </mat-form-field>
-            <mat-form-field [appearance]="appearance" class="d-inline-block">
+            <mat-form-field [appearance]="appearance" class="half-width-input">
                 <mat-label>Vehicle Capacity</mat-label>
-                <input matInput type="text" id="capacity" formControlName="capacity" [readonly]="isReadOnly"/>
+                <input matInput type="text" id="capacity" formControlName="capacity" [readonly]="isReadOnly" />
             </mat-form-field>
         </div>
     </form>

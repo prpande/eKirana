@@ -1,5 +1,7 @@
 <div class="">
     <app-vehicle-info-form [isReadOnly]="false"></app-vehicle-info-form>
-    <button mat-raised-button color="primary" (click)="onBack()">Back</button>
-    <button mat-raised-button color="primary" [disabled]="checkNextDisabled()" (click)="onNext()">Register</button>
+    <div class="container my-3">
+        <button mat-raised-button color="primary" (click)="onBack()">Back</button>
+        <button class="ms-5" mat-raised-button color="primary" [disabled]="checkNextDisabled()" (click)="onNext()">Register</button>
+    </div>
 </div>

@@ -1,7 +1,7 @@
 <div class="">
     <app-id-form [userInfo]="userInfo" [isReadOnly]="false"></app-id-form>
     <div class="container my-3">
-        <button mat-raised-button color="primary" (click)="onBack()">Back</button>
-        <button mat-raised-button color="primary" [disabled]="checkNextDisabled()" (click)="onNext()">{{nextButtonText}}</button>
+            <button mat-raised-button color="primary" (click)="onBack()">Back</button>
+            <button class="ms-5" mat-raised-button color="primary" [disabled]="checkNextDisabled()" (click)="onNext()">{{nextButtonText}}</button>
     </div>
 </div>

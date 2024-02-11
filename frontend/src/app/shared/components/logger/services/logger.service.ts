@@ -8,21 +8,22 @@ import { LogLevel } from '../models/LogLevel';
 export class LoggerService {
 
   constructor() { }
-  info(msg: string): void {
+  info(msg: any): void {
     this.logWith(LogLevel.Info, msg);
   }
-  warn(msg: string): void {
+  warn(msg: any): void {
     this.logWith(LogLevel.Warn, msg);
   }
-  error(msg: string): void {
+  error(msg: any): void {
     this.logWith(LogLevel.Error, msg);
   }
-  debug(msg: string): void {
+  debug(msg: any): void {
     this.logWith(LogLevel.Debug, msg);
   }
-  private logWith(level: any, msg: string): void {
+  private logWith(level: any, msg: any): void {
     let callingMethod = this.getInvokingMethodName();
-    let formattedMsg = `[${(new Date()).toISOString()}]\t[${level}]\t[${callingMethod}]:\t${msg}`;
+    let msgStr = JSON.stringify(msg)
+    let formattedMsg = `[${(new Date()).toISOString()}]\t[${level}]\t[${callingMethod}]:\t${msgStr}`;
     switch (level) {
       case LogLevel.None:
         return console.log(formattedMsg);

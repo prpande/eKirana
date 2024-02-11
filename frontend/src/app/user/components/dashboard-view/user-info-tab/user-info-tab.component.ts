@@ -1,24 +1,25 @@
 import { Component, Input, ViewChild } from '@angular/core';
+import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
+import { ImageService } from 'src/app/shared/image-manager/services/image.service';
+import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
+import { Address } from 'src/app/user/models/address';
 import { User } from 'src/app/user/models/user';
-import { UserInfoFormComponent } from '../../forms/user-info-form/user-info-form.component';
+import { Vehicle } from 'src/app/user/models/vehicle';
+import { UserService } from 'src/app/user/services/user.service';
 import { AddressFormComponent } from '../../forms/address-form/address-form.component';
 import { IdFormComponent } from '../../forms/id-form/id-form.component';
+import { UserInfoFormComponent } from '../../forms/user-info-form/user-info-form.component';
 import { VehicleInfoFormComponent } from '../../forms/vehicle-info-form/vehicle-info-form.component';
 import { InformationControlsComponent } from '../information-controls/information-controls.component';
-import { MatFormFieldAppearance } from '@angular/material/form-field';
-import { UserService } from 'src/app/user/services/user.service';
-import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
-import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
-import { Vehicle } from 'src/app/user/models/vehicle';
-import { Address } from 'src/app/user/models/address';
 
 @Component({
   selector: 'app-user-info-tab',
   templateUrl: './user-info-tab.component.html',
   styleUrls: ['./user-info-tab.component.css']
 })
-export class UserInfoTabComponent {
+export class UserInfoTabComponent{
   @ViewChild(MatTabGroup) tabGroup!: MatTabGroup;
   @ViewChild(MatTab) tab!: MatTab;
 
@@ -34,7 +35,8 @@ export class UserInfoTabComponent {
 
   constructor(private userService: UserService,
     private logger: LoggerService,
-    private restErrorSvc: RestErrorHandlerService) { }
+    private restErrorSvc: RestErrorHandlerService,
+    private imageService: ImageService) { }
 
   editClick() {
     let form = this.getCurrentTabForm();
@@ -90,6 +92,7 @@ export class UserInfoTabComponent {
         break;
       case 1:
         let newAddress = new Address(formData);
+        console.log(newAddress);
         newUserInfo.address = newAddress;
         break;
       case 2:

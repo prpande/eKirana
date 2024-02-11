@@ -1,20 +1,20 @@
 <mat-nav-list>
     <div *ngIf="userInfo && userInfo!.userType == 'CARRIER'">
-        <mat-list-item routerLink="deliveries">Deliveries</mat-list-item>
+        <mat-list-item routerLink="deliveries"><mat-icon>security</mat-icon>Deliveries</mat-list-item>
     </div>
     <div *ngIf="userInfo && userInfo!.userType == 'CARRIER'">
-        <mat-list-item routerLink="location">Update Location</mat-list-item>
+        <mat-list-item routerLink="location"><mat-icon>my_location</mat-icon>Update Location</mat-list-item>
     </div>
     <div>
-        <mat-list-item routerLink="information">Information</mat-list-item>
+        <mat-list-item routerLink="information"><mat-icon>info</mat-icon>Information</mat-list-item>
     </div>
     <div>
-        <mat-list-item routerLink="alerts">Alerts</mat-list-item>
+        <mat-list-item routerLink="alerts"><mat-icon>notifications</mat-icon>Alerts</mat-list-item>
     </div>
     <div>
-        <mat-list-item routerLink="orders">Orders</mat-list-item>
+        <mat-list-item routerLink="orders"><mat-icon>receipt</mat-icon>Orders</mat-list-item>
     </div>
     <div>
-        <mat-list-item routerLink="">Security</mat-list-item>
+        <mat-list-item routerLink=""><mat-icon>security</mat-icon> Security</mat-list-item>
     </div>
 </mat-nav-list>

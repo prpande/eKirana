@@ -1,7 +1,9 @@
 <a routerLink="/shop/{{shop?.userId}}">
     <mat-card mat-ripple class="shop-card d-lg-inline-block m-3">
+        <div class="">
+            <img *ngIf="imgSrc" class="img-thumbnail" mat-card-image [src]="imgSrc" [alt]="shop?.displayImageUrl">
+        </div>
         <mat-card-content>
-            <img mat-card-image src="{{shop?.displayImageUrl}}" alt=" {{shop?.displayImageUrl}}">
             <mat-card-title color="primary">
                 {{shop?.fullName}}
             </mat-card-title>
