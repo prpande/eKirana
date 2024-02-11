@@ -59,7 +59,12 @@ public class RestEndpoints {
     public static final String[] ORDER_SECURE_PATTERNS = new String[]{ORDER_ROOT + "/*"};
     //endregion
 
-    //region Test
-    public static final String z = "test";
+    //region Image Service endpoints
+    public static final String IMAGE_ROOT = "/api/image";
+    public static final String SAVE_IMAGE = "/";
+    public static final String GET_IMAGE_BY_ID = "/{imageId}";
+    public static final String GET_IMAGE_BY_USER_ID = "/user/{userId}";
+    public static final String DELETE_IMAGE = "/{imageId}";
+    public static final String[] IMAGE_SECURE_PATTERNS = new String[]{IMAGE_ROOT + "/*"};
     //endregion
 }

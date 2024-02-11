@@ -56,6 +56,7 @@
 	<modules>
 		<module>AuthenticationService</module>
 		<module>UserService</module>
+		<module>ImageService</module>
 		<module>ProductService</module>
 		<module>OrderService</module>
 		<module>SpringCloudAPIGateway</module>
