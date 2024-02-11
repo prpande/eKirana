@@ -1,0 +1,26 @@
+<div class="d-flex">
+    <div class="">
+        <div class="mt-2">
+            <mat-form-field appearance="outline">
+                <input matInput type="text" id="imagePath" [formControl]="imagePathFormControl" readonly />
+                <mat-icon matSuffix class="color-green" *ngIf="imageInitialized">check_circle</mat-icon>
+                <mat-icon matSuffix *ngIf="!imageInitialized">icon</mat-icon>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="">
+        <div class="mx-2 border-2 border my-auto" *ngIf="imageInitialized">
+            <img [src]="imageSrcString" height="70px">
+        </div>
+    </div>
+    <div class="button-container">
+        <div class="my-3">
+            <label for="file-upload" class="custom-file-upload">
+                <button mat-mini-fab matTooltip="Add New Address" class="" color="accent" (click)="fileInput.click()" [disabled]="isReadOnly">
+                    <mat-icon class="">image</mat-icon>
+                </button>
+            </label>
+        </div>
+        <input id="file-upload" type="file" (change)="onFileChange($event)" accept="image/*" #fileInput />
+    </div>
+</div>

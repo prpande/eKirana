@@ -26,11 +26,11 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBadgeModule } from '@angular/material/badge';
 import { QuantityFormComponent } from './components/quantity-form/quantity-form.component';
+import { ImageManagerModule } from './image-manager/image-manager.module';
 
 @NgModule({
-  declarations: [
-  
-    QuantityFormComponent
+  declarations: [  
+    QuantityFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +61,7 @@ import { QuantityFormComponent } from './components/quantity-form/quantity-form.
     MatRadioModule,
     MatDialogModule,
     MatBadgeModule,
+    ImageManagerModule
   ],
   exports: [
     BrowserModule,
@@ -91,7 +92,8 @@ import { QuantityFormComponent } from './components/quantity-form/quantity-form.
     MatRadioModule,
     MatDialogModule,
     MatBadgeModule,
-    QuantityFormComponent
+    QuantityFormComponent,
+    ImageManagerModule
   ],
 })
 export class SharedModule { }

@@ -9,14 +9,16 @@ public class Image {
     private String imageId;
     private String userId;
     private String imageData;
+    private String name;
 
     public Image() {
     }
 
-    public Image(String imageId, String userId, String imageData) {
+    public Image(String imageId, String userId, String imageData, String name) {
         this.imageId = imageId;
         this.userId = userId;
         this.imageData = imageData;
+        this.name = name;
     }
 
     public String getImageId() {
@@ -43,12 +45,21 @@ public class Image {
         this.imageData = imageData;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "Image{" +
                 "imageId='" + imageId + '\'' +
                 ", userId='" + userId + '\'' +
-                ", imageData=" + imageData +
+                ", imageData='" + imageData + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }
