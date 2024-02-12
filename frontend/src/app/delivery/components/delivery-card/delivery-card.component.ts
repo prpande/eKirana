@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Order } from 'src/app/order/models/order';
 import { OrderStatus } from 'src/app/order/models/orderStatus';
 import { OrderService } from 'src/app/order/services/order.service';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
+import { MapDialogComponent } from 'src/app/shared/components/map-dialog/map-dialog.component';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
 import { Address } from 'src/app/user/models/address';
 import { AuthService } from 'src/app/user/services/auth.service';
@@ -27,7 +29,8 @@ export class DeliveryCardComponent implements OnInit {
     private authService: AuthService,
     private orderService: OrderService,
     private userService: UserService,
-    private restErrorSvc: RestErrorHandlerService) { }
+    private restErrorSvc: RestErrorHandlerService,
+    private mapDialog: MatDialog) { }
 
   ngOnInit(): void {
     if (this.order) {
@@ -146,5 +149,19 @@ export class DeliveryCardComponent implements OnInit {
         });
       }
     }
+  }
+
+  getDirections(){
+    let title = `Directions from ${this.seller.fullName} to ${this.destination.fullName}.`
+    const dialogRef = this.mapDialog.open(MapDialogComponent, {
+      data:{
+        title: title,
+        isDirection: true,
+        sourceLat: this.seller.latitude!,
+        sourceLng: this.seller.longitude!,
+        destinationLat: this.destination.latitude!, 
+        destinationLng: this.destination.longitude!
+      }
+    });
   }
 }

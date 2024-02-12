@@ -34,9 +34,9 @@
             </div>
         </div>
         <div class="card-control align-self-center ms-auto" *ngIf="isInProgress">
-            <div class="banner d-flex justify-content-center  mt-5">
+            <div class="banner d-flex justify-content-center ">
                 <div class="text-center">
-                    <div class="p-3" *ngIf="isAcceptable">
+                    <div class="p-2" *ngIf="isAcceptable">
                         <button mat-fab extended color="accent" class="align-self-center" (click)="acceptOrder()">
                             <mat-icon class="p-0 m-0">check_circle</mat-icon>
                             <p class="p-0 m-1">
@@ -44,8 +44,16 @@
                             </p>
                         </button>
                     </div>
-                    <div class="p-3" *ngIf="isInProgress">
-                        <div class="" *ngIf="!isShipped">
+                    <div class="p-2" *ngIf="isInProgress">
+                        <div class="">
+                            <button mat-fab extended color="primary" class="align-self-center" (click)="getDirections()">
+                                <mat-icon class="p-0 m-0">directions</mat-icon>
+                                <p class="p-0 m-1">
+                                    Get Directions
+                                </p>
+                            </button>
+                        </div>
+                        <div class="mt-3" *ngIf="!isShipped">
                             <button mat-fab extended color="primary" class="align-self-center" (click)="shipOrder()">
                                 <mat-icon class="p-0 m-0">local_shipping</mat-icon>
                                 <p class="p-0 m-1">
@@ -53,7 +61,7 @@
                                 </p>
                             </button>
                         </div>
-                        <div class="" *ngIf="isShipped">
+                        <div class="mt-3" *ngIf="isShipped">
                             <button mat-fab extended color="primary" class="align-self-center" (click)="deliverOrder()">
                                 <mat-icon class="p-0 m-0">done_all</mat-icon>
                                 <p class="p-0 m-1">
