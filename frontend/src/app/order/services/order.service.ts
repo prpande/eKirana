@@ -4,13 +4,15 @@ import { Observable } from 'rxjs';
 import { Order } from '../models/order';
 import { OrderRestEndpointsService } from './order-rest-endpoints.service';
 import { OrderStatus } from '../models/orderStatus';
+import { AuthService } from 'src/app/user/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
 
-  constructor(private httpCLient: HttpClient) { }
+  constructor(private httpCLient: HttpClient,
+    private authService: AuthService) { }
 
   placeOrder(order: Order): Observable<Order> {
     return this.httpCLient.post<Order>(OrderRestEndpointsService.PLACE_ORDER, order);
@@ -28,7 +30,8 @@ export class OrderService {
     return this.httpCLient.get<Order[]>(OrderRestEndpointsService.GET_ORDERS_AVAILABLE_FOR_DELIVERY);
   }
 
-  cancelOrder(orderId: string): Observable<Order> {
+  cancelOrder(orderId: string, comment: string): Observable<Order> {
+    let fmtComment = `[${Date.now().toString()}] : Order cancellation by User:[${this.authService.UserCredentials.userId}] : ${comment};`
     return this.httpCLient.put<Order>(OrderRestEndpointsService.CANCEL_ORDER(orderId), OrderStatus.CANCELLED);
   }
 
@@ -54,5 +57,15 @@ export class OrderService {
 
   updateOrderDeliveryDate(orderId: string, date: Date): Observable<Order> {
     return this.httpCLient.put<Order>(OrderRestEndpointsService.UPDATE_ORDER_DELIVERY_DATE(orderId), date);
+  }
+
+  isOrderInProgress(order: Order): boolean {
+    return order && order.status != OrderStatus.CANCELLED && order.status != OrderStatus.DELIVERED;
+  }
+
+  canOrderCancelRequest(order: Order): boolean {
+    return order && order.status != OrderStatus.CANCELLED && 
+    order.status != OrderStatus.CANCELLATION_REQUESTED && 
+    order.status != OrderStatus.DELIVERED;
   }
 }

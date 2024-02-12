@@ -105,8 +105,7 @@ const routes: Routes = [
   {
     path: "orders/:orderId",
     component: OrderPageComponent,
-    canActivate: [loginGuard, dashStartGuard],
-    canDeactivate: [dashEndGuard]
+    canActivate: [loginGuard]
   },
   {
     path: "shop/:shopId",

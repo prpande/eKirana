@@ -1,11 +1,9 @@
-<div class="card p-2">
-    <div class="h5">
-        In Progress
+<div class="p-2">
+    <div class="h5 text-center m-2 p-5" *ngIf="!isDeliveryInProgress">
+        No deliveries in progress.
     </div>
-    <mat-divider color="primary" class="border-1 my-1"></mat-divider>
-    <div class="">
-        <div class="h6 text-center m-2">
-            No deliveries in progress.
-        </div>
+    <div class="" *ngIf="isDeliveryInProgress">
+        <app-delivery-card *ngFor="let order of inProgressDeliveries" [order]="order"
+            (refreshOrders)="ngOnInit()"></app-delivery-card>
     </div>
 </div>

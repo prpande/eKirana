@@ -1,14 +1,9 @@
-<div class="card p-2">
-    <div class="h5">
-        Available
+<div class="">
+    <div class="h5 text-center m-2 p-5" *ngIf="!isOrderAvailable">
+        No available deliveries.
     </div>
-    <mat-divider color="primary" class="border-1 my-1"></mat-divider>
-    <div class="">
-        <div class="h6 text-center m-2" *ngIf="!isOrderAvailable">
-            No available deliveries.
-        </div>
-        <div class="" *ngIf="isOrderAvailable">
-            <app-available-delivery-card *ngFor="let order of availableOrders" [order]="order" (refreshOrders)="ngOnInit()"></app-available-delivery-card>
-        </div>
+    <div class="" *ngIf="isOrderAvailable">
+        <app-delivery-card *ngFor="let order of availableOrders" [order]="order"
+            (refreshOrders)="ngOnInit()"></app-delivery-card>
     </div>
 </div>

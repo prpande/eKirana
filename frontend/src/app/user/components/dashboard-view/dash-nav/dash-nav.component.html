@@ -11,8 +11,6 @@
             </div>
         </mat-list-item>
     </div>
-
-
     <div>
         <mat-list-item routerLink="alerts" routerLinkActive="active-link">
             <div class="d-inline-block">
@@ -25,37 +23,13 @@
             </div>
         </mat-list-item>
     </div>
-    <div>
+    <div *ngIf="!isCarrier">
         <mat-list-item routerLink="orders" routerLinkActive="active-link">
             <div class="d-inline-block">
                 <div class="tab-label ms-auto">
                     <mat-icon>receipt</mat-icon>
                     <p class="h5 p-0 m-0 mx-2">
                         Orders
-                    </p>
-                </div>
-            </div>
-        </mat-list-item>
-    </div>
-    <div *ngIf="isCarrier">
-        <mat-list-item routerLink="deliveries" routerLinkActive="active-link">
-            <div class="d-inline-block">
-                <div class="tab-label ms-auto">
-                    <mat-icon>local_shipping</mat-icon>
-                    <p p class="h5 p-0 m-0 mx-2">
-                        Deliveries
-                    </p>
-                </div>
-            </div>
-        </mat-list-item>
-    </div>
-    <div *ngIf="isCarrier">
-        <mat-list-item routerLink="location" routerLinkActive="active-link">
-            <div class="d-inline-block">
-                <div class="tab-label ms-auto">
-                    <mat-icon>my_location</mat-icon>
-                    <p class="h5 p-0 m-0 mx-2">
-                        Update Location
                     </p>
                 </div>
             </div>

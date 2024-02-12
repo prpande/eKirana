@@ -1,0 +1,80 @@
+<div class=" order-card" *ngIf="isInitialized">
+    <div *ngIf="isInitialized" class="card m-3 p-3 main">
+        <div class="d-flex">
+            <div class="d-flex justify-content-around flex-fill">
+                <div class="">
+                    <div class="tab-label ms-auto">
+                        <mat-icon>store</mat-icon>
+                        <p class="h6 p-0 m-0 mx-2">
+                            Seller
+                        </p>
+                    </div>
+                    <div class="">
+                        <app-address-card [address]="seller"></app-address-card>
+                    </div>
+                </div>
+                <div class="align-self-center">
+                    <mat-icon class="m-2" color="primary">arrow_forward_ios</mat-icon>
+                    <mat-icon class="m-2" color="primary">arrow_forward_ios</mat-icon>
+                    <mat-icon class="m-2" color="accent">local_shipping</mat-icon>
+                    <mat-icon class="m-2" color="primary">arrow_forward_ios</mat-icon>
+                    <mat-icon class="m-2" color="primary">arrow_forward_ios</mat-icon>
+                </div>
+                <div class="">
+                    <div class="tab-label ms-auto">
+                        <mat-icon>place</mat-icon>
+                        <p class="h6 p-0 m-0 mx-2">
+                            Delivery Address
+                        </p>
+                    </div>
+                    <div class="">
+                        <app-address-card [address]="destination"></app-address-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-control align-self-center ms-auto" *ngIf="isInProgress">
+            <div class="banner d-flex justify-content-center  mt-5">
+                <div class="text-center">
+                    <div class="p-3" *ngIf="isAcceptable">
+                        <button mat-fab extended color="accent" class="align-self-center" (click)="acceptOrder()">
+                            <mat-icon class="p-0 m-0">check_circle</mat-icon>
+                            <p class="p-0 m-1">
+                                Accept Order
+                            </p>
+                        </button>
+                    </div>
+                    <div class="p-3" *ngIf="isInProgress">
+                        <div class="" *ngIf="!isShipped">
+                            <button mat-fab extended color="primary" class="align-self-center" (click)="shipOrder()">
+                                <mat-icon class="p-0 m-0">local_shipping</mat-icon>
+                                <p class="p-0 m-1">
+                                    Mark Shipped
+                                </p>
+                            </button>
+                        </div>
+                        <div class="" *ngIf="isShipped">
+                            <button mat-fab extended color="primary" class="align-self-center" (click)="deliverOrder()">
+                                <mat-icon class="p-0 m-0">done_all</mat-icon>
+                                <p class="p-0 m-1">
+                                    Mark Delivered
+                                </p>
+                            </button>
+                        </div>
+                        <div class="mt-3" *ngIf="isCancellable">
+                            <button mat-fab extended color="warn" class="align-self-center" (click)="cancelOrder()">
+                                <mat-icon class="p-0 m-0">cancel</mat-icon>
+                                <p class="p-0 m-1">
+                                    Cancel Order
+                                </p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <app-order-card [order]="order"></app-order-card>
+        </div>
+    </div>
+</div>

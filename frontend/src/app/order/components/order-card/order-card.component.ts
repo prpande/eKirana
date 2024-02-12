@@ -74,7 +74,7 @@ export class OrderCardComponent {
     let confirmation = confirm(`Are your sure you want to cancel order:[${this.order.orderId}]?`);
     if (confirmation) {
 
-      this.orderService.cancelOrder(this.order.orderId!).subscribe({
+      this.orderService.cancelOrder(this.order.orderId!, "test").subscribe({
         next: updatedOrder => {
           this.logger.info(`Order cancelled:[${updatedOrder.orderId}]`);
           this.order = updatedOrder;

@@ -18,6 +18,7 @@ export class AvailableDeliveriesComponent implements OnInit{
     private orderService: OrderService){}
 
   ngOnInit(): void {
+    this.availableOrders = [];
     this.authService.goHomeIfNotAllowed(UserType.CARRIER);
     this.orderService.getOrdersAvailableForDelivery().subscribe({
       next: orders => {
