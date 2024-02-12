@@ -8,6 +8,7 @@ import { LoggerService } from 'src/app/shared/components/logger/services/logger.
 import { BehaviorSubject, Observable, Subscription, catchError } from 'rxjs';
 import { DatastoreService } from 'src/app/shared/services/datastore.service';
 import { GlobalConstants } from 'src/app/app.module';
+import { RouterService } from 'src/app/shared/services/router.service';
 
 export type LoggedInCredentialData = {
   credentials?: UserCredential;
@@ -43,7 +44,8 @@ export class AuthService {
   constructor(private httpCLient: HttpClient,
     private restErrorSvc: RestErrorHandlerService,
     private logger: LoggerService,
-    private dataStore: DatastoreService) {
+    private dataStore: DatastoreService,
+    private routerService: RouterService) {
 
   }
 
@@ -148,6 +150,12 @@ export class AuthService {
           }
         }
       );
+  }
+
+  goHomeIfNotAllowed(requiredUserType: UserType){
+    if(!this.isLoggedIn && this.UserCredentials.userType != requiredUserType){
+      this.routerService.goToHome();
+    }
   }
 
   get isCarrier(): boolean{

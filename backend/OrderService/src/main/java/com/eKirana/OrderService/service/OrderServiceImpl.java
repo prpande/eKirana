@@ -207,6 +207,11 @@ public class OrderServiceImpl implements IOrderService {
         }
 
         Order order = optOrder.get();
+
+        if(order.getCarrierId() != null){
+            throw new UserIsNotOwnerException();
+        }
+
         if(order.getStatus() != OrderStatus.CONFIRMED){
             throw new OrderNotConfirmedException();
         }

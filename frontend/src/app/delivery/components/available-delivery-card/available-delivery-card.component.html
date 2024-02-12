@@ -1,0 +1,47 @@
+<div class=" order-card">
+    <mat-card *ngIf="isInitialized" class="m-3 p-3 main">
+        <div class="d-flex">
+            <div class="d-flex justify-content-around flex-fill">
+                <div class="">
+                    <div class="tab-label ms-auto">
+                        <mat-icon>store</mat-icon>
+                        <p class="h6 p-0 m-0 mx-2">
+                            Seller
+                        </p>
+                    </div>
+                    <div class="">
+                        <app-address-card [address]="seller"></app-address-card>
+                    </div>
+                </div>
+                <div class="align-self-center">
+                    <mat-icon class="m-2" color="primary">arrow_forward_ios</mat-icon>
+                    <mat-icon class="m-2" color="primary">arrow_forward_ios</mat-icon>
+                    <mat-icon class="m-2" color="accent">local_shipping</mat-icon>
+                    <mat-icon class="m-2" color="primary">arrow_forward_ios</mat-icon>
+                    <mat-icon class="m-2" color="primary">arrow_forward_ios</mat-icon>
+                </div>
+                <div class="">
+                    <div class="tab-label ms-auto">
+                        <mat-icon>place</mat-icon>
+                        <p class="h6 p-0 m-0 mx-2">
+                            Delivery Address
+                        </p>
+                    </div>
+                    <div class="">
+                        <app-address-card [address]="destination"></app-address-card>
+                    </div>
+                </div>
+            </div>
+            <div class="card-control align-self-center ms-auto">
+                <div class="button-container d-inline-block mx-2">
+                    <button matTooltip="Confirm" (click)="acceptOrder()" mat-mini-fab color="primary">
+                        <mat-icon>check_circle</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <app-order-card [order]="order"></app-order-card>
+        </div>
+    </mat-card>
+</div>

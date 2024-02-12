@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
 import { AddressDialogComponent } from '../forms/address-dialog/address-dialog.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-address-card',
@@ -21,7 +22,8 @@ export class AddressCardComponent {
   constructor(private addressDialog: MatDialog,
     private logger: LoggerService,
     private restErrorSvc: RestErrorHandlerService,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
   ) {
     this.address = new Address();
   }
@@ -74,5 +76,9 @@ export class AddressCardComponent {
         this.restErrorSvc.processPostError(err);
       }
     })
+  }
+
+  get isUserOwner(): boolean{
+    return this.authService.UserCredentials.userId == this.address.userId;
   }
 }

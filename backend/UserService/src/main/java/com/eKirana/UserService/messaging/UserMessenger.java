@@ -27,20 +27,20 @@ public class UserMessenger {
     }
 
     @RabbitListener(queues = Constants.ALERT_QUEUE_NAME)
-    private void alertQueueListener(AlertQMessage alertQMessage){
+    private void alertQueueListener(AlertQMessage alertQMessage) {
         try {
             User user = userService.getUserById(alertQMessage.getUserId());
             List<Alert> alertList = user.getAlertList();
-            if(alertList == null){
+            if (alertList == null) {
                 alertList = new ArrayList<>();
             }
 
             alertList.add(alertQMessage.getAlert());
             User updatedUser = new User();
             updatedUser.setAlertList(alertList);
-            if(user.getUserType() == UserType.CARRIER){
-                Vehicle userVehicle = updatedUser.getVehicleInfo();
-                if( userVehicle == null){
+            if (user.getUserType() == UserType.CARRIER) {
+                Vehicle userVehicle = user.getVehicleInfo();
+                if (userVehicle == null) {
                     userVehicle = new Vehicle();
                 }
 
@@ -49,7 +49,7 @@ public class UserMessenger {
             }
             logger.info("[alertQueueListener]: Adding Alert:[{}] for User[{}]", alertQMessage.getAlert().getAlertId(), alertQMessage.getUserId());
             userService.updateUser(alertQMessage.getUserId(), updatedUser);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             logger.error("[alertQueueListener]: Failed adding Alert:[{}] for User[{}]", alertQMessage.getAlert().getAlertId(), alertQMessage.getUserId(), ex);
         }
     }

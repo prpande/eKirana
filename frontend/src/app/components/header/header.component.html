@@ -4,6 +4,15 @@
     </a>
     <div class="">
         <div class="container">
+            <div *ngIf="loggedIn==true && userCredentials.userType =='CARRIER'" class="button-container d-inline-block">
+                <button mat-fab extended matTooltip="Delivery Hub" routerLink="delivery-hub"
+                    color="warn">
+                    <mat-icon class="p-0 m-0">local_shipping</mat-icon>
+                    <p class="p-0 m-1">
+                        Hub
+                    </p>
+                </button>
+            </div>
             <div *ngIf="loggedIn==true && userCredentials.userType =='SELLER'" class="button-container d-inline-block">
                 <button mat-fab extended matTooltip="Store Front" routerLink="/shop/{{userCredentials.userId}}"
                     color="warn">

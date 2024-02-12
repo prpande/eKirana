@@ -1,1 +1,21 @@
-<p>delivery-hub-view works!</p>
+<div class="container">
+    <div class="card m-3 p-3">
+        <div class="d-inline-block px-3">
+            <div class="d-flex">
+                <mat-icon class="mt-1" color="primary">local_shipping</mat-icon>
+                <p class="h3 p-0 m-0 mx-2">
+                    Deliveries
+                </p>
+            </div>
+        </div>
+        <mat-divider color="primary" class="border-3 my-3"></mat-divider>
+        <div class="px-3">
+            <app-in-progress-deliveries></app-in-progress-deliveries>
+        </div>
+        <mat-divider color="primary" class="border-2 my-3"></mat-divider>
+        <div class="px-3">
+            <app-available-deliveries></app-available-deliveries>
+        </div>
+    </div>
+
+</div>

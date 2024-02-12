@@ -18,7 +18,7 @@
         <div class="h6 d-flex">
             <mat-icon>phone</mat-icon> {{address.phoneNumber}}
         </div>
-        <mat-card-actions class="card-actions p-0 text-center">
+        <mat-card-actions class="card-actions p-0 text-center" *ngIf="isUserOwner">
             <div class="button-container d-inline-block mx-2">
                 <button (click)="editAddress()" mat-icon-button color="primary">
                     <mat-icon>edit</mat-icon>

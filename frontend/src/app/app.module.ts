@@ -17,6 +17,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { UserModule } from './user/user.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { OrderModule } from './order/order.module';
+import { DeliveryModule } from './delivery/delivery.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { OrderModule } from './order/order.module';
     UserModule,
     CartModule,
     ShopModule,
+    DeliveryModule,
     OrderModule,
     MatToolbarModule
   ],
