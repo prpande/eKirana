@@ -61,10 +61,10 @@ public class RestEndpoints {
 
     //region Image Service endpoints
     public static final String IMAGE_ROOT = "/api/image";
-    public static final String SAVE_IMAGE = "/";
+    public static final String SAVE_IMAGE = "/update";
     public static final String GET_IMAGE_BY_ID = "/{imageId}";
     public static final String GET_IMAGE_BY_USER_ID = "/user/{userId}";
-    public static final String DELETE_IMAGE = "/{imageId}";
-    public static final String[] IMAGE_SECURE_PATTERNS = new String[]{IMAGE_ROOT + "/*"};
+    public static final String DELETE_IMAGE = "/update/{imageId}";
+    public static final String[] IMAGE_SECURE_PATTERNS = new String[]{IMAGE_ROOT + SAVE_IMAGE + "/*"};
     //endregion
 }

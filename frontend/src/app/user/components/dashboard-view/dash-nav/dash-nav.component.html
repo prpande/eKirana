@@ -1,20 +1,76 @@
-<mat-nav-list>
-    <div *ngIf="userInfo && userInfo!.userType == 'CARRIER'">
-        <mat-list-item routerLink="deliveries"><mat-icon>security</mat-icon>Deliveries</mat-list-item>
+<mat-nav-list class="container">
+    <div>
+        <mat-list-item routerLink="information" routerLinkActive="active-link">
+            <div class="d-inline-block">
+                <div class="tab-label ms-auto">
+                    <mat-icon>info</mat-icon>
+                    <p class="h5 p-0 m-0 mx-2">
+                        Information
+                    </p>
+                </div>
+            </div>
+        </mat-list-item>
     </div>
-    <div *ngIf="userInfo && userInfo!.userType == 'CARRIER'">
-        <mat-list-item routerLink="location"><mat-icon>my_location</mat-icon>Update Location</mat-list-item>
+
+
+    <div>
+        <mat-list-item routerLink="alerts" routerLinkActive="active-link">
+            <div class="d-inline-block">
+                <div class="tab-label ms-auto">
+                    <mat-icon>notifications</mat-icon>
+                    <p class="h5 p-0 m-0 mx-2">
+                        Alerts
+                    </p>
+                </div>
+            </div>
+        </mat-list-item>
     </div>
     <div>
-        <mat-list-item routerLink="information"><mat-icon>info</mat-icon>Information</mat-list-item>
+        <mat-list-item routerLink="orders" routerLinkActive="active-link">
+            <div class="d-inline-block">
+                <div class="tab-label ms-auto">
+                    <mat-icon>receipt</mat-icon>
+                    <p class="h5 p-0 m-0 mx-2">
+                        Orders
+                    </p>
+                </div>
+            </div>
+        </mat-list-item>
+    </div>
+    <div *ngIf="isCarrier">
+        <mat-list-item routerLink="deliveries" routerLinkActive="active-link">
+            <div class="d-inline-block">
+                <div class="tab-label ms-auto">
+                    <mat-icon>local_shipping</mat-icon>
+                    <p p class="h5 p-0 m-0 mx-2">
+                        Deliveries
+                    </p>
+                </div>
+            </div>
+        </mat-list-item>
+    </div>
+    <div *ngIf="isCarrier">
+        <mat-list-item routerLink="location" routerLinkActive="active-link">
+            <div class="d-inline-block">
+                <div class="tab-label ms-auto">
+                    <mat-icon>my_location</mat-icon>
+                    <p class="h5 p-0 m-0 mx-2">
+                        Update Location
+                    </p>
+                </div>
+            </div>
+        </mat-list-item>
     </div>
     <div>
-        <mat-list-item routerLink="alerts"><mat-icon>notifications</mat-icon>Alerts</mat-list-item>
-    </div>
-    <div>
-        <mat-list-item routerLink="orders"><mat-icon>receipt</mat-icon>Orders</mat-list-item>
-    </div>
-    <div>
-        <mat-list-item routerLink=""><mat-icon>security</mat-icon> Security</mat-list-item>
+        <mat-list-item routerLink="security" routerLinkActive="active-link">
+            <div class="d-inline-block">
+                <div class="tab-label ms-auto">
+                    <mat-icon>security</mat-icon>
+                    <p class="h5 p-0 m-0 mx-2">
+                        Security
+                    </p>
+                </div>
+            </div>
+        </mat-list-item>
     </div>
 </mat-nav-list>

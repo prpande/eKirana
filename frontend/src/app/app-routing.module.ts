@@ -20,6 +20,8 @@ import { checkoutEndGuard } from './shared/guards/checkout-end.guard';
 import { dashStartGuard } from './shared/guards/dash-start.guard';
 import { dashEndGuard } from './shared/guards/dash-end.guard';
 import { OrderPageComponent } from './order/components/order-page/order-page.component';
+import { SecurityTabComponent } from './user/components/dashboard-view/security-tab/security-tab.component';
+import { DeliveryHubViewComponent } from './delivery/components/delivery-hub-view/delivery-hub-view.component';
 
 const routes: Routes = [
   {
@@ -69,6 +71,11 @@ const routes: Routes = [
     }
   },
   {
+    path: "delivery-hub",
+    component: DeliveryHubViewComponent,
+    canActivate: [loginGuard],
+  },
+  {
     path: "location",
     component: LocationTabComponent,
     canActivate: [loginGuard, dashStartGuard],
@@ -80,6 +87,15 @@ const routes: Routes = [
   {
     path: "orders",
     component: OrdersTabComponent,
+    canActivate: [loginGuard, dashStartGuard],
+    canDeactivate: [dashEndGuard],
+    resolve: {
+      userDataResolver: UserDataResolver
+    }
+  },
+  {
+    path: "security",
+    component: SecurityTabComponent,
     canActivate: [loginGuard, dashStartGuard],
     canDeactivate: [dashEndGuard],
     resolve: {

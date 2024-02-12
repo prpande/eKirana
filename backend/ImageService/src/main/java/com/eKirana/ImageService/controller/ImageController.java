@@ -51,9 +51,7 @@ public class ImageController {
     @GetMapping(GET_IMAGE_BY_ID)
     public ResponseEntity<?> getImageById(@PathVariable String imageId, HttpServletRequest httpServletRequest) throws ImageNotFoundException {
         try {
-            String userId = JwtFilter.getUserIdFromRequest(httpServletRequest);
-            UserType userType = JwtFilter.getUserTypeFromRequest(httpServletRequest);
-            logger.info("[getImageById]: User:[{}] UserType:[{}] Image:[{}]", userId, userType, imageId);
+            logger.info("[getImageById]: Enter");
             responseEntity = new ResponseEntity<>(imageService.getImageById(imageId), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("[getImageById]: Error", ex);
@@ -66,12 +64,10 @@ public class ImageController {
     @GetMapping(GET_IMAGE_BY_USER_ID)
     public ResponseEntity<?> getImageByUserId(@PathVariable String userId, HttpServletRequest httpServletRequest) {
         try {
-            String requestingUserId = JwtFilter.getUserIdFromRequest(httpServletRequest);
-            UserType userType = JwtFilter.getUserTypeFromRequest(httpServletRequest);
-            logger.info("[getImageBuUserId]: Requesting User:[{}] UserType:[{}] Requested User:[{}]", requestingUserId, userType, userId);
+            logger.info("[getImageByUserId]: Requested User:[{}]",userId);
             responseEntity = new ResponseEntity<>(imageService.getImageByUserId(userId), HttpStatus.OK);
         } catch (Exception ex) {
-            logger.error("[getImageBuUserId]: Error", ex);
+            logger.error("[getImageByUserId]: Error", ex);
             throw ex;
         }
 

@@ -19,7 +19,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; min-width: 
 .half-width-input{
     width: 47%;
 }
-
+.tab-label {
+  display: flex;
+  justify-content: center;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

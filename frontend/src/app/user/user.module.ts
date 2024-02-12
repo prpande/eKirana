@@ -24,6 +24,7 @@ import { InformationControlsComponent } from './components/dashboard-view/inform
 import { DeliveryAddressManagerComponent } from './components/dashboard-view/user-info-tab/delivery-address-manager/delivery-address-manager.component';
 import { AddressDialogComponent } from './components/forms/address-dialog/address-dialog.component';
 import { DashNavComponent } from './components/dashboard-view/dash-nav/dash-nav.component';
+import { SecurityTabComponent } from './components/dashboard-view/security-tab/security-tab.component';
 
 
 
@@ -52,7 +53,8 @@ import { DashNavComponent } from './components/dashboard-view/dash-nav/dash-nav.
     InformationControlsComponent,
     DeliveryAddressManagerComponent,
     AddressDialogComponent,
-    DashNavComponent
+    DashNavComponent,
+    SecurityTabComponent
   ],
   imports: [
     SharedModule,

@@ -1,12 +1,18 @@
-<div class="container card m-4">
-    <div class="d-flex mt-3">
-        <mat-icon class="p-0 m-0" color="primary">alert</mat-icon>
-        <p class="h5 d-inline-block"> Alerts</p>
-    </div>
-    <mat-divider color="primary"></mat-divider>
-    <div class="p-2 my-3">
-        <div class="d-flex flex-column">
-            <app-alert-card *ngFor="let alert of alerts" [alert]="alert"></app-alert-card>
+<div class="card m-3">
+    <div class="container py-3">
+        <div class="d-inline-block">
+            <div class="tab-label ms-auto">
+                <mat-icon color="primary">notifications</mat-icon>
+                <p class="h4 p-0 m-0 mx-2">
+                    Alerts
+                </p>
+            </div>
+        </div>
+        <mat-divider color="primary" class="border-3 my-3"></mat-divider>
+        <div class="p-2 my-3">
+            <div class="d-flex flex-column">
+                <app-alert-card *ngFor="let alert of alerts" [alert]="alert"></app-alert-card>
+            </div>
         </div>
     </div>
 </div>
