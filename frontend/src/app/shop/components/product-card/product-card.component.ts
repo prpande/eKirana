@@ -15,16 +15,16 @@ import { ImageService } from 'src/app/shared/image-manager/services/image.servic
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.css']
 })
-export class ProductCardComponent implements OnInit{
+export class ProductCardComponent implements OnInit {
 
   @Input()
   product: Product;
-  
+
   @Output()
   productUpdatedEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
-  
+
   imgSrc!: string;
-  
+
   constructor(public productDialog: MatDialog,
     private authService: AuthService,
     private productService: ProductService,
@@ -35,14 +35,14 @@ export class ProductCardComponent implements OnInit{
     this.product = new Product();
   }
   ngOnInit(): void {
-    if(this.product && this.product.imageUrl){
+    if (this.product && this.product.imageUrl) {
       this.imageService.getImage(this.product.imageUrl).subscribe({
-        next: imgData =>{
-          if(imgData){
+        next: imgData => {
+          if (imgData) {
             this.imgSrc = this.imageService.getImageSrcString(imgData);
           }
         },
-        error: err =>{
+        error: err => {
           this.logger.error(err);
         }
       });
@@ -50,16 +50,15 @@ export class ProductCardComponent implements OnInit{
   }
 
 
-  isShopOwner(): boolean{
-    if(this.authService.UserCredentials.userType == UserType.SELLER && this.product.sellerId === this.authService.UserCredentials.userId)
-    {
+  isShopOwner(): boolean {
+    if (this.authService.UserCredentials.userType == UserType.SELLER && this.product.sellerId === this.authService.UserCredentials.userId) {
       return true;
     }
 
     return false;
   }
 
-  isCustomer(): boolean{
+  isCustomer(): boolean {
     return (this.authService.UserCredentials.userType == UserType.CUSTOMER)
   }
 
@@ -98,7 +97,11 @@ export class ProductCardComponent implements OnInit{
     })
   }
 
-  addProductToCart() { 
-    this.cartService.addToCart(this.product);
+  get canAddToCart() {
+    return (this.product && this.product.quantity! > 0);
+  }
+
+  addProductToCart() {
+    this.cartService.addToCart(this.product);    
   }
 }

@@ -52,7 +52,6 @@ public class OrderServiceImpl implements IOrderService {
         order.setStatus(null);
         Order savedOrder = orderRepository.save(order);
         messagePublisher.publishOrder(savedOrder);
-        messagePublisher.publishOrder(savedOrder);
         return systemUpdateOrderStatus(savedOrder.getOrderId(), OrderStatus.INITIALIZED);
     }
 

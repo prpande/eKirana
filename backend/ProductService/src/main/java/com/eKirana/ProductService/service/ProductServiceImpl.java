@@ -82,6 +82,10 @@ public class ProductServiceImpl implements IProductService{
             product.setDescription(newProduct.getDescription());
         }
 
+        if(newProduct.getQuantity() >= 0){
+            product.setQuantity(newProduct.getQuantity());
+        }
+
         if (newProduct.getCategory() != null) {
             product.setCategory(newProduct.getCategory());
         }

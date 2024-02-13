@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="button-container mt-5">
-            <button mat-fab extended matTooltip="Checkout" color="warn" (click)="proceedToPayment()">
+            <button mat-fab extended matTooltip="Checkout" color="warn" (click)="proceedToPayment()" [disabled]="!canCheckout">
                 <mat-icon class="m-0">payment</mat-icon>
                 <p class="m-1 h5">
                     Proceed To Payment

@@ -2,8 +2,8 @@
     <mat-card>
         <mat-card-content>
             <div class="d-flex flex-row">
-                <div class="">
-                    <img src="{{cartItem.item?.imageUrl}}" alt="{{cartItem.item?.imageUrl}}">
+                <div class="d-inline-block product-img me-4" *ngIf="imgSrc">
+                    <img class="img-thumbnail" [src]="imgSrc" alt="{{cartItem.item?.imageUrl}}">
                 </div>
                 <div class="me-auto">
                     <mat-card-title>

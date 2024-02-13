@@ -27,8 +27,12 @@ export class OrderCardComponent {
     private restErrorSvc: RestErrorHandlerService,
     private logger: LoggerService) { }
 
-  get placedOn(): string {
-    return (new Date(this.order.placedOn!.toString())).toUTCString();
+  get placedOnDate(): string {
+    return (new Date(this.order.placedOn!.toString())).toDateString();
+  }
+
+  get placedOnTime(): string {
+    return (new Date(this.order.placedOn!.toString())).toLocaleTimeString();
   }
 
   get items(): Product[] {
@@ -89,6 +93,14 @@ export class OrderCardComponent {
   }
   get shortId(): string{
     let idSubStr = this.order.orderId?.split("-")[4];
-    return `... - ${idSubStr}`
+    return idSubStr!;
+  }
+
+  get status(){
+    if(this.order)
+    {
+      return this.order.status?.replace('_', ' ')!;
+    }
+    return undefined;
   }
 }

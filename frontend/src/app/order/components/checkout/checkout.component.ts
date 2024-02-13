@@ -68,15 +68,15 @@ export class CheckoutComponent implements OnInit {
     })
   }
 
-  orderSuccess(orderPlaced: Order) { 
+  orderSuccess(orderPlaced: Order) {
     this.logger.info(`Order:[${orderPlaced.orderId}] placed successfully`);
     let orderArr = this.successfulOrders.getValue();
     orderArr.push(orderPlaced);
     this.successfulOrders.next(orderArr);
-    
+
   }
 
-  orderFailed(order: Order, error: any) { 
+  orderFailed(order: Order, error: any) {
     this.logger.error(`Order:[${order.orderId}] failed.`);
     this.successfulOrders.error(error);
     this.restErrorSvc.processPostError(error);
@@ -140,6 +140,14 @@ export class CheckoutComponent implements OnInit {
     this.deliveryAddress = this.addressSelector.getSelectedAddress();
   }
 
+  get canCheckout(): boolean {
+    if (this.addressSelector) {
+      return this.addressSelector.getSelectedAddress().addressId != null
+    }
+
+    return false;
+  }
+
   proceedToPayment() {
     this.setDeliveryAddress();
     this.createOrders();
@@ -147,8 +155,7 @@ export class CheckoutComponent implements OnInit {
     this.successfulOrders = new BehaviorSubject<Order[]>([]);
     this.successfulOrders.subscribe({
       next: ordersSuccess => {
-        if(ordersSuccess.length == this.orders.length)
-        {
+        if (ordersSuccess.length == this.orders.length) {
           this.logger.info("All orders placed successfully!");
           this.cartService.clearCart();
           // TODO mat snack bar/ dialog

@@ -1,17 +1,24 @@
-<div class="">
-    <h3 mat-dialog-title>{{dialogData.operation}} Product Details</h3>
+<div class="dialog p-3">
+    <div mat-dialog-title class="d-flex align-items-center">
+        <mat-icon color="primary" class="">create</mat-icon>
+        <div class="">
+            {{dialogData.operation}} Product Details
+        </div>
+    </div>
+    <mat-divider color="primary" class="border-3"></mat-divider>
     <mat-dialog-content>
         <app-product-form [product]="dialogData.productInfo" #productForm></app-product-form>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <div class="text-center mx-auto py-2">
+        <div class="text-center mx-auto">
             <div class="button-container d-inline-block m-0">
                 <button mat-mini-fab matTooltip="Cancel" (click)="dialogRef.close(undefined)" class="" color="primary">
                     <mat-icon class="">cancel</mat-icon>
                 </button>
             </div>
             <div class="button-container d-inline-block ms-5">
-                <button mat-mini-fab matTooltip="Save" (click)="submitFormData()" class="" color="accent" [disabled]="isSaveDisabled()">
+                <button mat-mini-fab matTooltip="Save" (click)="submitFormData()" class="" color="accent"
+                    [disabled]="isSaveDisabled()">
                     <mat-icon class="">save</mat-icon>
                 </button>
             </div>

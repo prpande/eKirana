@@ -21,16 +21,21 @@
                     &#8377; {{product.price}}
                 </p>
             </div>
-            <div class="">
+            <div class="h6" *ngIf="canAddToCart">
                 <p class="">In Stock: {{product.quantity}}</p>
             </div>
-            <div class="" *ngIf="isShopOwner()">
-                <div class="button-container d-inline-block">
+            <div class="" *ngIf="!canAddToCart">
+                <mat-error class="h6 text-danger">
+                    Out of Stock
+                </mat-error>
+            </div>
+            <div class="d-flex justify-content-evenly" *ngIf="isShopOwner()">
+                <div class="m-2">
                     <button mat-mini-fab color="primary" (click)="updateProduct()">
                         <mat-icon>edit</mat-icon>
                     </button>
                 </div>
-                <div class="button-container d-inline-block">
+                <div class="m-2">
                     <button mat-mini-fab color="primary" (click)="deleteProduct()">
                         <mat-icon>delete</mat-icon>
                     </button>
@@ -38,7 +43,7 @@
             </div>
         </div>
         <div class="button-container align-self-center ps-5" *ngIf="isCustomer()">
-            <button mat-mini-fab color="primary" (click)="addProductToCart()">
+            <button mat-mini-fab color="primary" (click)="addProductToCart()" [disabled]="!canAddToCart">
                 <mat-icon>add_shopping_cart</mat-icon>
             </button>
         </div>

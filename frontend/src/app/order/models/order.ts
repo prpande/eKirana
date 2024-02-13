@@ -28,14 +28,18 @@ export class Order {
             return total + item.quantity! * item.price!;
         }, 0);
 
-        if (bill) {
-            return bill;
+        let strArr = `${bill}`.split('.')
+        let dec = Math.round(Number.parseFloat(`.${strArr[1]}`) * 100)
+        let totalFmt = Number.parseFloat(`${strArr[0]}.${dec}`)
+        if (totalFmt) {
+            return totalFmt;
         }
 
         return 0;
     }
 
     setTotal(){
+
         this.totalAmount = this.getTotal();
     }
 }
