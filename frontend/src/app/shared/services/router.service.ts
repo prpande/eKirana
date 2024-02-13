@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { UserType } from 'src/app/user/models/userType';
 
 @Injectable({
   providedIn: 'root'
@@ -11,29 +12,42 @@ export class RouterService {
 
   readonly dashStarted: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private router:Router) { }
+  constructor(private router: Router) { }
 
-  goToHome(){
+  goToHome() {
     this.router.navigate(["home"]);
   }
 
-  goToLogin(){
+  goToLogin() {
     this.router.navigate(["login"]);
   }
 
-  goToRegistration(){
+  goToRegistration() {
     this.router.navigate(["register"]);
   }
 
-  goToUserDash(){
+  goToUserDash() {
     this.router.navigate(["dashboard"]);
   }
 
-  goToCheckOut(){
+  goToCheckOut() {
     this.router.navigate(["checkout"]);
   }
 
-  goToOrders(){
+  goToOrders() {
     this.router.navigate(["orders"]);
+  }
+
+  postLogin(userType: UserType, userId: string) {
+    switch (userType) {
+      case UserType.SELLER:
+        this.router.navigate(["shop", userId]);
+        break;
+      case UserType.CARRIER:
+        this.router.navigate(["delivery-hub"]);
+        break;
+      default:
+        this.goToHome();        
+    }
   }
 }

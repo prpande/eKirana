@@ -26,7 +26,11 @@ export class AlertCardComponent {
     return this.alert.level == AlertLevel.CRITICAL;
   }
 
-  get timeStamp(): string{
-    return (new Date(this.alert.timeStamp!.toString())).toUTCString();
+  get timeStampDate(): string {
+    return (new Date(this.alert.timeStamp!.toString())).toDateString();
+  }
+
+  get timeStampTime(): string {
+    return (new Date(this.alert.timeStamp!.toString())).toLocaleTimeString();
   }
 }

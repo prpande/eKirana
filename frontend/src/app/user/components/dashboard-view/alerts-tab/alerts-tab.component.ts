@@ -15,35 +15,24 @@ import { UserService } from 'src/app/user/services/user.service';
 })
 export class AlertsTabComponent {
   userInfo!: User;
+
   alerts: Alert[] = [];
+  displayArray: Alert[] = [];
+  filteredAlerts: Alert[] = []
+
+  currentPage: number = 0;
+  pageSize: number = 10;
+  totalSize: number = 0;
 
   constructor(private routerService: RouterService,
     private authService: AuthService,
     private restErrorSvc: RestErrorHandlerService,
     private logger: LoggerService,
-    private actRoute: ActivatedRoute,
     private userService: UserService) { }
 
   ngOnInit(): void {
-    if (!this.authService.isLoggedIn) {
-      this.logger.error("No login information found!");
-      alert("No user login information found for the session!\nPlease log in again.");
-      this.authService.logout();
-      this.routerService.goToLogin();
-    }
-
-    this.actRoute.data.subscribe({
-      next: data => {
-        this.userInfo = data['userDataResolver'] as User;
-        this.alerts = [...this.userInfo.alertList!].reverse();
-      },
-      error: err => {
-        this.logger.error(`AlertsTabComponent: Error getting user information UserId:[${this.authService.UserCredentials?.userId}]`);
-        this.restErrorSvc.processFetchError(err);
-        this.authService.logout();
-        this.routerService.goToLogin();
-      }
-    })
+    this.authService.goToLoginIfNotLoggedIn();
+    this.refreshAlerts();
   }
 
   refreshAlerts() {
@@ -51,10 +40,35 @@ export class AlertsTabComponent {
       next: info => {
         this.userInfo = info;
         this.alerts = [...this.userInfo.alertList!].reverse();
+        this.totalSize = this.alerts.length;
+        this.filteredAlerts = this.alerts;
+        this.generateAlertArray();
       },
       error: err => {
+        this.logger.error(`AlertsTabComponent: Error getting alerts for UserId:[${this.authService.UserCredentials?.userId}]`);
         this.restErrorSvc.processFetchError(err);
       }
     });
+  }
+
+  handlePageEvent(event: any) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.generateAlertArray();
+  }
+
+  generateAlertArray() {
+    let start = this.currentPage * this.pageSize;
+    let end = start + this.pageSize;
+    this.displayArray = this.filteredAlerts.slice(start, end);
+    this.totalSize = this.filteredAlerts.length;
+  }
+
+  applyFilter(target: any) {
+    let filter = target.value.trim().toLowerCase();
+    this.filteredAlerts = this.alerts.filter(alert =>
+      JSON.stringify(alert).toLowerCase().includes(filter)
+    );
+    this.generateAlertArray();
   }
 }

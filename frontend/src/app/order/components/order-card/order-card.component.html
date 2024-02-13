@@ -1,50 +1,44 @@
-<mat-card class="container my-2 py-2 order-card">
-    <div class="d-flex flex-row">
-        <div class="">
-            <a routerLink="/orders/{{order.orderId}}">
-                {{shortId}}
-            </a>
-        </div>
-        <div class="mx-5 d-flex flex-column">
-            <div class="">
-                {{placedOnTime}}
-            </div>
-            <div class="">
-                {{placedOnDate}}
-            </div>
-        </div>
-        <div class="">
-            {{status}}
-        </div>
-        <div class="mx-5">
-            <div class="d-flex flex-column">
-                <div class="d-block" *ngFor="let item of items">
-                    <div class="d-inline-block ms-auto">{{item.quantity}}</div>
-                    <div class="d-inline-block px-3">X</div>
-                    <div class="d-inline-block">{{item.name}}</div>
-                </div>
-            </div>
-        </div>
-        <div class="">
-            &#8377; {{order.totalAmount}}
-        </div>
-        <div class="mx-5" *ngIf="isSeller">
-            {{order.customerId}}
-        </div>
-        <div class="mx-5" *ngIf="isCustomer">
-            {{order.sellerId}}
-        </div>
-        <div class="me-auto">
-            <div class="button-container d-inline-block mx-2" *ngIf="isCancellable">
-                <button matTooltip="Cancel" (click)="cancelOrder()" mat-mini-fab color="warn">
-                    <mat-icon>cancel</mat-icon>
-                </button>
-            </div>
-            <div class="button-container d-inline-block mx-2" *ngIf="isConfirmable">
-                <button matTooltip="Confirm" (click)="confirmOrder()" mat-mini-fab color="primary">
-                    <mat-icon>check_circle</mat-icon>
-                </button>
-            </div>
-        </div>
+<td scope="row" class="data">
+    <a routerLink="/orders/{{order.orderId}}">
+        {{shortId}}
+    </a>
+</td>
+<td class="data">
+    <div class="">
+        {{placedOnTime}}
     </div>
-</mat-card>
+    <div class="">
+        {{placedOnDate}}
+    </div>
+</td>
+<td class="data">
+    <div class="" *ngFor="let s of status">{{s}}</div>
+</td>
+<td class="data">
+    <div class="d-block" *ngFor="let item of items">
+        <div class="d-inline-block ms-auto">{{item.quantity}}</div>
+        <div class="d-inline-block px-3">X</div>
+        <div class="d-inline-block">{{item.name}}</div>
+    </div>
+</td>
+<td class="data">
+    &#8377; {{order.totalAmount}}
+</td>
+<td class="data" *ngIf="isSeller">
+    {{order.customerId}}
+</td>
+<td class="data" *ngIf="isCustomer">
+    {{order.sellerId}}
+</td>
+<td class="me-auto">
+    <div class="button-container m-2" *ngIf="isCancellable">
+        <button matTooltip="Cancel" (click)="cancelOrder()" mat-mini-fab color="warn">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </div>
+    <div class="button-container m-2" *ngIf="isConfirmable">
+        <button matTooltip="Confirm" (click)="confirmOrder()" mat-mini-fab color="primary">
+            <mat-icon>check_circle</mat-icon>
+        </button>
+    </div>
+</td>

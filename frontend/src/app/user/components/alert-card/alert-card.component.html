@@ -1,18 +1,20 @@
 <mat-card class="container my-2 py-2">
     <div class="d-flex flex-row">
         <div class="">
-            <mat-icon class="p-0 m-0" color="primary" *ngIf="isLow">priority_high</mat-icon>
-            <mat-icon class="p-0 m-0" color="accent" *ngIf="isMedium">warning</mat-icon>
-            <mat-icon class="p-0 m-0" color="warn" *ngIf="isCritical">error</mat-icon>
+            <mat-icon class="p-0 m-0 text-success" *ngIf="isLow">priority_high</mat-icon>
+            <mat-icon class="p-0 m-0 text-warning" *ngIf="isMedium">warning</mat-icon>
+            <mat-icon class="p-0 m-0 text-danger" *ngIf="isCritical">error</mat-icon>
         </div>
         <div class="mx-5">
-            {{timeStamp}}
+            <div class="">
+                {{timeStampTime}}
+            </div>
+            <div class="">
+                {{timeStampDate}}
+            </div>
         </div>
         <div class="">
             {{alert.message}}
-        </div>
-        <div class="mx-5">
-            {{alert.cleared}}
         </div>
     </div>
 </mat-card>

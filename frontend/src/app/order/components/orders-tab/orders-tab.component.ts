@@ -17,34 +17,65 @@ export class OrdersTabComponent {
   userInfo!: User;
 
   orders: Order[] = [];
+  tableDisplayArray: Order[] = [];
+  filteredOrders: Order[] = []
+
+  currentPage: number = 0;
+  pageSize: number = 5;
+  totalSize: number = 0;
 
   constructor(private routerService: RouterService,
     private authService: AuthService,
     private restErrorSvc: RestErrorHandlerService,
     private logger: LoggerService,
-    private actRoute: ActivatedRoute,
     private orderService: OrderService) { }
 
   ngOnInit(): void {
-    if (!this.authService.isLoggedIn) {
-      this.logger.error("No login information found!");
-      alert("No user login information found for the session!\nPlease log in again.");
-      this.authService.logout();
-      this.routerService.goToLogin();
-    }
-
+    this.authService.goToLoginIfNotLoggedIn();
     this.refreshOrders();
   }
 
-  refreshOrders(){
+  refreshOrders() {
     this.orderService.getAllOrdersByUser().subscribe({
       next: orderInfos => {
         this.orders = [...orderInfos].reverse();
+        this.totalSize = this.orders.length;
+        this.filteredOrders= this.orders;
+        this.generateOrderArray();
       },
-      error: err =>{
+      error: err => {
         this.logger.error(`OrdersTabComponent: Error getting orders for UserId:[${this.authService.UserCredentials?.userId}]`);
         this.restErrorSvc.processFetchError(err);
       }
     })
+  }
+
+  handlePageEvent(event: any) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.generateOrderArray();
+  }
+
+  generateOrderArray() {
+    let start = this.currentPage * this.pageSize;
+    let end = start + this.pageSize;
+    this.tableDisplayArray = this.filteredOrders.slice(start, end);
+    this.totalSize = this.filteredOrders.length;
+  }
+
+  get isCustomer(): boolean {
+    return this.authService.isCustomer;
+  }
+
+  get isSeller(): boolean {
+    return this.authService.isSeller;
+  }
+
+  applyFilter(target: any) {
+    let filter = target.value.trim().toLowerCase();
+    this.filteredOrders = this.orders.filter(order =>
+      JSON.stringify(order).toLowerCase().includes(filter)
+    );
+    this.generateOrderArray();
   }
 }

@@ -10,7 +10,7 @@ import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-hand
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 
 @Component({
-  selector: 'app-order-card',
+  selector: '[app-order-card]',
   templateUrl: './order-card.component.html',
   styleUrls: ['./order-card.component.css']
 })
@@ -52,8 +52,8 @@ export class OrderCardComponent {
   }
 
   get isCancellable(): boolean {
-    return (this.isSeller && (this.order.status != OrderStatus.DELIVERED && this.order.status != OrderStatus.SHIPPED)) ||
-    (this.isCustomer && (this.order.status != OrderStatus.CANCELLATION_REQUESTED && this.order.status != OrderStatus.DELIVERED));
+    return ((this.isSeller && (this.order.status != OrderStatus.DELIVERED && this.order.status != OrderStatus.SHIPPED && this.order.status != OrderStatus.CANCELLED)) ||
+    (this.isCustomer && (this.order.status != OrderStatus.CANCELLATION_REQUESTED && this.order.status != OrderStatus.DELIVERED && this.order.status != OrderStatus.CANCELLED)))
   }
 
   get isConfirmable(): boolean {
@@ -99,7 +99,7 @@ export class OrderCardComponent {
   get status(){
     if(this.order)
     {
-      return this.order.status?.replace('_', ' ')!;
+      return this.order.status?.split('_')!;
     }
     return undefined;
   }

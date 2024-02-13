@@ -62,15 +62,6 @@ const routes: Routes = [
     }
   },
   {
-    path: "deliveries",
-    component: DeliveriesTabComponent,
-    canActivate: [loginGuard, dashStartGuard],
-    canDeactivate: [dashEndGuard],
-    resolve: {
-      userDataResolver: UserDataResolver
-    }
-  },
-  {
     path: "delivery-hub",
     component: DeliveryHubViewComponent,
     canActivate: [loginGuard],

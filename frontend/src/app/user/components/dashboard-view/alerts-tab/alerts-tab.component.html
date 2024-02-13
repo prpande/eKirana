@@ -1,18 +1,30 @@
-<div class="card m-3">
-    <div class="container py-3">
-        <div class="d-inline-block">
-            <div class="tab-label ms-auto">
+<div class="card m-3 p-1">
+    <div class="container">
+        <div class="d-flex p-3">
+            <div class="tab-label ms-auto align-self-center px-3">
                 <mat-icon color="primary">notifications</mat-icon>
                 <p class="h4 p-0 m-0 mx-2">
                     Alerts
                 </p>
             </div>
-        </div>
-        <mat-divider color="primary" class="border-3 my-3"></mat-divider>
-        <div class="p-2 my-3">
-            <div class="d-flex flex-column">
-                <app-alert-card *ngFor="let alert of alerts" [alert]="alert"></app-alert-card>
+            <div class="d-flex flex-fill justify-content-end">
+                <input (keyup)="applyFilter($event.target)" placeholder="Filter" class="text-end w-25 text-dark p-2">
             </div>
         </div>
+        <mat-divider color="primary" class="border-3"></mat-divider>
+        <div class="p-2">
+
+            <div class="d-flex flex-column">
+                <app-alert-card *ngFor="let alert of displayArray" [alert]="alert"></app-alert-card>
+            </div>
+        </div>
+        <div class="text-center" *ngIf="totalSize == 0">
+            <div class="h5">
+                No orders to display.
+            </div>
+        </div>
+        <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[10, 25, 50]" [showFirstLastButtons]="true"
+            [length]="totalSize" [pageIndex]="currentPage" (page)="handlePageEvent($event)" class="mt-2">
+        </mat-paginator>
     </div>
 </div>

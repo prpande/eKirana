@@ -1,18 +1,45 @@
-<div class="card m-3">
-    <div class="container py-3">
-        <div class="d-inline-block">
-            <div class="tab-label ms-auto">
+<div class="card m-3 p-1">
+    <div class="container">
+        <div class="d-flex p-3">
+            <div class="tab-label ms-auto align-self-center">
                 <mat-icon color="primary">receipt</mat-icon>
                 <p class="h4 p-0 m-0 mx-2">
                     Orders
                 </p>
             </div>
-        </div>
-        <mat-divider color="primary" class="border-3 my-3"></mat-divider>
-        <div class="p-2 my-3">
-            <div class="d-flex flex-column">
-                <app-order-card *ngFor="let order of orders" [order]="order"></app-order-card>
+            <div class="d-flex flex-fill justify-content-end">
+                <input (keyup)="applyFilter($event.target)" placeholder="Filter" class="text-end w-25 text-dark p-2">
             </div>
+        </div>
+        <mat-divider color="primary" class="border-3"></mat-divider>
+
+        <div class="p-2 my-3">
+            <table class="w-100 table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Order#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Items</th>
+                        <th scope="col">Total</th>
+                        <th scope="col" *ngIf="isSeller">Customer ID</th>
+                        <th scope="col" *ngIf="isCustomer">Seller ID</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="totalSize > 0">
+                    <tr *ngFor="let order of tableDisplayArray" app-order-card [order]="order" class=""></tr>
+                </tbody>
+            </table>
+            <div class="text-center p-3" *ngIf="totalSize == 0">
+                <div class="h5">
+                    No orders to display.
+                </div>
+            </div>
+            <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]"
+                [showFirstLastButtons]="true" [length]="totalSize" [pageIndex]="currentPage"
+                (page)="handlePageEvent($event)" class="mt-2">
+            </mat-paginator>
         </div>
     </div>
 </div>

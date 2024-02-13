@@ -39,7 +39,7 @@ export class LoginViewComponent {
     this.authService.userCredential$.subscribe({
       next: () => {
         if(this.authService.isLoggedIn){
-          this.router.goToUserDash();
+          this.router.postLogin(userCredentials.userType!, userCredentials.userId!);
         }
       },
       error: err => {
