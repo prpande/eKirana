@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Order } from 'src/app/order/models/order';
 import { OrderStatus } from 'src/app/order/models/orderStatus';
 import { OrderService } from 'src/app/order/services/order.service';
+import { InteractionDialogService } from 'src/app/shared/components/interaction-dialog/service/interaction-dialog.service';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 import { MapDialogComponent } from 'src/app/shared/components/map-dialog/map-dialog.component';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
@@ -30,7 +31,8 @@ export class DeliveryCardComponent implements OnInit {
     private orderService: OrderService,
     private userService: UserService,
     private restErrorSvc: RestErrorHandlerService,
-    private mapDialog: MatDialog) { }
+    private mapDialog: MatDialog,
+    private dialogService: InteractionDialogService) { }
 
   ngOnInit(): void {
     if (this.order) {
@@ -56,112 +58,146 @@ export class DeliveryCardComponent implements OnInit {
     return this.order.deliveryAddress!;
   }
 
-  get isAcceptable(): boolean{
+  get isAcceptable(): boolean {
     return this.order.status == OrderStatus.CONFIRMED && !this.order.carrierId;
   }
   get isInProgress(): boolean {
     return this.orderService.isOrderInProgress(this.order);
   }
 
-  get isShipped(): boolean {
-    return this.order && this.order.status == OrderStatus.SHIPPED;
+  get canMarkShipped(): boolean {
+    return this.isAssigned && this.isInProgress && this.order.status != OrderStatus.SHIPPED;
   }
 
-  get isCancellable(): boolean {
-    return this.orderService.canOrderCancelRequest(this.order);
+  get canMarkDelivered(): boolean {
+    return this.isAssigned && this.order && this.order.status == OrderStatus.SHIPPED;
   }
-  
+
+  get isAssigned(): boolean {
+    return this.authService.UserCredentials.userId! == this.order.carrierId
+  }
+  get isCancellable(): boolean {
+    return this.isAssigned && this.orderService.canOrderCancelRequest(this.order);
+  }
+  get isDelivered(): boolean {
+    return this.order.status == OrderStatus.DELIVERED;
+  }
+  get isCancelled(): boolean {
+    console.log(this.order.status == OrderStatus.CANCELLED || this.order.status == OrderStatus.CANCELLATION_REQUESTED);
+    return (this.order.status == OrderStatus.CANCELLED || this.order.status == OrderStatus.CANCELLATION_REQUESTED);
+  }
   acceptOrder() {
-    if (!this.isInProgress) {
-      let answer = confirm(`Are you sure you want to deliver Order:[${this.order.orderId}]?`);
-      if (answer) {
-        this.orderService.updateOrderCarrier(this.order.orderId!, this.authService.UserCredentials.userId!).subscribe({
-          next: info => {
-            if (info) {
-              this.logger.info(`Assigned Carrier:[${info.carrierId}] for Order:[${info.orderId}]`);
+    if (this.isAcceptable) {
+      this.dialogService.openInteractionDialog({
+        isConfirmation: true,
+        title: `Are you sure you want to accept this order for delivery?`,
+        message: `Order:[${this.order.orderId}]`
+      }).subscribe(answer => {
+        if (answer) {
+          this.orderService.updateOrderCarrier(this.order.orderId!, this.authService.UserCredentials.userId!).subscribe({
+            next: info => {
+              if (info) {
+                this.logger.info(`Assigned Carrier:[${info.carrierId}] for Order:[${info.orderId}]`);
+                this.refreshOrders.emit();
+              }
+            },
+            error: err => {
               this.refreshOrders.emit();
+              this.restErrorSvc.processPostError(err);
             }
-          },
-          error: err => {
-            this.refreshOrders.emit();
-            this.restErrorSvc.processPostError(err);
-          }
-        });
-      }
+          });
+        }
+      });
     }
   }
 
   shipOrder() {
-    if (this.isInProgress && !this.isShipped) {
-      let answer = confirm(`Are you sure you want to ship Order:[${this.order.orderId}]?`);
-      if (answer) {
-        this.orderService.shipOrder(this.order.orderId!).subscribe({
-          next: info => {
-            if (info) {
-              this.logger.info(`Shipped Order:[${info.orderId}]`);
+    if (this.canMarkShipped) {
+      this.dialogService.openInteractionDialog({
+        isConfirmation: true,
+        title: `Are you sure you want to mark order as shipped?`,
+        message: `Order:[${this.order.orderId}]`
+      }).subscribe(answer => {
+        if (answer) {
+          this.orderService.shipOrder(this.order.orderId!).subscribe({
+            next: info => {
+              if (info) {
+                this.logger.info(`Shipped Order:[${info.orderId}]`);
+                this.refreshOrders.emit();
+              }
+            },
+            error: err => {
               this.refreshOrders.emit();
+              this.restErrorSvc.processPostError(err);
             }
-          },
-          error: err => {
-            this.refreshOrders.emit();
-            this.restErrorSvc.processPostError(err);
-          }
-        });
-      }
+          });
+        }
+      });
     }
   }
 
-  deliverOrder() { 
-    if (this.isInProgress && this.isShipped) {
-      let answer = confirm(`Are you sure you want to deliver Order:[${this.order.orderId}]?`);
-      if (answer) {
-        this.orderService.deliverOrder(this.order.orderId!).subscribe({
-          next: info => {
-            if (info) {
-              this.logger.info(`Delivered Order:[${info.orderId}]`);
+  deliverOrder() {
+    if (this.canMarkDelivered) {
+      this.dialogService.openInteractionDialog({
+        isConfirmation: true,
+        title: `Are you sure you want to accept mark order as delivered?`,
+        message: `Order:[${this.order.orderId}]`
+      }).subscribe(answer => {
+        if (answer) {
+          this.orderService.deliverOrder(this.order.orderId!).subscribe({
+            next: info => {
+              if (info) {
+                this.logger.info(`Delivered Order:[${info.orderId}]`);
+                this.refreshOrders.emit();
+              }
+            },
+            error: err => {
               this.refreshOrders.emit();
+              this.restErrorSvc.processPostError(err);
             }
-          },
-          error: err => {
-            this.refreshOrders.emit();
-            this.restErrorSvc.processPostError(err);
-          }
-        });
-      }
+          });
+        }
+      });
     }
   }
 
-  cancelOrder() { 
+  cancelOrder() {
     if (this.isInProgress) {
-      let answer = confirm(`Are you sure you want to cancel Order:[${this.order.orderId}]?`);
-      if (answer) {
-        this.orderService.cancelOrder(this.order.orderId!, "test").subscribe({
-          next: info => {
-            if (info) {
-              this.logger.info(`Cancelled Order:[${info.orderId}]`);
+      this.dialogService.openInteractionDialog({
+        isConfirmation: true,
+        title: `Are you sure you want to cancel this order?`,
+        message: `Order:[${this.order.orderId}]`
+      }).subscribe(answer => {
+        if (answer) {
+          this.orderService.cancelOrder(this.order.orderId!, "test").subscribe({
+            next: info => {
+              if (info) {
+                this.logger.info(`Cancelled Order:[${info.orderId}]`);
+                this.refreshOrders.emit();
+              }
+            },
+            error: err => {
               this.refreshOrders.emit();
+              this.restErrorSvc.processPostError(err);
             }
-          },
-          error: err => {
-            this.refreshOrders.emit();
-            this.restErrorSvc.processPostError(err);
-          }
-        });
-      }
+          });
+        }
+      });
     }
   }
 
-  getDirections(){
+  getDirections() {
     let title = `Directions from ${this.seller.fullName} to ${this.destination.fullName}.`
     const dialogRef = this.mapDialog.open(MapDialogComponent, {
-      data:{
+      data: {
         title: title,
         isDirection: true,
         sourceLat: this.seller.latitude!,
         sourceLng: this.seller.longitude!,
-        destinationLat: this.destination.latitude!, 
+        destinationLat: this.destination.latitude!,
         destinationLng: this.destination.longitude!
-      }
+      },
+      width: '50vw'
     });
   }
 }

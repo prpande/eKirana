@@ -29,10 +29,11 @@ import { QuantityFormComponent } from './components/quantity-form/quantity-form.
 import { ImageManagerModule } from './image-manager/image-manager.module';
 import { MapDialogComponent } from './components/map-dialog/map-dialog.component';
 import { MapDisplayComponent } from './components/map-dialog/map-display/map-display.component';
+import { InteractionDialogComponent } from './components/interaction-dialog/interaction-dialog.component';
 
 @NgModule({
   declarations: [  
-    QuantityFormComponent, MapDialogComponent, MapDisplayComponent,
+    QuantityFormComponent, MapDialogComponent, MapDisplayComponent, InteractionDialogComponent,
   ],
   imports: [
     BrowserModule,

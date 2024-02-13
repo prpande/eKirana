@@ -3,6 +3,7 @@
     position: absolute;
     width: 95%;
     z-index: 5;
+    height: 65%
 }
 .main{
     box-shadow: 0 0 5px #c2c2c2 !important;
@@ -10,7 +11,7 @@
 
 .order-card:hover{
     .card-control{
-        display: block;
+        display: flex;
     }
 
     .main{
@@ -22,5 +23,6 @@
         background-color: #4444448a;
         border-radius: 10px;
         box-shadow: 0 0 5px 5px #4444448a !important;
+        width: 100%;
     }
 }

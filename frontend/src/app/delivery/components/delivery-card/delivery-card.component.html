@@ -1,40 +1,65 @@
 <div class=" order-card" *ngIf="isInitialized">
     <div *ngIf="isInitialized" class="card m-3 p-3 main">
-        <div class="d-flex">
-            <div class="d-flex justify-content-around flex-fill">
-                <div class="card p-2">
-                    <div class="tab-label ms-auto">
-                        <mat-icon>store</mat-icon>
-                        <p class="h6 p-0 m-0 mx-2">
+        <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-around w-75">
+                <div class="card p-2 bg-light">
+                    <div class="d-flex me-auto">
+                        <mat-icon class="text-primary">store</mat-icon>
+                        <p class="h5 p-0 m-0 mx-1">
                             Seller
                         </p>
                     </div>
-                    <div class="">
+                    <div class="mt-2">
                         <app-address-card [address]="seller"></app-address-card>
                     </div>
                 </div>
-                <div class="align-self-center">
-                    <mat-icon class="m-2" color="primary">arrow_forward_ios</mat-icon>
-                    <mat-icon class="m-2" color="primary">arrow_forward_ios</mat-icon>
-                    <mat-icon class="m-2" color="accent">local_shipping</mat-icon>
-                    <mat-icon class="m-2" color="primary">arrow_forward_ios</mat-icon>
-                    <mat-icon class="m-2" color="primary">arrow_forward_ios</mat-icon>
+                <div class="align-self-center flex-fill text-center">
+                    <div class="d-inline-block">
+                        <div *ngIf="canMarkDelivered">
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">arrow_forward_ios</mat-icon>
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">arrow_forward_ios</mat-icon>
+                            <mat-icon class="m-2" class="text-primary h2 h-auto w-auto">local_shipping</mat-icon>
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">arrow_forward_ios</mat-icon>
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">arrow_forward_ios</mat-icon>
+                        </div>
+                        <div *ngIf="canMarkShipped && !isCancelled">
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">arrow_forward_ios</mat-icon>
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">arrow_forward_ios</mat-icon>
+                            <mat-icon class="m-2" class="text-warning h2 h-auto w-auto">store</mat-icon>
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">arrow_forward_ios</mat-icon>
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">arrow_forward_ios</mat-icon>
+                        </div>
+                        <div *ngIf="isDelivered">
+                            <mat-icon class="m-2" class="text-success h2 h-auto w-auto">done_all</mat-icon>
+                            <mat-icon class="m-2" class="text-success h2 h-auto w-auto">done_all</mat-icon>
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">where_to_vote</mat-icon>
+                            <mat-icon class="m-2" class="text-success h2 h-auto w-auto">done_all</mat-icon>
+                            <mat-icon class="m-2" class="text-success h2 h-auto w-auto">done_all</mat-icon>
+                        </div>
+                        <div *ngIf="isCancelled">
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">pause</mat-icon>
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">pause</mat-icon>
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">cancel</mat-icon>
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">pause</mat-icon>
+                            <mat-icon class="m-2" class="text-danger h2 h-auto w-auto">pause</mat-icon>
+                        </div>
+                    </div>
                 </div>
-                <div class="card p-2">
-                    <div class="tab-label ms-auto">
-                        <mat-icon>place</mat-icon>
-                        <p class="h6 p-0 m-0 mx-2">
-                            Delivery Address
+                <div class="card p-2 bg-light">
+                    <div class="d-flex me-auto">
+                        <mat-icon class="text-danger">place</mat-icon>
+                        <p class="h5 p-0 m-0 mx-1">
+                            Delivery
                         </p>
                     </div>
-                    <div class="">
+                    <div class="mt-2">
                         <app-address-card [address]="destination"></app-address-card>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card-control align-self-center ms-auto" *ngIf="isInProgress">
-            <div class="banner d-flex justify-content-center ">
+        <div class="card-control align-self-center ms-auto " *ngIf="isInProgress">
+            <div class="banner justify-content-center  align-self-center">
                 <div class="text-center">
                     <div class="p-2" *ngIf="isAcceptable">
                         <button mat-fab extended color="accent" class="align-self-center" (click)="acceptOrder()">
@@ -46,24 +71,25 @@
                     </div>
                     <div class="p-2" *ngIf="isInProgress">
                         <div class="">
-                            <button mat-fab extended color="primary" class="align-self-center" (click)="getDirections()">
-                                <mat-icon class="p-0 m-0">directions</mat-icon>
+                            <button mat-fab extended color="primary" class="align-self-center"
+                                (click)="getDirections()">
+                                <mat-icon class="p-0 m-0 text-warning">directions</mat-icon>
                                 <p class="p-0 m-1">
                                     Get Directions
                                 </p>
                             </button>
                         </div>
-                        <div class="mt-3" *ngIf="!isShipped">
+                        <div class="mt-3" *ngIf="canMarkShipped">
                             <button mat-fab extended color="primary" class="align-self-center" (click)="shipOrder()">
-                                <mat-icon class="p-0 m-0">local_shipping</mat-icon>
+                                <mat-icon class="p-0 m-0 text-info">local_shipping</mat-icon>
                                 <p class="p-0 m-1">
                                     Mark Shipped
                                 </p>
                             </button>
                         </div>
-                        <div class="mt-3" *ngIf="isShipped">
+                        <div class="mt-3" *ngIf="canMarkDelivered">
                             <button mat-fab extended color="primary" class="align-self-center" (click)="deliverOrder()">
-                                <mat-icon class="p-0 m-0">done_all</mat-icon>
+                                <mat-icon class="p-0 m-0 text-success">done_all</mat-icon>
                                 <p class="p-0 m-1">
                                     Mark Delivered
                                 </p>
@@ -81,8 +107,12 @@
                 </div>
             </div>
         </div>
-        <div class="">
-            <div app-order-card [order]="order"></div>
+        <div class="mt-3">
+            <table class="w-100 table table-active text-center m-0">
+                <tbody>
+                    <tr app-order-card [order]="order"></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

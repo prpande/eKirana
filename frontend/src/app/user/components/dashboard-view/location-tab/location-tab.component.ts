@@ -22,12 +22,7 @@ export class LocationTabComponent {
     private actRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    if (!this.authService.isLoggedIn) {
-      this.logger.error("No login information found!");
-      alert("No user login information found for the session!\nPlease log in again.");
-      this.authService.logout();
-      this.routerService.goToLogin();
-    }
+    this.authService.goToLoginIfNotLoggedIn();
 
     this.actRoute.data.subscribe({
       next: data => {

@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { interval, timeInterval, timeout } from 'rxjs';
+import { InteractionDialogService } from 'src/app/shared/components/interaction-dialog/service/interaction-dialog.service';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
 import { UserCredential } from 'src/app/user/models/userCredential';
@@ -29,7 +30,8 @@ export class SecurityTabComponent implements OnInit {
     private restErrorSvc: RestErrorHandlerService,
     private authService: AuthService,
     private logger: LoggerService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private dialogService: InteractionDialogService) { }
 
   ngOnInit(): void {
     this.authService.goToLoginIfNotLoggedIn();
@@ -90,9 +92,14 @@ export class SecurityTabComponent implements OnInit {
             next: creds => {
               if (creds) {
                 this.logger.info(`Successfully changed user password: [${this.userId?.value}]`);
-                alert("Password changed successfully. Redirecting to login...");
-                this.authService.logout();
-                this.authService.goToLoginIfNotLoggedIn();
+                this.dialogService.openInteractionDialog({
+                  isConfirmation: false,
+                  title: `Password changed successfully.`,
+                  message: `Redirecting to login...`
+                }).subscribe(() => {
+                  this.authService.logout();
+                  this.authService.goToLoginIfNotLoggedIn();
+                });
               }
             },
             error: err => {
@@ -107,7 +114,7 @@ export class SecurityTabComponent implements OnInit {
         let response = err as HttpErrorResponse;
         if (response.status == 401) {
           this.displayCredentialsValidError = true;
-          setTimeout(()=>{this.displayCredentialsValidError = false;}, 5000);
+          setTimeout(() => { this.displayCredentialsValidError = false; }, 5000);
           this.ngOnInit()
         }
         else {

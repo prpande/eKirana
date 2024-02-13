@@ -23,7 +23,7 @@ export class MyDeliveriesComponent implements OnInit {
     this.orderService.getAllOrdersByUser().subscribe({
       next: orders => {
         if (orders && orders.length > 0) {
-          this.myDeliveries = orders;
+          this.myDeliveries = orders.reverse();
         }
       },
       error: err => {

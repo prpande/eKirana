@@ -1,0 +1,29 @@
+<div class="card dialog border-2">
+    <div class="container p-3">
+        <div class="h5 text-center text-light py-2">
+            {{dialogData.title}}
+        </div>
+        <div class="text-center text-light">
+            {{dialogData.message}}
+        </div>
+        <div class="">
+            <div class="d-flex justify-content-evenly mt-3">
+                <div class="" *ngIf="dialogData.isConfirmation">
+                    <button matTooltip="Cancel" (click)="dialogRef.close(false)" class="btn btn-circle btn-danger">
+                        <mat-icon class="h3 p-0 m-0 h-auto w-auto">close</mat-icon>
+                    </button>
+                </div>
+                <div class="" *ngIf="dialogData.isConfirmation">
+                    <button matTooltip="Ok" (click)="dialogRef.close(true)" class="btn btn-circle btn-success">
+                        <mat-icon class="h3 p-0 m-0 h-auto w-auto">check</mat-icon>
+                    </button>
+                </div>
+                <div class="" *ngIf="!dialogData.isConfirmation">
+                    <button matTooltip="Cancel" (click)="dialogRef.close(false)" class="btn btn-circle btn-info">
+                        <mat-icon class="h3 p-0 m-0 h-auto w-auto">check</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

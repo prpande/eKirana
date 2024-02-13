@@ -14,6 +14,7 @@ import { RouterService } from 'src/app/shared/services/router.service';
 import { UserType } from '../../models/userType';
 import { IdGeneratorService } from 'src/app/shared/services/id-generator.service';
 import { Address } from '../../models/address';
+import { InteractionDialogService } from 'src/app/shared/components/interaction-dialog/service/interaction-dialog.service';
 
 export type StepperUpdate = {
   state?: StepperUpdateState,
@@ -49,7 +50,8 @@ export class NewUserViewComponent {
     private logger: LoggerService,
     private snackBar: MatSnackBar,
     private routerService: RouterService,
-    private idGenerator: IdGeneratorService) {
+    private idGenerator: IdGeneratorService,
+    private dialogService: InteractionDialogService) {
     this.stepUpdate$.subscribe({
       next: update => {
         switch (update.state) {
@@ -100,10 +102,14 @@ export class NewUserViewComponent {
         let response = err as HttpErrorResponse;
         if (response.status == 404) {
           this.logger.error(`Not Found UserID:[${this.userInfo.userId}]`);
-          alert(`Unable to save user information!\n
-          UserID:${this.userInfo.userId} was not found!\n
-          Please try registering again.`)
-          window.location.reload();
+          this.dialogService.openInteractionDialog({
+            isConfirmation: false,
+            title: `Unable to save user information!`,
+            message: `UserID:${this.userInfo.userId} was not found!. Please try registering again.`
+          }).subscribe(() => {
+
+            window.location.reload();
+          });
         }
         else {
           this.restErrorSvc.processPostError(err);
@@ -126,8 +132,8 @@ export class NewUserViewComponent {
     this.nextStep(this.userInfo);
   }
 
-  setCustomerDeliveryAddress(){
-    if(this.userInfo.userType == UserType.CUSTOMER){
+  setCustomerDeliveryAddress() {
+    if (this.userInfo.userType == UserType.CUSTOMER) {
       let deliveryAddress = new Address(this.userInfo.address);
       deliveryAddress.addressId = this.idGenerator.generateId();
       deliveryAddress.isDefault = true;

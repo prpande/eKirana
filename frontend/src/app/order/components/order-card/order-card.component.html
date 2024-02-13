@@ -30,7 +30,7 @@
 <td class="data" *ngIf="isCustomer">
     {{order.sellerId}}
 </td>
-<td class="me-auto">
+<td class="me-auto" *ngIf="!isCarrier">
     <div class="button-container m-2" *ngIf="isCancellable">
         <button matTooltip="Cancel" (click)="cancelOrder()" mat-mini-fab color="warn">
             <mat-icon>cancel</mat-icon>

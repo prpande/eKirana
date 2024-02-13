@@ -8,6 +8,7 @@ import { OrderStatus } from '../../models/orderStatus';
 import { OrderService } from '../../services/order.service';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
+import { InteractionDialogService } from 'src/app/shared/components/interaction-dialog/service/interaction-dialog.service';
 
 @Component({
   selector: '[app-order-card]',
@@ -25,7 +26,8 @@ export class OrderCardComponent {
     private authService: AuthService,
     private orderService: OrderService,
     private restErrorSvc: RestErrorHandlerService,
-    private logger: LoggerService) { }
+    private logger: LoggerService,
+    private dialogService: InteractionDialogService) { }
 
   get placedOnDate(): string {
     return (new Date(this.order.placedOn!.toString())).toDateString();
@@ -53,11 +55,11 @@ export class OrderCardComponent {
 
   get isCancellable(): boolean {
     return ((this.isSeller && (this.order.status != OrderStatus.DELIVERED && this.order.status != OrderStatus.SHIPPED && this.order.status != OrderStatus.CANCELLED)) ||
-    (this.isCustomer && (this.order.status != OrderStatus.CANCELLATION_REQUESTED && this.order.status != OrderStatus.DELIVERED && this.order.status != OrderStatus.CANCELLED)))
+      (this.isCustomer && (this.order.status != OrderStatus.CANCELLATION_REQUESTED && this.order.status != OrderStatus.DELIVERED && this.order.status != OrderStatus.CANCELLED)))
   }
 
   get isConfirmable(): boolean {
-    return this.isSeller && (this.order.status == OrderStatus.INITIALIZED || this.order.status == OrderStatus.CANCELLATION_REQUESTED) ;
+    return this.isSeller && (this.order.status == OrderStatus.INITIALIZED || this.order.status == OrderStatus.CANCELLATION_REQUESTED);
   }
 
   confirmOrder() {
@@ -75,30 +77,37 @@ export class OrderCardComponent {
   }
 
   cancelOrder() {
-    let confirmation = confirm(`Are your sure you want to cancel order:[${this.order.orderId}]?`);
-    if (confirmation) {
+    if (this.isCancellable) {
+      this.dialogService.openInteractionDialog({
+        isConfirmation: true,
+        title: `Are you sure you want to cancel this order?`,
+        message: `Order:[${this.order.orderId}]`
+      }).subscribe(confirmation => {
+        if (confirmation) {
 
-      this.orderService.cancelOrder(this.order.orderId!, "test").subscribe({
-        next: updatedOrder => {
-          this.logger.info(`Order cancelled:[${updatedOrder.orderId}]`);
-          this.order = updatedOrder;
-          this.orderUpdatedEvent.emit(this.order);
-        },
-        error: err => {
-          this.logger.error(`Error cancelling order:[${this.order.orderId}]`);
-          this.restErrorSvc.processPostError(err);
+          this.orderService.cancelOrder(this.order.orderId!, "test").subscribe({
+            next: updatedOrder => {
+              this.logger.info(`Order cancelled:[${updatedOrder.orderId}]`);
+              this.order = updatedOrder;
+              this.orderUpdatedEvent.emit(this.order);
+            },
+            error: err => {
+              this.logger.error(`Error cancelling order:[${this.order.orderId}]`);
+              this.restErrorSvc.processPostError(err);
+            }
+          })
         }
-      })
+      });
     }
   }
-  get shortId(): string{
+
+  get shortId(): string {
     let idSubStr = this.order.orderId?.split("-")[4];
     return idSubStr!;
   }
 
-  get status(){
-    if(this.order)
-    {
+  get status() {
+    if (this.order) {
       return this.order.status?.split('_')!;
     }
     return undefined;

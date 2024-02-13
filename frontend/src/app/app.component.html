@@ -1,19 +1,21 @@
-<app-header [cartDrawer]="cartDrawer" [dashDrawer]="dashDrawer"></app-header>
-<div class="mb-4">
-    <mat-drawer-container class="">
-        <mat-drawer id="cart-drawer" #cartDrawer mode="side" position="end" class="test">
-            <app-cart-view></app-cart-view>
-        </mat-drawer>
-        <mat-drawer-content class="">
-            <mat-drawer-container id="nav-container" class="container">
-                <mat-drawer id="nav-drawer" class="card my-3" #dashDrawer mode="side" opened="true">
-                    <app-dash-nav></app-dash-nav>
-                </mat-drawer>
-                <mat-drawer-content id="nav-content" class="">
-                    <router-outlet></router-outlet>
-                </mat-drawer-content>
-            </mat-drawer-container>
-        </mat-drawer-content>
-    </mat-drawer-container>
+<div class="d-flex flex-column h-100">
+    <app-header [cartDrawer]="cartDrawer" [dashDrawer]="dashDrawer"></app-header>
+    <div class="flex-fill">
+        <mat-drawer-container class="h-100">
+            <mat-drawer id="cart-drawer" #cartDrawer mode="side" position="end" class="">
+                <app-cart-view></app-cart-view>
+            </mat-drawer>
+            <mat-drawer-content class="">
+                <mat-drawer-container id="nav-container" class="container">
+                    <mat-drawer id="nav-drawer" class="card my-3" #dashDrawer mode="side" opened="true">
+                        <app-dash-nav></app-dash-nav>
+                    </mat-drawer>
+                    <mat-drawer-content id="nav-content" class="">
+                        <router-outlet></router-outlet>
+                    </mat-drawer-content>
+                </mat-drawer-container>
+            </mat-drawer-content>
+        </mat-drawer-container>
+    </div>
+    <app-footer></app-footer>
 </div>
-<app-footer></app-footer>

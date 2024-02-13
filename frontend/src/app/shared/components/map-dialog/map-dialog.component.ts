@@ -80,6 +80,7 @@ export class MapDialogComponent {
   }
 
   renderDirections() {
+    console.log(this.dialogData);
     let origin = new google.maps.LatLng({
       lat: this.dialogData.sourceLat,
       lng: this.dialogData.sourceLng
