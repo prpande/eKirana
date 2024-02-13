@@ -1,14 +1,16 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { User } from 'src/app/user/models/user';
+import { Vehicle } from 'src/app/user/models/vehicle';
 
 export interface MapDialogData {
   title: string;
   isDirection: boolean;
   sourceLat: number;
   sourceLng: number;
-  destinationLat: number; 
-  destinationLng: number; 
+  destinationLat: number;
+  destinationLng: number;
 }
 @Component({
   selector: 'app-map-dialog',
@@ -16,7 +18,7 @@ export interface MapDialogData {
   styleUrls: ['./map-dialog.component.css']
 })
 export class MapDialogComponent {
-  
+
   directionsResults!: google.maps.DirectionsResult;
   isDirectionInitialized: boolean = false;
   readonly dirService = new google.maps.DirectionsService();
@@ -35,7 +37,7 @@ export class MapDialogComponent {
     mapTypeControl: false,
     streetViewControl: false
   };
-  
+
   locationInitialized: boolean = false;
   locationLatLng: google.maps.LatLng = new google.maps.LatLng({ lat: 0, lng: 0 });
   markerOptions: google.maps.MarkerOptions = {
@@ -43,8 +45,6 @@ export class MapDialogComponent {
     animation: google.maps.Animation.DROP,
   };
 
-  latFormControl: FormControl = new FormControl('', [Validators.required]);
-  lngFormControl: FormControl = new FormControl('', [Validators.required]);
   constructor(public dialogRef: MatDialogRef<MapDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: MapDialogData) {
   }
@@ -74,13 +74,12 @@ export class MapDialogComponent {
   }
 
   setMapMarker(data: any) {
+    console.log(data)
     this.locationLatLng = new google.maps.LatLng(data);
-    this.latFormControl?.setValue(this.locationLatLng.lat());
-    this.lngFormControl?.setValue(this.locationLatLng.lng());
     this.locationInitialized = true;
   }
 
-  renderDirections(){
+  renderDirections() {
     let origin = new google.maps.LatLng({
       lat: this.dialogData.sourceLat,
       lng: this.dialogData.sourceLng
@@ -94,14 +93,14 @@ export class MapDialogComponent {
         origin: origin,
         destination: destination,
         travelMode: google.maps.TravelMode.DRIVING
-    },
-    (response, status) =>{
-      this.displayDirectionsOnMap(response, status);
-    });
+      },
+      (response, status) => {
+        this.displayDirectionsOnMap(response, status);
+      });
   }
 
-  displayDirectionsOnMap(response: any, status: any){
-    if(status == google.maps.DirectionsStatus.OK){      
+  displayDirectionsOnMap(response: any, status: any) {
+    if (status == google.maps.DirectionsStatus.OK) {
       this.directionsResults = response;
       this.isDirectionInitialized = true;
       this.dirDisplay.setDirections(this.directionsResults);
@@ -109,15 +108,15 @@ export class MapDialogComponent {
     }
   }
 
-  get areLatLngInvalid(): boolean{
-    return !this.latFormControl.valid || !this.lngFormControl.valid;
+  get areLatLngInvalid(): boolean {
+    return this.locationLatLng.lat() == 0 && this.locationLatLng.lng() == 0;
   }
 
-  submitLocation(){
-    this.dialogRef.close(new google.maps.LatLng(
+  submitLocation() {
+    this.dialogRef.close(new Vehicle(
       {
-        lat: this.latFormControl.value,
-        lng: this.lngFormControl.value
+        latitude: this.locationLatLng.lat(),
+        longitude: this.locationLatLng.lng()
       }));
   }
 }

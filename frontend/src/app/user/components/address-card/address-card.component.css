@@ -1,6 +1,6 @@
 .address-card{
-    width: 14vw;
-    height: 9vw;
+    width: fit-content;
+    height: 200px;
 }
 .card-actions{
     display: none;

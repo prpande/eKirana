@@ -184,7 +184,7 @@ public class UserController {
         try {
             String userId = JwtFilter.getUserIdFromRequest(httpServletRequest);
             UserType userType = JwtFilter.getUserTypeFromRequest(httpServletRequest);
-            logger.info("[updateVehicleInfo]: User:[{}] UserType:[{}] Vehicle:[{}]", userId, userType, newVehicleInfo.getRegistrationNumber());
+            logger.info("[updateVehicleInfo]: User:[{}] UserType:[{}] Vehicle:[{}]", userId, userType, newVehicleInfo.toString());
             responseEntity = new ResponseEntity<>(userService.updateVehicleInfo(userId, newVehicleInfo), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("[updateVehicleInfo]: Error", ex);

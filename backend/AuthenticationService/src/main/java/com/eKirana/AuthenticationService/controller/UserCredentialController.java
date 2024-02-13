@@ -77,11 +77,11 @@ public class UserCredentialController {
     }
 
     @PutMapping(UPDATE_PASSWORD)
-    public ResponseEntity<?> updatePassword(@RequestBody String newPassword, HttpServletRequest httpServletRequest) throws UserCredentialsAlreadyExistsException, UserCredentialsNotFoundException {
+    public ResponseEntity<?> updatePassword(@RequestBody UserCredential newCredentials, HttpServletRequest httpServletRequest) throws UserCredentialsAlreadyExistsException, UserCredentialsNotFoundException {
         try {
             String userId = getUserIdFromRequest(httpServletRequest);
             logger.info("[updatePassword]: " + userId);
-            responseEntity = new ResponseEntity<>(userCredentialService.updateUserPassword(userId, newPassword), HttpStatus.OK);
+            responseEntity = new ResponseEntity<>(userCredentialService.updateUserPassword(userId, newCredentials), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("[updatePassword]: Error", ex);
             throw ex;

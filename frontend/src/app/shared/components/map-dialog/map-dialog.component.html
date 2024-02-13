@@ -12,22 +12,16 @@
                         <map-marker *ngIf="!dialogData.isDirection && locationInitialized" [position]="locationLatLng" [options]="markerOptions"></map-marker>
                     </google-map>
                 </div>
-                <div class="">
+                <div class="" *ngIf="isDirectionInitialized">
                     <div id="directionsList" ng-show="isDirectionInitialized" class="m-2 p-2 card"></div>
                 </div>
             </div>
-            <div class="d-flex my-3" *ngIf="!dialogData.isDirection">
-                <div class="mx-3">
-                    <mat-form-field appearance="outline" id="latitude" class="" [formControl]="latFormControl">
-                        <mat-label>Latitude</mat-label>
-                        <input matInput type="text" readonly/>
-                    </mat-form-field>
+            <div class="d-flex m-2 justify-content-evenly p-2" *ngIf="!dialogData.isDirection">
+                <div class="h6">
+                    Latitude: <span class="h5">{{locationLatLng.lat()}}</span>
                 </div>
-                <div class="mx-3">
-                    <mat-form-field appearance="outline" id="longitude" class="" [formControl]="lngFormControl">
-                        <mat-label>Longitude</mat-label>
-                        <input matInput type="text" readonly/>
-                    </mat-form-field>
+                <div class="h6">
+                    Longitude: <span class="h5">{{locationLatLng.lng()}}</span>
                 </div>
             </div> 
             <div class="text-center mx-auto mt-5">

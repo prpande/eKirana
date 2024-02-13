@@ -10,5 +10,5 @@ public interface IUserCredentialService {
     String checkUserId(String userId) throws UserCredentialsAlreadyExistsException;
     UserCredential saveUserCredential(UserCredential userCredential) throws UserCredentialsAlreadyExistsException;
     UserCredential getUserCredentialByUserIdAndPasswordAndUserType(String userId, String password, UserType userType) throws InvalidUserCredentialsException;
-    UserCredential updateUserPassword(String userId, String newPassword) throws UserCredentialsNotFoundException, UserCredentialsAlreadyExistsException;
+    UserCredential updateUserPassword(String userId, UserCredential newCredential) throws UserCredentialsNotFoundException, UserCredentialsAlreadyExistsException, InvalidUserCredentialsException;
 }

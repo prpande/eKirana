@@ -28,10 +28,11 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { QuantityFormComponent } from './components/quantity-form/quantity-form.component';
 import { ImageManagerModule } from './image-manager/image-manager.module';
 import { MapDialogComponent } from './components/map-dialog/map-dialog.component';
+import { MapDisplayComponent } from './components/map-dialog/map-display/map-display.component';
 
 @NgModule({
   declarations: [  
-    QuantityFormComponent, MapDialogComponent,
+    QuantityFormComponent, MapDialogComponent, MapDisplayComponent,
   ],
   imports: [
     BrowserModule,

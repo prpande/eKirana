@@ -63,18 +63,22 @@ public class UserCredentialServiceImpl implements IUserCredentialService{
     }
 
     @Override
-    public UserCredential updateUserPassword(String userId, String newPassword) throws UserCredentialsNotFoundException, UserCredentialsAlreadyExistsException {
+    public UserCredential updateUserPassword(String userId, UserCredential newCredential) throws UserCredentialsNotFoundException, UserCredentialsAlreadyExistsException, InvalidUserCredentialsException {
         Optional<UserCredential> optCredentials = userCredentialRepository.findById(userId);
+
         if(optCredentials.isEmpty()){
             throw new UserCredentialsNotFoundException();
         }
 
         UserCredential foundCredentials = optCredentials.get();
-        if(foundCredentials.getPassword().equals(newPassword)){
+        if(!newCredential.getUserId().equals(userId) || newCredential.getUserType() != foundCredentials.getUserType()){
+            throw new InvalidUserCredentialsException();
+        }
+        if(foundCredentials.getPassword().equals(newCredential.getPassword())){
             throw new UserCredentialsAlreadyExistsException();
         }
 
-        foundCredentials.setPassword(newPassword);
+        foundCredentials.setPassword(newCredential.getPassword());
         return userCredentialRepository.save(foundCredentials);
     }
 }

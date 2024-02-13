@@ -1,14 +1,14 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { GlobalConstants } from 'src/app/app.module';
+import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
+import { DatastoreService } from 'src/app/shared/services/datastore.service';
+import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
+import { RouterService } from 'src/app/shared/services/router.service';
 import { UserCredential } from '../models/userCredential';
 import { UserType } from '../models/userType';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
-import { UserRestEndpointsService } from './user-rest-endpoints.service';
-import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
-import { BehaviorSubject, Observable, Subscription, catchError } from 'rxjs';
-import { DatastoreService } from 'src/app/shared/services/datastore.service';
-import { GlobalConstants } from 'src/app/app.module';
-import { RouterService } from 'src/app/shared/services/router.service';
+import { UserService } from './user.service';
 
 export type LoggedInCredentialData = {
   credentials?: UserCredential;
@@ -41,7 +41,7 @@ export class AuthService {
   private _userIdValidation$ = new BehaviorSubject<string | undefined>(undefined);
   private _loggedInStatusStream$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpCLient: HttpClient,
+  constructor(private userService: UserService,
     private restErrorSvc: RestErrorHandlerService,
     private logger: LoggerService,
     private dataStore: DatastoreService,
@@ -93,33 +93,33 @@ export class AuthService {
 
   login(userCredential: UserCredential) {
     this.refreshUserCredentialSubject();
-    this.httpCLient.post(UserRestEndpointsService.LOGIN, userCredential, { responseType: 'text' })
-      .subscribe(
-        {
-          next: data => {
-            let credentialData: LoggedInCredentialData = {
-              credentials: userCredential,
-              jwt: data,
-              timeStamp: Date.now().toString()
-            };
-            this.logger.info(`Logged in: User:[${userCredential.userId}] UserType:[${userCredential.userType}]`);
-            this.dataStore.saveData(this.dataStorCredKey, credentialData);
-            this.userCredential$.next(credentialData);
-            this._loggedInStatusStream$.next(true);
-          },
-          error: err => {
-            this._loggedInStatusStream$.next(false);
-            this.logger.error(`Error logging in: User:[${userCredential.userId}] UserType:[${userCredential.userType}]`);
-            let response = err as HttpErrorResponse;
-            if (response.status == 401) {
-              this.userCredential$.error(err);
-            }
-            else {
-              this.restErrorSvc.processPostError(err);
-            }
+
+    this.userService.login(userCredential).subscribe(
+      {
+        next: data => {
+          let credentialData: LoggedInCredentialData = {
+            credentials: userCredential,
+            jwt: data,
+            timeStamp: Date.now().toString()
+          };
+          this.logger.info(`Logged in: User:[${userCredential.userId}] UserType:[${userCredential.userType}]`);
+          this.dataStore.saveData(this.dataStorCredKey, credentialData);
+          this.userCredential$.next(credentialData);
+          this._loggedInStatusStream$.next(true);
+        },
+        error: err => {
+          this._loggedInStatusStream$.next(false);
+          this.logger.error(`Error logging in: User:[${userCredential.userId}] UserType:[${userCredential.userType}]`);
+          let response = err as HttpErrorResponse;
+          if (response.status == 401) {
+            this.userCredential$.error(err);
+          }
+          else {
+            this.restErrorSvc.processPostError(err);
           }
         }
-      );
+      }
+    );
   }
 
   logout() {
@@ -131,42 +131,47 @@ export class AuthService {
 
   checkUserId(userId: string) {
     this.refreshUserIdValidationSubject();
-    this.httpCLient.post(UserRestEndpointsService.CHECK_USER_ID, userId, { responseType: 'text' })
-      .subscribe(
-        {
-          next: data => {
-            this.logger.info(`Valid UserId:[${data}]`);
-            this.userIdValidation$.next(data);
-          },
-          error: err => {
-            this.logger.error(`Error in validating UserId:[${userId}]`);
-            let response = err as HttpErrorResponse;
-            if (response.status == 409) {
-              this.userIdValidation$.error(err);
-            }
-            else {
-              this.restErrorSvc.processPostError(err);
-            }
+
+    this.userService.checkUserId(userId).subscribe(
+      {
+        next: data => {
+          this.logger.info(`Valid UserId:[${data}]`);
+          this.userIdValidation$.next(data);
+        },
+        error: err => {
+          this.logger.error(`Error in validating UserId:[${userId}]`);
+          let response = err as HttpErrorResponse;
+          if (response.status == 409) {
+            this.userIdValidation$.error(err);
+          }
+          else {
+            this.restErrorSvc.processPostError(err);
           }
         }
-      );
+      }
+    );
   }
 
-  goHomeIfNotAllowed(requiredUserType: UserType){
-    if(!this.isLoggedIn && this.UserCredentials.userType != requiredUserType){
+  goHomeIfNotAllowed(requiredUserType: UserType) {
+    if (!this.isLoggedIn && this.UserCredentials.userType != requiredUserType) {
       this.routerService.goToHome();
     }
   }
 
-  get isCarrier(): boolean{
+  goToLoginIfNotLoggedIn() {
+    if (!this.isLoggedIn) {
+      this.routerService.goToLogin();
+    }
+  }
+  get isCarrier(): boolean {
     return this.UserCredentials.userType == UserType.CARRIER;
   }
 
-  get isCustomer(): boolean{
+  get isCustomer(): boolean {
     return this.UserCredentials.userType == UserType.CUSTOMER;
   }
 
-  get isSeller(): boolean{
+  get isSeller(): boolean {
     return this.UserCredentials.userType == UserType.SELLER;
   }
 }
