@@ -22,6 +22,7 @@ import { dashEndGuard } from './shared/guards/dash-end.guard';
 import { OrderPageComponent } from './order/components/order-page/order-page.component';
 import { SecurityTabComponent } from './user/components/dashboard-view/security-tab/security-tab.component';
 import { DeliveryHubViewComponent } from './delivery/components/delivery-hub-view/delivery-hub-view.component';
+import { SearchResultsComponent } from './shared/components/search-results/search-results.component';
 
 const routes: Routes = [
   {
@@ -113,6 +114,10 @@ const routes: Routes = [
     component: NewUserViewComponent,
     canActivate: [preventRegistrationGuard],
     canDeactivate: [preventNavigationGuard]
+  },
+  {
+    path: "search/:searchStr",
+    component: SearchResultsComponent,
   },
   {
     path: "**",

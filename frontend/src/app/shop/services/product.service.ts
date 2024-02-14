@@ -35,4 +35,8 @@ export class ProductService {
       this.imageService.saveCachedImage(product.imageUrl);
     }
   }
+
+  getAllProducts() : Observable<Product[]>{
+    return this.httpCLient.get<Product[]>(ProductRestEndpointsService.GET_ALL_PRODUCTS);
+  }
 }

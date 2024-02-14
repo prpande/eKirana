@@ -1,0 +1,11 @@
+#search-container{
+    width: 40%;
+    margin: auto;
+    min-width: 400px;
+}
+#search-box{
+    margin: 1vh auto;
+    width: 100%;
+    opacity: 0.7;
+    color: whitesmoke;
+}

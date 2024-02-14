@@ -30,10 +30,12 @@ import { MapDialogComponent } from './components/map-dialog/map-dialog.component
 import { MapDisplayComponent } from './components/map-dialog/map-display/map-display.component';
 import { QuantityFormComponent } from './components/quantity-form/quantity-form.component';
 import { ImageManagerModule } from './image-manager/image-manager.module';
+import { SearchComponent } from './components/search/search.component';
+import { SearchResultsComponent } from './components/search-results/search-results.component';
 
 @NgModule({
   declarations: [  
-    QuantityFormComponent, MapDialogComponent, MapDisplayComponent, InteractionDialogComponent,
+    QuantityFormComponent, MapDialogComponent, MapDisplayComponent, InteractionDialogComponent, SearchComponent, SearchResultsComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,6 +99,7 @@ import { ImageManagerModule } from './image-manager/image-manager.module';
     MatBadgeModule,
     QuantityFormComponent,
     ImageManagerModule,
+    SearchComponent
   ],
 })
 export class SharedModule { }

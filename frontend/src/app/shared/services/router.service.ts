@@ -38,6 +38,9 @@ export class RouterService {
     this.router.navigate(["orders"]);
   }
 
+  goToSearchResults(searchString: string){
+    this.router.navigate(["search", searchString]);
+  }
   postLogin(userType: UserType, userId: string) {
     switch (userType) {
       case UserType.SELLER:

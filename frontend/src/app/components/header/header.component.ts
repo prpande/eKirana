@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { CartService } from 'src/app/cart/services/cart.service';
+import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
 import { RouterService } from 'src/app/shared/services/router.service';
+import { Product } from 'src/app/shop/models/product';
+import { ProductService } from 'src/app/shop/services/product.service';
 import { UserCredential } from 'src/app/user/models/userCredential';
 import { AuthService } from 'src/app/user/services/auth.service';
 
@@ -10,7 +13,7 @@ import { AuthService } from 'src/app/user/services/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit {
 
   @Input()
   cartDrawer!: MatDrawer;
@@ -39,31 +42,31 @@ export class HeaderComponent implements OnInit{
   ngOnInit(): void {
     this.cartService.cart$.subscribe({
       next: () => {
-        if(this.cartService.cartItems.length > 0){
-          if(this.canOpenCartDrawer){
+        if (this.cartService.cartItems.length > 0) {
+          if (this.canOpenCartDrawer) {
             this.cartDrawer.open();
           }
         }
       }
     })
-    
-    this.routerService.checkoutStarted.subscribe(() =>{
+
+    this.routerService.checkoutStarted.subscribe(() => {
       this.canOpenCartDrawer = !this.routerService.checkoutStarted.value;
-      if(!this.canOpenCartDrawer){
+      if (!this.canOpenCartDrawer) {
         this.cartDrawer.close();
       }
     })
 
-    this.routerService.dashStarted.subscribe(() =>{
-      this.routerService.dashStarted.value ? this.dashDrawer.open(): this.dashDrawer.close();
+    this.routerService.dashStarted.subscribe(() => {
+      this.routerService.dashStarted.value ? this.dashDrawer.open() : this.dashDrawer.close();
     });
   }
 
   toggleCartDrawer() {
-      this.cartDrawer.toggle();
+    this.cartDrawer.toggle();
   }
 
-  getCartCount() : number{
+  getCartCount(): number {
     return this.cartService.getCount();
   }
 
@@ -73,4 +76,6 @@ export class HeaderComponent implements OnInit{
     this.authService.logout();
     this.routerService.goToLogin();
   }
-}
+
+
+} 
