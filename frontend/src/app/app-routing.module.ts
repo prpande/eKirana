@@ -31,7 +31,7 @@ const routes: Routes = [
   },
   {
     path: "dashboard", 
-    redirectTo: "/information",
+    redirectTo: "/information/0",
     pathMatch: "full"
   },
   {
@@ -44,7 +44,7 @@ const routes: Routes = [
     canActivate: [preventRegistrationGuard]
   },
   {
-    path: "information",
+    path: "information/:tabIndex",
     component: DashboardViewComponent,
     canActivate: [loginGuard, dashStartGuard],
     canDeactivate: [dashEndGuard],

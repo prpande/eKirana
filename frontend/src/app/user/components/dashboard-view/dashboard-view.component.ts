@@ -15,6 +15,9 @@ export class DashboardViewComponent implements OnInit {
 
   userInfo!: User;
 
+  initialized: boolean = false;
+  tabIndex: number = 0;
+
   constructor(private routerService: RouterService,
     private authService: AuthService,
     private restErrorSvc: RestErrorHandlerService,
@@ -35,6 +38,12 @@ export class DashboardViewComponent implements OnInit {
         this.routerService.goToLogin();
       }
     })
+
+    this.actRoute.paramMap.subscribe(params => {
+      this.tabIndex = Number.parseInt(params.get('tabIndex') ?? '0');
+      this.initialized = true;
+    })
+
   }
 
 }

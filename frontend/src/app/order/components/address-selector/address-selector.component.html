@@ -5,7 +5,7 @@
         <div class="mb-3">
             <mat-radio-group [formControl]="addressSelector">
                 <mat-radio-button *ngFor="let address of addresses" [value]="address.addressId">
-                    <app-address-card [address]="address" (addressUpdatedEvent)="onAddressModified()"></app-address-card>
+                    <app-address-card [address]="address" (addressUpdatedEvent)="onAddressModified()" [isReadOnly]="true"></app-address-card>
                 </mat-radio-button>
             </mat-radio-group>
         </div>

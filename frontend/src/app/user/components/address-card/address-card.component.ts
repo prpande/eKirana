@@ -6,6 +6,7 @@ import { LoggerService } from 'src/app/shared/components/logger/services/logger.
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
 import { AddressDialogComponent } from '../forms/address-dialog/address-dialog.component';
 import { AuthService } from '../../services/auth.service';
+import { InteractionDialogService } from 'src/app/shared/components/interaction-dialog/service/interaction-dialog.service';
 
 @Component({
   selector: 'app-address-card',
@@ -26,7 +27,8 @@ export class AddressCardComponent {
     private logger: LoggerService,
     private restErrorSvc: RestErrorHandlerService,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialogService: InteractionDialogService
   ) {
     this.address = new Address();
   }
@@ -46,7 +48,7 @@ export class AddressCardComponent {
     return false;
   }
 
-  editAddress() { 
+  editAddress() {
     const dialogRef = this.addressDialog.open(AddressDialogComponent, {
       data: {
         operation: "Edit",
@@ -54,14 +56,14 @@ export class AddressCardComponent {
       }
     });
 
-    dialogRef.afterClosed().subscribe(addressInfo =>{
-      if(addressInfo){
+    dialogRef.afterClosed().subscribe(addressInfo => {
+      if (addressInfo) {
         this.userService.updateUserDeliveryAddress(addressInfo).subscribe({
           next: savedAddress => {
             this.logger.info(`Updated Address:[${addressInfo.addressId}]`);
             this.addressUpdatedEvent.emit(addressInfo.addressId);
           },
-          error: err =>{
+          error: err => {
             this.restErrorSvc.processPostError(err);
           }
         })
@@ -69,19 +71,27 @@ export class AddressCardComponent {
     })
   }
 
-  deleteAddress() { 
-    this.userService.deleteUserDeliveryAddress(this.address.addressId!).subscribe({
-      next: data => {
-        console.log(`Address delete successfully:[${this.address.addressId}]`);
-        this.addressUpdatedEvent.emit(undefined);
-      },
-      error: err => {
-        this.restErrorSvc.processPostError(err);
+  deleteAddress() {
+    this.dialogService.openInteractionDialog({
+      isConfirmation: true,
+      title: `Are you sure you want to remove this address?`,
+      message: `Address:[${this.address.addressId}]`
+    }).subscribe(confirmation => {
+      if (confirmation) {
+        this.userService.deleteUserDeliveryAddress(this.address.addressId!).subscribe({
+          next: data => {
+            console.log(`Address delete successfully:[${this.address.addressId}]`);
+            this.addressUpdatedEvent.emit(undefined);
+          },
+          error: err => {
+            this.restErrorSvc.processPostError(err);
+          }
+        })
       }
-    })
+    });
   }
 
-  get isUserOwner(): boolean{
+  get isUserOwner(): boolean {
     return this.authService.UserCredentials.userId == this.address.userId;
   }
 }

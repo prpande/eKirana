@@ -35,6 +35,12 @@ input::-webkit-inner-spin-button {
 .samarkan{
   font-family: samarkan, Arial, Helvetica, sans-serif;
 }
+.showcase{
+  background-color: #bdbdbd70 !important;
+}
+.splash-bg{
+    background-image: url("/assets/images/ek10.png");
+}
 
 /* Firefox */
 input[type=number] {

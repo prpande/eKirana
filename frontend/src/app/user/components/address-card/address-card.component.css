@@ -1,12 +1,4 @@
 .address-card{
     width: fit-content;
-    height: 200px;
-}
-.card-actions{
-    display: none;
-}
-.address-card:hover{
-    .card-actions{
-        display: block;
-    }
+    height: 225px;
 }

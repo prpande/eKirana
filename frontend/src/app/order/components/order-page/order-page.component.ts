@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
+import { MapDialogComponent } from 'src/app/shared/components/map-dialog/map-dialog.component';
+import { Image } from 'src/app/shared/image-manager/models/Image';
 import { ImageService } from 'src/app/shared/image-manager/services/image.service';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
 import { RouterService } from 'src/app/shared/services/router.service';
@@ -11,11 +13,7 @@ import { AuthService } from 'src/app/user/services/auth.service';
 import { UserService } from 'src/app/user/services/user.service';
 import { Order } from '../../models/order';
 import { OrderService } from '../../services/order.service';
-import { Image } from 'src/app/shared/image-manager/models/Image';
-import { OrderStatus } from '../../models/orderStatus';
-import { MatDialog } from '@angular/material/dialog';
-import { MapDialogComponent } from 'src/app/shared/components/map-dialog/map-dialog.component';
-import { InteractionDialogService } from 'src/app/shared/components/interaction-dialog/service/interaction-dialog.service';
+import {Location} from '@angular/common'
 
 @Component({
   selector: 'app-order-page',
@@ -38,7 +36,7 @@ export class OrderPageComponent implements OnInit {
     private userService: UserService,
     private imageService: ImageService,
     private mapDialog: MatDialog,
-    private dialogService: InteractionDialogService) {
+    private location: Location) {
     this.orderInfo = new Order();
   }
 
@@ -173,7 +171,9 @@ export class OrderPageComponent implements OnInit {
         this.restErrorSvc.processFetchError(err);
       }
     })
+  }
 
-
+  goBack(){
+    this.location.back();
   }
 }

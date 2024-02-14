@@ -21,17 +21,16 @@
             </div>
         </div>
     </mat-card-content>
-    <mat-card-actions class="card-actions p-0 text-center" *ngIf="isUserOwner && !isReadOnly">
-        <div class="button-container d-inline-block mx-2">
+    <mat-card-actions class="p-0 text-center d-flex justify-content-evenly" *ngIf="isUserOwner && !isReadOnly">
+        <div class="p-0">
             <button (click)="editAddress()" mat-icon-button color="primary">
                 <mat-icon>edit</mat-icon>
             </button>
         </div>
-        <div class="button-container d-inline-block mx-2">
+        <div class="p-0">
             <button (click)="deleteAddress()" mat-icon-button color="warn">
                 <mat-icon>delete</mat-icon>
             </button>
         </div>
     </mat-card-actions>
-
 </mat-card>

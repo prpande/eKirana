@@ -19,7 +19,7 @@ import { InformationControlsComponent } from '../information-controls/informatio
   templateUrl: './user-info-tab.component.html',
   styleUrls: ['./user-info-tab.component.css']
 })
-export class UserInfoTabComponent{
+export class UserInfoTabComponent {
   @ViewChild(MatTabGroup) tabGroup!: MatTabGroup;
   @ViewChild(MatTab) tab!: MatTab;
 
@@ -32,6 +32,8 @@ export class UserInfoTabComponent{
 
   @Input()
   userInfo!: User;
+  @Input()
+  tabIndex: number = 0;
 
   constructor(private userService: UserService,
     private logger: LoggerService,
@@ -70,7 +72,7 @@ export class UserInfoTabComponent{
   }
 
   getCurrentTabForm(): any {
-    switch (this.tabGroup.selectedIndex) {
+    switch (this.tabIndex) {
       case 0:
         return this.userInfoForm;
       case 1:
@@ -86,7 +88,7 @@ export class UserInfoTabComponent{
 
   saveNewUserInfo(formData: any) {
     let newUserInfo = new User(this.userInfo);
-    switch (this.tabGroup.selectedIndex) {
+    switch (this.tabIndex) {
       case 0:
         newUserInfo.setValues(formData);
         break;
@@ -107,9 +109,9 @@ export class UserInfoTabComponent{
       next: user => {
         this.logger.info(`Successfully updated User:[${user.userId}]`);
         this.userInfo = user;
-        if(this.tabGroup.selectedIndex == 1){
+        if (this.tabIndex == 1) {
           this.getCurrentTabForm().address = user.address;
-        } else{
+        } else {
           this.getCurrentTabForm().userInfo = user;
         }
         this.getCurrentTabForm().ngOnInit();
