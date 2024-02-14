@@ -48,9 +48,8 @@ public class ProductController {
     @GetMapping(GET_PRODUCT_BY_ID)
     public ResponseEntity<?> getProductById(@PathVariable String productId, HttpServletRequest request) throws ProductNotFoundException, UserIsNotOwnerException {
         try {
-            String userId = JwtFilter.getUserIdFromRequest(request);
-            logger.info("[getProductById]: User:[{}] Product:[{}]", userId, productId);
-            responseEntity = new ResponseEntity<>(productService.getProductById(productId, userId), HttpStatus.OK);
+            logger.info("[getProductById]: Product:[{}]", productId);
+            responseEntity = new ResponseEntity<>(productService.getProductById(productId), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("[getProductById]: Error", ex);
             throw ex;
@@ -62,8 +61,7 @@ public class ProductController {
     @GetMapping(GET_ALL_PRODUCT_BY_SELLER_ID)
     public ResponseEntity<?> getAllProductBySellerId(@PathVariable String sellerId, HttpServletRequest request) {
         try {
-            String userId = JwtFilter.getUserIdFromRequest(request);
-            logger.info("[getAllProductBySellerId]: Requesting User:[{}] Seller Id:[{}]", userId, sellerId);
+            logger.info("[getAllProductBySellerId]: Seller Id:[{}]", sellerId);
             responseEntity = new ResponseEntity<>(productService.getAllProductBySellerId(sellerId), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("[getAllProductBySellerId]: Error", ex);

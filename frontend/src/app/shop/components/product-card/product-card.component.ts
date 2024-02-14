@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Product } from '../../models/product';
 import { AuthService } from 'src/app/user/services/auth.service';
@@ -16,7 +16,7 @@ import { InteractionDialogService } from 'src/app/shared/components/interaction-
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.css']
 })
-export class ProductCardComponent implements OnInit {
+export class ProductCardComponent implements OnInit, AfterViewChecked {
 
   @Input()
   product: Product;
@@ -33,7 +33,8 @@ export class ProductCardComponent implements OnInit {
     private restErrorSvc: RestErrorHandlerService,
     private cartService: CartService,
     private imageService: ImageService,
-    private dialogService: InteractionDialogService) {
+    private dialogService: InteractionDialogService,
+    private cdr: ChangeDetectorRef) {
     this.product = new Product();
   }
   ngOnInit(): void {
@@ -51,6 +52,9 @@ export class ProductCardComponent implements OnInit {
     }
   }
 
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
+  }
 
   isShopOwner(): boolean {
     if (this.authService.UserCredentials.userType == UserType.SELLER && this.product.sellerId === this.authService.UserCredentials.userId) {

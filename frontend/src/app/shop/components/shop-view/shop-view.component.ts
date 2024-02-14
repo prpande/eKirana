@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
@@ -19,12 +19,14 @@ import { ImageService } from 'src/app/shared/image-manager/services/image.servic
   templateUrl: './shop-view.component.html',
   styleUrls: ['./shop-view.component.css']
 })
-export class ShopViewComponent implements OnInit {
+
+export class ShopViewComponent implements OnInit, AfterViewChecked {
 
   userInfo: UserCredential;
   shopInfo: User;
   products: Product[];
   imgSrc!: string;
+  categorizedProducts: Map<string, Product[]> = new Map<string, Product[]>();
 
   constructor(private logger: LoggerService,
     private authService: AuthService,
@@ -34,13 +36,15 @@ export class ShopViewComponent implements OnInit {
     private routerService: RouterService,
     private productService: ProductService,
     public productDialog: MatDialog,
-    private imageService: ImageService) {
+    private imageService: ImageService,
+    private cdr: ChangeDetectorRef) {
     this.userInfo = authService.UserCredentials;
     this.shopInfo = new User();
     this.products = [];
   }
 
   ngOnInit(): void {
+    this.categorizedProducts.clear();
     this.activatedRoute.paramMap.subscribe(data => {
       let id = data.get("shopId") ?? "";
       this.logger.info(`Getting details for seller:[${id}]`);
@@ -60,8 +64,12 @@ export class ShopViewComponent implements OnInit {
         }
       })
     }
-
+    
     )
+  }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
   }
 
   handleRestErrorAndGoHome(data: any) {
@@ -74,11 +82,25 @@ export class ShopViewComponent implements OnInit {
     this.productService.getSellerProducts(this.shopInfo.userId!).subscribe({
       next: productData => {
         this.products = productData;
+        this.categorizeProducts();
       },
       error: err => {
         this.handleRestErrorAndGoHome(err);
       }
     })
+  }
+
+  categorizeProducts() {
+    this.products.forEach(product => {
+      if (product.category) {
+        let productArray = this.categorizedProducts.get(product.category)!;
+        if (!productArray) {
+          productArray = [];
+        }
+        productArray.push(product);
+        this.categorizedProducts.set(product.category, productArray);
+      }
+    });
   }
 
   getShopImage() {
@@ -131,5 +153,9 @@ export class ShopViewComponent implements OnInit {
     }
 
     return false;
+  }
+
+  get getCategories(){
+    return [...this.categorizedProducts.keys()];
   }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface IProductService {
     Product saveProduct(Product product, String userId) throws ProductAlreadyExistsException;
-    Product getProductById(String productId, String userId) throws ProductNotFoundException, UserIsNotOwnerException;
+    Product getProductById(String productId) throws ProductNotFoundException;
     List<Product> getAllProductBySellerId(String sellerId);
     List<Product> getAllProducts();
     Product updateProduct(String productId, Product product, String userId) throws ProductNotFoundException, UserIsNotOwnerException;

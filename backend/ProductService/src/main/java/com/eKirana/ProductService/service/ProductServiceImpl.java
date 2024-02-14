@@ -34,7 +34,7 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public Product getProductById(String productId, String userId) throws ProductNotFoundException, UserIsNotOwnerException {
+    public Product getProductById(String productId) throws ProductNotFoundException {
         Optional<Product> optProduct = productRepository.findById(productId);
         if(optProduct.isEmpty()){
             throw new ProductNotFoundException();

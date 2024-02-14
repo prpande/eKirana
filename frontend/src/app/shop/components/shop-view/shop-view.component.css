@@ -1,3 +1,36 @@
-.shop-title{
+.shop-title {
     width: 15vw;
+}
+
+a:link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.chevron {
+    transition: all 0.4s ease;
+}
+.product-list a:active {
+    .chevron{
+        transform: rotate(360deg);
+    }
+    .category-toggle{
+        border: 1px solid #2828284f;
+        background-color: #9191918a;
+        color: rgb(54, 54, 54);
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 5px;
+    }
+}
+.category-toggle{
+    border: 1px solid #2828284f;
+    background-color: #9191918a;
+    color: black;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 5px;
+}
+.category-toggle:hover{
+    border: 1px solid #2828289d;
+    background-color: #9c9c9c8a;
+    box-shadow: rgba(5, 5, 5, 0.568) 0px 0px 5px;
+
 }

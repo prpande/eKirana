@@ -2,7 +2,9 @@
     <mat-card class="showcase">
         <mat-card-content class="d-flex flex-row">
             <div class="shop-title me-4" *ngIf="imgSrc">
-                <img class="img-thumbnail" [src]="imgSrc" alt="{{shopInfo.address?.displayImageUrl}}">
+                <div class="">
+                    <img class="img-thumbnail" [src]="imgSrc" alt="{{shopInfo.address?.displayImageUrl}}">
+                </div>
             </div>
             <div class="me-auto align-self-center">
                 <div class="h2">{{shopInfo.address?.fullName}}</div>
@@ -13,7 +15,7 @@
             </div>
             <div class="d-flex" *ngIf="isShopOwner()">
                 <div class="align-self-center">
-                    <div class="button-container m-3" >
+                    <div class="button-container m-3">
                         <button mat-fab extended color="primary" routerLink="/orders">
                             <mat-icon class="p-0 m-0">receipt</mat-icon>
                             <p class="p-0 m-1">
@@ -21,7 +23,7 @@
                             </p>
                         </button>
                     </div>
-                    <div class="button-container m-3" >
+                    <div class="button-container m-3">
                         <button mat-fab extended color="accent" (click)="addProduct()">
                             <mat-icon class="p-0 m-0">add</mat-icon>
                             <p class="p-0 m-1">
@@ -29,7 +31,7 @@
                             </p>
                         </button>
                     </div>
-                    <div class="button-container m-3" >
+                    <div class="button-container m-3">
                         <button mat-fab extended color="warn" routerLink="/information/1">
                             <mat-icon class="p-0 m-0">edit</mat-icon>
                             <p class="p-0 m-1">
@@ -45,7 +47,25 @@
 <mat-divider class="mt-3 mb-2 border-4"></mat-divider>
 <div class="container mb-3 p-2">
     <div class="card p-3 showcase">
-        <app-product-card *ngFor="let product of products" [product]="product"
-            (productUpdatedEvent)="getProductsInShop()"></app-product-card>
+        <div class="product-list my-2" *ngFor="let category of getCategories; index as i">
+            <div class="">
+                <a class="" data-bs-toggle="collapse" href="#{{category}}">
+                    <div class="d-flex py-1 px-2 category-toggle">
+                        <div class="me-auto h4 align-self-center mt-1">
+                            {{category}}
+                        </div>
+                        <div class="icon ms-auto ">
+                            <mat-icon class="chevron mt-1" color="">code</mat-icon>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div [class]="'collapse ' +  ((i==0)?'show':'')" id="{{category}}">
+                <div class="card px-3 pb-2 showcase">
+                    <app-product-card *ngFor="let product of categorizedProducts.get(category)" [product]="product"
+                    (productUpdatedEvent)="getProductsInShop()"></app-product-card>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

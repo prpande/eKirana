@@ -29,17 +29,17 @@ public class RestEndpoints {
 
     //region Product Service endpoints
     public static final String PRODUCT_ROOT = "/api/product";
-    public static final String SAVE_PRODUCT = "";
+    public static final String SAVE_PRODUCT = "/secured";
     public static final String GET_PRODUCT_BY_ID = "/{productId}";
     public static final String GET_ALL_PRODUCT_BY_SELLER_ID = "/seller/{sellerId}";
-    public static final String GET_ALL_PRODUCTS = "/products";
-    public static final String UPDATE_PRODUCT = "/{productId}";
-    public static final String UPDATE_PRODUCT_QUANTITY = "/{productId}/quantity";
-    public static final String REMOVE_PRODUCT = "/{productId}";
-    public static final String ENABLE_PRODUCT = "/{productId}/enable";
-    public static final String DISABLE_PRODUCT = "/{productId}/disable";
+    public static final String GET_ALL_PRODUCTS = "";
+    public static final String UPDATE_PRODUCT = "/secured/{productId}";
+    public static final String UPDATE_PRODUCT_QUANTITY = "/secured/{productId}/quantity";
+    public static final String REMOVE_PRODUCT = "/secured/{productId}";
+    public static final String ENABLE_PRODUCT = "/secured/{productId}/enable";
+    public static final String DISABLE_PRODUCT = "/secured/{productId}/disable";
 
-    public static final String[] PRODUCT_SECURE_PATTERNS = new String[]{PRODUCT_ROOT + "/*"};
+    public static final String[] PRODUCT_SECURE_PATTERNS = new String[]{PRODUCT_ROOT + SAVE_PRODUCT + "/*"};
     //endregion
 
     //region Order Service endpoints
