@@ -106,10 +106,7 @@ export class OrderCardComponent {
     return idSubStr!;
   }
 
-  get status() {
-    if (this.order) {
-      return this.order.status?.split('_')!;
-    }
-    return undefined;
+  get getStatusDisplay() {
+    return this.orderService.getOrderStatusDisplay(this.order);
   }
 }

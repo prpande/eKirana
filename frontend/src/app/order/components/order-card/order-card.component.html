@@ -11,8 +11,19 @@
         {{placedOnDate}}
     </div>
 </td>
-<td class="data">
-    <div class="" *ngFor="let s of status">{{s}}</div>
+<td class="data text-wrap">
+    <div class="d-flex" *ngIf="getStatusDisplay as status">
+        <div class="d-flex p-0">
+            <div class="align-self-center">
+                <mat-icon class="{{status.class}}">{{status.icon}}</mat-icon>
+            </div>
+        </div>
+        <div class="p-0 m-0 h-auto">
+            <div class="" *ngFor="let s of status.text.split(' ')">
+                {{s}}
+            </div>
+        </div>
+    </div>
 </td>
 <td class="data">
     <div class="d-block" *ngFor="let item of items">

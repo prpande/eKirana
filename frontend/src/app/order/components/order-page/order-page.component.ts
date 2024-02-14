@@ -12,6 +12,10 @@ import { UserService } from 'src/app/user/services/user.service';
 import { Order } from '../../models/order';
 import { OrderService } from '../../services/order.service';
 import { Image } from 'src/app/shared/image-manager/models/Image';
+import { OrderStatus } from '../../models/orderStatus';
+import { MatDialog } from '@angular/material/dialog';
+import { MapDialogComponent } from 'src/app/shared/components/map-dialog/map-dialog.component';
+import { InteractionDialogService } from 'src/app/shared/components/interaction-dialog/service/interaction-dialog.service';
 
 @Component({
   selector: 'app-order-page',
@@ -25,14 +29,16 @@ export class OrderPageComponent implements OnInit {
   seller: Address = new Address();
   customer: Address = new Address();
 
-  constructor(private logger: LoggerService, 
+  constructor(private logger: LoggerService,
     private restErrorSvc: RestErrorHandlerService,
     private routerService: RouterService,
     private orderService: OrderService,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private userService: UserService,
-    private imageService: ImageService) {
+    private imageService: ImageService,
+    private mapDialog: MatDialog,
+    private dialogService: InteractionDialogService) {
     this.orderInfo = new Order();
   }
 
@@ -64,24 +70,23 @@ export class OrderPageComponent implements OnInit {
     this.routerService.goToOrders();
   }
 
-  populateSellerInfo(sellerId?: string){
-    if(sellerId)
-    {
-      this.userService.getOtherUserInfo(sellerId).subscribe(info =>{
+  populateSellerInfo(sellerId?: string) {
+    if (sellerId) {
+      this.userService.getOtherUserInfo(sellerId).subscribe(info => {
         this.seller = new Address(info.address);
       })
     }
   }
-  populateCustomerInfo(customerId?: string){
-    if(customerId){
-      this.userService.getOtherUserInfo(customerId).subscribe(info =>{
+  populateCustomerInfo(customerId?: string) {
+    if (customerId) {
+      this.userService.getOtherUserInfo(customerId).subscribe(info => {
         this.customer = new Address(info.address);
       })
     }
   }
-  populateCarrierInfo(carrierId?: string){
-    if(carrierId){
-      this.userService.getOtherUserInfo(carrierId).subscribe(info =>{
+  populateCarrierInfo(carrierId?: string) {
+    if (carrierId) {
+      this.userService.getOtherUserInfo(carrierId).subscribe(info => {
         this.carrier = new Address(info.address);
       })
     }
@@ -133,10 +138,42 @@ export class OrderPageComponent implements OnInit {
   }
 
   getImage(product: Product) {
-      return this.imageService.getImage(product.imageUrl!);
+    return this.imageService.getImage(product.imageUrl!);
   }
-  
+
   getImageSrc(img: Image) {
     return this.imageService.getImageSrcString(img);
+  }
+
+  get getStatusDisplay() {
+    return this.orderService.getOrderStatusDisplay(this.orderInfo);
+  }
+
+  get isInProgress(): boolean {
+    return this.orderService.isOrderInProgress(this.orderInfo);
+  }
+
+  trackOrder() {
+    this.userService.getOtherUserInfo(this.orderInfo.carrierId!).subscribe({
+      next: carrierInfo => {
+        let title = `Tracking order ${this.orderInfo.orderId}.`
+        const dialogRef = this.mapDialog.open(MapDialogComponent, {
+          data: {
+            title: title,
+            isDirection: true,
+            sourceLat: carrierInfo.vehicleInfo!.latitude!,
+            sourceLng: carrierInfo.vehicleInfo!.longitude!,
+            destinationLat: this.deliveryAddress.latitude!,
+            destinationLng: this.deliveryAddress.longitude!
+          },
+          width: '50vw'
+        });
+      },
+      error: err => {
+        this.restErrorSvc.processFetchError(err);
+      }
+    })
+
+
   }
 }

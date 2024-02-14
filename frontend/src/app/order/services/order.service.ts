@@ -68,4 +68,46 @@ export class OrderService {
     order.status != OrderStatus.CANCELLATION_REQUESTED && 
     order.status != OrderStatus.DELIVERED;
   }
+
+  getOrderStatusDisplay(order: Order) {
+    let statusDisplay = {
+      class: "",
+      icon: "icon",
+      text: ""
+    }
+    switch (order.status) {
+      case OrderStatus.INITIALIZED:
+        statusDisplay.class = "text-info";
+        statusDisplay.icon = "priority_high";
+        statusDisplay.text = "Initialized"
+        break;
+      case OrderStatus.CONFIRMED:
+        statusDisplay.class = "text-primary";
+        statusDisplay.icon = "check";
+        statusDisplay.text = "Confirmed"
+        break;
+      case OrderStatus.SHIPPED:
+        statusDisplay.class = "text-warning";
+        statusDisplay.icon = "local_shipping";
+        statusDisplay.text = "Shipped"
+        break;
+      case OrderStatus.DELIVERED:
+        statusDisplay.class = "text-success";
+        statusDisplay.icon = "where_to_vote";
+        statusDisplay.text = "Delivered"
+        break;
+      case OrderStatus.CANCELLED:
+        statusDisplay.class = "text-danger";
+        statusDisplay.icon = "cancel";
+        statusDisplay.text = "Cancelled"
+        break;
+      case OrderStatus.CANCELLATION_REQUESTED:
+        statusDisplay.class = "text-danger";
+        statusDisplay.icon = "error_outline";
+        statusDisplay.text = "Cancellation Requested"
+        break;
+    }
+
+    return statusDisplay;
+  }
 }

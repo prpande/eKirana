@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/app/user/models/user';
 import { Vehicle } from 'src/app/user/models/vehicle';
+import { InteractionDialogService } from '../interaction-dialog/service/interaction-dialog.service';
 
 export interface MapDialogData {
   title: string;
@@ -46,7 +47,8 @@ export class MapDialogComponent {
   };
 
   constructor(public dialogRef: MatDialogRef<MapDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: MapDialogData) {
+    @Inject(MAT_DIALOG_DATA) public dialogData: MapDialogData,
+    private dialogService: InteractionDialogService) {
   }
 
   setUpMap() {
@@ -106,6 +108,14 @@ export class MapDialogComponent {
       this.isDirectionInitialized = true;
       this.dirDisplay.setDirections(this.directionsResults);
       this.dirDisplay.setPanel(document.getElementById('directionsList'))
+    } else {
+      this.dialogService.openInteractionDialog({
+        isConfirmation: false,
+        title: `Unable to fetch direction data.`,
+        message: `Status:[${status}]`
+      })
+
+      this.dialogRef.close();
     }
   }
 

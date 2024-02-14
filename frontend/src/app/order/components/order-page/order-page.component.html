@@ -1,49 +1,71 @@
 <div class="card container my-3 p-3">
-    <div class="h4 mb-0 d-flex align-items-center">
-        <div class="button-container d-inline-block">
+    <div class="mb-0 d-flex align-items-center">
+        <div class="h4 button-container d-inline-block">
             <button mat-mini-fab matTooltip="Back to Orders" routerLink="/orders" color="primary">
                 <mat-icon class="">arrow_back</mat-icon>
             </button>
         </div>
-        <div class=" mx-3">
-            Order Details [ID:{{orderInfo.orderId}}]
+        <div class="h4 mx-3">
+            Order ID: {{orderInfo.orderId}}
+        </div>
+        <div class="d-flex ms-auto px-3" *ngIf="getStatusDisplay as status">
+            <div class="d-flex p-0">
+                <div class="align-self-center mb-1">
+                    <mat-icon class="{{status.class}}">{{status.icon}}</mat-icon>
+                </div>
+            </div>
+            <div class="h4 px-1">
+                {{status.text}}
+            </div>
         </div>
     </div>
     <mat-divider class="border-3 my-3"></mat-divider>
     <div class="d-flex">
-        <div class="card mx-4 p-3">
-            <div> Status:
-                <span class="h6">
-                    {{orderInfo.status}}
-                </span>
+        <div class="card mx-2 p-3 flex-fill bg-light">
+            <div class="d-flex me-auto">
+                <mat-icon class="text-info">information</mat-icon>
+                <p class="h5 p-0 m-0 mx-1">
+                    Order Details
+                </p>
             </div>
-            <div class=""> Order Date:
-                <span class="h6">
-                    {{placedOn}}
-                </span>
-            </div>
-            <div *ngIf="!isCustomer" class=""> Customer ID:
-                <span class="h6">
-                    {{orderInfo.customerId}}
-                </span>
-            </div>
-            <div *ngIf="!isSeller" class=""> Seller ID:
-                <span class="h6">
-                    {{orderInfo.sellerId}}
-                </span>
-            </div>
-            <div *ngIf="!isCarrier && isCarrierAssigned" class=""> Carrier ID:
-                <span class="h6">
-                    {{orderInfo.carrierId}}
-                </span>
-            </div>
-            <div *ngIf="isComments" class=""> Comments:
-                <span class="h6">
-                    {{orderInfo.comments}}
-                </span>
+            <div class="mt-2">
+                <mat-card>
+                    <mat-card-content>
+                        <div> Status:
+                            <span class="h6">
+                                {{orderInfo.status}}
+                            </span>
+                        </div>
+                        <div class=""> Order Date:
+                            <span class="h6">
+                                {{placedOn}}
+                            </span>
+                        </div>
+                        <div *ngIf="!isCustomer" class=""> Customer ID:
+                            <span class="h6">
+                                {{orderInfo.customerId}}
+                            </span>
+                        </div>
+                        <div *ngIf="!isSeller" class=""> Seller ID:
+                            <span class="h6">
+                                {{orderInfo.sellerId}}
+                            </span>
+                        </div>
+                        <div *ngIf="!isCarrier && isCarrierAssigned" class=""> Carrier ID:
+                            <span class="h6">
+                                {{orderInfo.carrierId}}
+                            </span>
+                        </div>
+                        <div *ngIf="isComments" class=""> Comments:
+                            <span class="h6">
+                                {{orderInfo.comments}}
+                            </span>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
             </div>
         </div>
-        <div class="card mx-4 p-3">
+        <div class="card mx-2 p-3 bg-light">
             <div class="d-flex me-auto">
                 <mat-icon class="text-danger">place</mat-icon>
                 <p class="h5 p-0 m-0 mx-1">
@@ -55,7 +77,7 @@
             </div>
         </div>
 
-        <div *ngIf="!isSeller" class="card mx-4 p-3 d-flex">
+        <div *ngIf="!isSeller" class="card mx-2 p-3 bg-light">
             <div class="d-flex me-auto">
                 <mat-icon class="text-primary">store</mat-icon>
                 <p class="h5 p-0 m-0 mx-1">
@@ -66,26 +88,35 @@
                 <app-address-card [address]="seller"></app-address-card>
             </div>
         </div>
-        <div *ngIf="!isCarrier && isCarrierAssigned" class="card mx-4 p-3">
+        <div *ngIf="!isCarrier && isCarrierAssigned && isInProgress" class="card mx-2 p-3 bg-light">
             <div class="d-flex me-auto">
-                <mat-icon class="text-danger">local_shipping</mat-icon>
+                <mat-icon class="text-warning">local_shipping</mat-icon>
                 <p class="h5 p-0 m-0 mx-1">
                     Carrier
                 </p>
             </div>
             <div class="mt-2">
-                <mat-card >
+                <mat-card>
                     <mat-card-content>
                         <div class="h6">{{carrier.fullName}}</div>
                         <div class="h6 d-flex">
-                            <mat-icon>phone</mat-icon> 
+                            <mat-icon>phone</mat-icon>
                             {{carrier.phoneNumber}}
                         </div>
                     </mat-card-content>
                 </mat-card>
             </div>
+            <div class="mt-auto text-center">
+                <button mat-fab extended matTooltip="Track Order" color="accent" class="m-0 py-1 px-2"
+                    (click)="trackOrder()">
+                    <mat-icon class="p-0 m-0">my_location</mat-icon>
+                    <p class="p-0 m-1 h6">
+                        Track
+                    </p>
+                </button>
+            </div>
         </div>
-        <div *ngIf="!isCustomer" class="card mx-4 p-3">
+        <div *ngIf="!isCustomer" class="card mx-2 p-3">
             <div class="d-flex me-auto">
                 <mat-icon class="text-info">person</mat-icon>
                 <p class="h5 p-0 m-0 mx-1">
@@ -97,7 +128,7 @@
                     <mat-card-content>
                         <div class="h6">{{customer.fullName}}</div>
                         <div class="h6 d-flex">
-                            <mat-icon>phone</mat-icon> 
+                            <mat-icon>phone</mat-icon>
                             {{customer.phoneNumber}}
                         </div>
                     </mat-card-content>
@@ -106,7 +137,7 @@
         </div>
     </div>
     <mat-divider class="border-1 my-3"></mat-divider>
-    <div class="container card p-3">
+    <div class="container card p-3 bg-light">
         <div class="h4 mb-3">Items</div>
         <div class="d-flex flex-column">
             <div *ngFor="let item of items">
