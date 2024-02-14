@@ -5,13 +5,13 @@
             <mat-drawer id="cart-drawer" #cartDrawer mode="side" position="end" class="">
                 <app-cart-view></app-cart-view>
             </mat-drawer>
-            <mat-drawer-content class="">
-                <mat-drawer-container id="nav-container" class="container">
+            <mat-drawer-content  class="app-body">
+                <mat-drawer-container id="nav-container" class="container bg-transparent">
                     <mat-drawer id="nav-drawer" class="card my-3" #dashDrawer mode="side" opened="true">
                         <app-dash-nav></app-dash-nav>
                     </mat-drawer>
                     <mat-drawer-content id="nav-content" class="">
-                        <router-outlet></router-outlet>
+                            <router-outlet></router-outlet>
                     </mat-drawer-content>
                 </mat-drawer-container>
             </mat-drawer-content>

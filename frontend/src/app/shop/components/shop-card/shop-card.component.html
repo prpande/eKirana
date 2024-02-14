@@ -1,15 +1,17 @@
 <a routerLink="/shop/{{shop?.userId}}">
     <mat-card mat-ripple class="shop-card d-lg-inline-block m-3">
-        <div class="">
-            <img *ngIf="imgSrc" class="img-thumbnail" mat-card-image [src]="imgSrc" [alt]="shop?.displayImageUrl">
+        <div class="d-flex d-lg-block">
+            <div class="">
+                <img *ngIf="imgSrc" class="img-thumbnail" mat-card-image [src]="imgSrc" [alt]="shop?.displayImageUrl">
+            </div>
+            <mat-card-content>
+                <mat-card-title color="primary">
+                    {{shop?.fullName}}
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <p>{{shop?.line1}}, {{shop?.line2}}, {{shop?.city}}, {{shop?.phoneNumber}}</p>
+                </mat-card-subtitle>
+            </mat-card-content>
         </div>
-        <mat-card-content>
-            <mat-card-title color="primary">
-                {{shop?.fullName}}
-            </mat-card-title>
-            <mat-card-subtitle>
-                <p>{{shop?.line1}}, {{shop?.line2}}, {{shop?.city}}, {{shop?.phoneNumber}}</p>
-            </mat-card-subtitle>
-        </mat-card-content>
     </mat-card>
 </a>

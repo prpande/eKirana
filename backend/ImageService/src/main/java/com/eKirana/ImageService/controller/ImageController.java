@@ -51,7 +51,7 @@ public class ImageController {
     @GetMapping(GET_IMAGE_BY_ID)
     public ResponseEntity<?> getImageById(@PathVariable String imageId, HttpServletRequest httpServletRequest) throws ImageNotFoundException {
         try {
-            logger.info("[getImageById]: Enter");
+            logger.info("[getImageById]: Image:[{}]", imageId);
             responseEntity = new ResponseEntity<>(imageService.getImageById(imageId), HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("[getImageById]: Error", ex);

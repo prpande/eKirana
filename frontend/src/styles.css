@@ -28,6 +28,13 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+@font-face {
+  font-family: samarkan;
+  src: url(assets/fonts/Samarkan.ttf);
+}
+.samarkan{
+  font-family: samarkan, Arial, Helvetica, sans-serif;
+}
 
 /* Firefox */
 input[type=number] {

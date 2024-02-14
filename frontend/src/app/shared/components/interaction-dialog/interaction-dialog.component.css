@@ -8,6 +8,7 @@
 } 
 
 .dialog{
-    background-color: #19191991;
-    box-shadow: 0 0 20px 20px #191919;
+    background-color: #6c757d;
+    box-shadow: 0 0px 20px 20px #35393d;
+    color: whitesmoke;
 }

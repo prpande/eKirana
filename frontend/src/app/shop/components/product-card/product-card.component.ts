@@ -9,6 +9,7 @@ import { LoggerService } from 'src/app/shared/components/logger/services/logger.
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
 import { CartService } from 'src/app/cart/services/cart.service';
 import { ImageService } from 'src/app/shared/image-manager/services/image.service';
+import { InteractionDialogService } from 'src/app/shared/components/interaction-dialog/service/interaction-dialog.service';
 
 @Component({
   selector: 'app-product-card',
@@ -31,7 +32,8 @@ export class ProductCardComponent implements OnInit {
     private logger: LoggerService,
     private restErrorSvc: RestErrorHandlerService,
     private cartService: CartService,
-    private imageService: ImageService) {
+    private imageService: ImageService,
+    private dialogService: InteractionDialogService) {
     this.product = new Product();
   }
   ngOnInit(): void {
@@ -86,15 +88,24 @@ export class ProductCardComponent implements OnInit {
   }
 
   deleteProduct() {
-    this.productService.removeProduct(this.product.productId!).subscribe({
-      next: data => {
-        console.log(`Product delete successfully:[${this.product.productId}]`);
-        this.productUpdatedEvent.emit(true);
-      },
-      error: err => {
-        this.restErrorSvc.processPostError(err);
+    this.dialogService.openInteractionDialog({
+      isConfirmation: true,
+      title: `Are you sure you want to delete product?`,
+      message: `Product:[${this.product.name}]`
+    }).subscribe(confirmation => {
+      if (confirmation) {
+
+        this.productService.removeProduct(this.product.productId!).subscribe({
+          next: data => {
+            console.log(`Product delete successfully:[${this.product.productId}]`);
+            this.productUpdatedEvent.emit(true);
+          },
+          error: err => {
+            this.restErrorSvc.processPostError(err);
+          }
+        })
       }
-    })
+    });
   }
 
   get canAddToCart() {

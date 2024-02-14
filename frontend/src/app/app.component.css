@@ -2,11 +2,6 @@
     width: 13vw;
     min-width: 250px;
 }
-.splash-image{
-    background-size:auto; 
-    width:auto;
-    background-image: url("/assets/bg.png");
-}
 .full-height{
     height: 100vh;
 }
@@ -18,4 +13,9 @@
 #nav-drawer{
     height: fit-content;
     width: fit-content;
+}
+.app-body{
+    background-size:auto; 
+    width:auto;
+    background-image: url("/assets/images/ek3.png");
 }
