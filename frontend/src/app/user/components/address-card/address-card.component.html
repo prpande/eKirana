@@ -1,25 +1,27 @@
 <mat-card class="d-inline-block address-card p-2 px-3">
-    <div class="p-0 d-inline-block">
-        <div class="h6">
-            {{address.fullName}}
+    <mat-card-content>
+        <div class="p-0 d-inline-block">
+            <div class="h6">
+                {{address.fullName}}
+            </div>
+            <div class="h6">
+                {{address.line1}}<span *ngIf="isLine2()">, {{address.line2}}</span>
+            </div>
+            <div class="h6" *ngIf="isLandmark()">
+                Landmark: {{address.landmark}}
+            </div>
+            <div class="h6">
+                {{address.city}}
+            </div>
+            <div class="h6">
+                {{address.state}} - {{address.pinCode}}
+            </div>
+            <div class="h6 d-flex">
+                <mat-icon>phone</mat-icon> {{address.phoneNumber}}
+            </div>
         </div>
-        <div class="h6">
-            {{address.line1}}<span *ngIf="isLine2()">, {{address.line2}}</span>
-        </div>
-        <div class="h6" *ngIf="isLandmark()">
-            Landmark: {{address.landmark}}
-        </div>
-        <div class="h6">
-            {{address.city}}
-        </div>
-        <div class="h6">
-            {{address.state}} - {{address.pinCode}}
-        </div>
-        <div class="h6 d-flex">
-            <mat-icon>phone</mat-icon> {{address.phoneNumber}}
-        </div>
-    </div>
-    <mat-card-actions class="card-actions p-0 text-center" *ngIf="isUserOwner">
+    </mat-card-content>
+    <mat-card-actions class="card-actions p-0 text-center" *ngIf="isUserOwner && !isReadOnly">
         <div class="button-container d-inline-block mx-2">
             <button (click)="editAddress()" mat-icon-button color="primary">
                 <mat-icon>edit</mat-icon>

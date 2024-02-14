@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CartItem } from 'src/app/cart/models/cart';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
 import { ImageService } from 'src/app/shared/image-manager/services/image.service';
-import { ProductService } from 'src/app/shop/services/product.service';
 
 @Component({
   selector: 'app-checkout-item-card',

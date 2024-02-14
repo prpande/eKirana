@@ -78,8 +78,7 @@ const routes: Routes = [
   {
     path: "orders",
     component: OrdersTabComponent,
-    canActivate: [loginGuard, dashStartGuard],
-    canDeactivate: [dashEndGuard],
+    canActivate: [loginGuard],
     resolve: {
       userDataResolver: UserDataResolver
     }

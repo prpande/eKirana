@@ -4,6 +4,7 @@
     </a>
     <div class="">
         <div class="container">
+            
             <div *ngIf="loggedIn==true && userCredentials.userType =='CARRIER'" class="button-container d-inline-block">
                 <button mat-fab extended matTooltip="Delivery Hub" routerLink="delivery-hub"
                     color="warn">
@@ -35,12 +36,12 @@
                         Log In
                     </p>
                 </button>
-                <button *ngIf="loggedIn==true" mat-mini-fab matTooltip="logout" (click)="logout()" class="">
+                <button *ngIf="loggedIn==true" mat-mini-fab matTooltip="Log Out" (click)="logout()" class="">
                     <mat-icon>logout</mat-icon>
                 </button>
             </div>
             <div class="button-container d-inline-block">
-                <button mat-mini-fab matTooltip="Dashboard" routerLink="dashboard" *ngIf="loggedIn==true" class="">
+                <button mat-mini-fab matTooltip="Profile" routerLink="dashboard" *ngIf="loggedIn==true" class="">
                     <mat-icon class="">person</mat-icon>
                 </button>
                 <button mat-fab extended matTooltip="Register" routerLink="register" *ngIf="loggedIn!=true"
@@ -49,6 +50,12 @@
                     <p class="p-0 m-1">
                         Register
                     </p>
+                </button>
+            </div>
+            <div *ngIf="loggedIn==true && userCredentials.userType =='CUSTOMER'" class="button-container d-inline-block">
+                <button mat-mini-fab matTooltip="My Orders" routerLink="orders"
+                    color="warn">
+                    <mat-icon class="p-0 m-0">receipt</mat-icon>
                 </button>
             </div>
             <div *ngIf="loggedIn==true && userCredentials.userType =='CUSTOMER'"

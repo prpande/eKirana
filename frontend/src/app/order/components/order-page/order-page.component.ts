@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderService } from '../../services/order.service';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
+import { ImageService } from 'src/app/shared/image-manager/services/image.service';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
 import { RouterService } from 'src/app/shared/services/router.service';
-import { Order } from '../../models/order';
-import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/shop/models/product';
-import { CartItem } from 'src/app/cart/models/cart';
 import { Address } from 'src/app/user/models/address';
 import { AuthService } from 'src/app/user/services/auth.service';
-import { User } from 'src/app/user/models/user';
 import { UserService } from 'src/app/user/services/user.service';
+import { Order } from '../../models/order';
+import { OrderService } from '../../services/order.service';
+import { Image } from 'src/app/shared/image-manager/models/Image';
 
 @Component({
   selector: 'app-order-page',
@@ -30,7 +31,8 @@ export class OrderPageComponent implements OnInit {
     private orderService: OrderService,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private userService: UserService) {
+    private userService: UserService,
+    private imageService: ImageService) {
     this.orderInfo = new Order();
   }
 
@@ -128,5 +130,13 @@ export class OrderPageComponent implements OnInit {
 
   get isSeller(): boolean {
     return this.authService.isSeller;
+  }
+
+  getImage(product: Product) {
+      return this.imageService.getImage(product.imageUrl!);
+  }
+  
+  getImageSrc(img: Image) {
+    return this.imageService.getImageSrcString(img);
   }
 }

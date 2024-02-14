@@ -1,23 +1,37 @@
-<mat-card class="my-2">
+<mat-card class="my-2 product-card">
     <mat-card-content class="d-flex flex-row">
-        <div class="d-inline-block product-img me-4" *ngIf="imgSrc">
-            <img class="img-thumbnail" [src]="imgSrc" alt="{{product.imageUrl}}">
+        <div class="product-img p-0 d-flex" *ngIf="imgSrc">
+            <img class="img-thumbnail w-100 align-self-center" [src]="imgSrc" alt="{{product.imageUrl}}">
         </div>
-        <div class="d-inline-block me-auto">
+        <div class="me-auto details w-100 px-3">
             <div class="h4">
                 {{product.name}}
             </div>
             <div class="">
                 <p>{{product.category}}</p>
             </div>
-            <div class="d-none d-md-block">
-                <p>{{product.description}}</p>
-                <p>{{product.specifications}}</p>
+            <div class="d-none d-md-block card w-100 p-2">
+                <div>
+                    <div class="h6 m-0 p-0 text-decoration-underline">
+                        Specifications
+                    </div>
+                    <div class=" p-0 m-1">
+                        {{product.specifications}}
+                    </div>
+                </div>
+                <div id="description" class="mt-lg-3  d-none">
+                    <div class="h6 m-0 p-0 text-decoration-underline">
+                        Description
+                    </div>
+                    <div class="m-0 p-1">
+                        {{product.description}}
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="d-inline-block text-center align-self-center">
+        <div class="text-center align-self-center">
             <div class="">
-                <p class="h4">
+                <p class="h4 text-nowrap">
                     &#8377; {{product.price}}
                 </p>
             </div>
@@ -42,7 +56,7 @@
                 </div>
             </div>
         </div>
-        <div class="button-container align-self-center ps-5" *ngIf="isCustomer()">
+        <div class="button-container align-self-center ps-3" *ngIf="isCustomer()">
             <button mat-mini-fab color="primary" (click)="addProductToCart()" [disabled]="!canAddToCart">
                 <mat-icon>add_shopping_cart</mat-icon>
             </button>

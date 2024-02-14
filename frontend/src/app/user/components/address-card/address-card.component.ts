@@ -16,6 +16,9 @@ export class AddressCardComponent {
   @Input()
   address!: Address;
 
+  @Input()
+  isReadOnly: boolean = false;
+
   @Output()
   addressUpdatedEvent: EventEmitter<any> = new EventEmitter<any>();
 
