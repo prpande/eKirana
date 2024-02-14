@@ -52,8 +52,8 @@
                     </p>
                 </button>
             </div>
-            <div *ngIf="loggedIn==true && userCredentials.userType =='CUSTOMER'" class="button-container d-inline-block">
-                <button mat-mini-fab matTooltip="My Orders" routerLink="orders"
+            <div *ngIf="loggedIn==true && userCredentials.userType !='CARRIER'" class="button-container d-inline-block">
+                <button mat-mini-fab matTooltip="Orders" routerLink="orders"
                     color="warn">
                     <mat-icon class="p-0 m-0">receipt</mat-icon>
                 </button>

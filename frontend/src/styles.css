@@ -41,7 +41,9 @@ input::-webkit-inner-spin-button {
 .splash-bg{
     background-image: url("/assets/images/ek10.png");
 }
-
+.mat-divider {
+  border-top-color: #3f51b5af !important;
+}
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
