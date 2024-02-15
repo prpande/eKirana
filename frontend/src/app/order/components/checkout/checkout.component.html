@@ -1,5 +1,5 @@
 <div class="container card my-5 p-4 showcase">
-    <div class="card-title h3 text-center">Checkout</div>
+    <div class="card-title h3 text-center">Checkout <span *ngIf="!isCartEmpty()">({{cartCount}} Items)</span></div>
     <mat-divider class="border-4 my-3"></mat-divider>
     <div class="h4 text-center" *ngIf="isCartEmpty()">
         Your cart is empty! No items to checkout.
@@ -7,7 +7,7 @@
     <div *ngIf="!isCartEmpty()">
         <app-address-selector></app-address-selector>
         <mat-divider class="border-1 my-3"></mat-divider>
-        <div class="container card p-3">
+        <div class="container card p-3 splash-bg">
             <div class="h4 mb-3">Cart</div>
             <div class="d-flex flex-column">
                 <app-checkout-item-card *ngFor="let item of cart" [cartItem]="item"></app-checkout-item-card>

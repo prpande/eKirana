@@ -52,7 +52,7 @@
                 <a class="" data-bs-toggle="collapse" href="#{{category}}">
                     <div class="d-flex py-1 px-2 category-toggle">
                         <div class="me-auto h4 align-self-center mt-1">
-                            {{category}}
+                            {{category}} ({{categorizedProducts.get(category)!.length}})
                         </div>
                         <div class="icon ms-auto ">
                             <mat-icon class="chevron mt-1" color="">code</mat-icon>
@@ -61,7 +61,7 @@
                 </a>
             </div>
             <div [class]="'collapse ' +  ((i==0)?'show':'')" id="{{category}}">
-                <div class="card px-3 pb-2 showcase">
+                <div class="mt-2 card p-3 splash-bg">
                     <app-product-card *ngFor="let product of categorizedProducts.get(category)" [product]="product"
                     (productUpdatedEvent)="getProductsInShop()"></app-product-card>
                 </div>

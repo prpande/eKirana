@@ -1,9 +1,27 @@
-.product-img{
+.product-img {
     width: 15vw;
+
+}
+.product-card {
+    box-shadow: #8080818f 0px 0px 10px !important;
 }
 
-.product-card:hover {
-    #description {
-        display: block !important;
-    }
+.description:hover {
+    box-shadow: #cccdce 0px 0px 10px !important;
+    border: 1px solid #8080818f !important;
+}
+
+.description {
+    cursor: pointer;
+}
+
+.mask {
+    position: absolute;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.mask:hover {
+    box-shadow: #3f51b596 0px 0px 10px !important;
+    border: 1px solid #3f51b59a !important;
 }

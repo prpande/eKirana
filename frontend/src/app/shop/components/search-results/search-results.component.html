@@ -1,0 +1,95 @@
+<div class="card container my-3 p-3 showcase">
+    <div class="mb-0 d-flex align-items-center">
+        <div class="h4 button-container d-inline-block">
+            <button mat-fab matTooltip="Back" (click)="goBack()" color="primary">
+                <mat-icon class="">arrow_back</mat-icon>
+            </button>
+        </div>
+        <div class="h4 mx-3">
+            Search Results
+        </div>
+        <div class="d-flex ms-auto px-3">
+            <div class="d-flex p-0">
+                <div class="align-self-center mb-1">
+                    <mat-icon color="primary">search</mat-icon>
+                </div>
+            </div>
+            <div class="h4 px-1">
+                "{{searchStr}}"
+            </div>
+        </div>
+    </div>
+    <mat-divider class="border-3 my-3"></mat-divider>
+    <div class="">
+        <div class="" *ngIf="filteredProducts.length != 0">
+            <div class="product-list my-2">
+                <div class="">
+                    <a class="" data-bs-toggle="collapse" href="#products">
+                        <div class="d-flex py-1 px-2 category-toggle">
+                            <div class="me-auto h4 align-self-center mt-1">
+                                Products ({{filteredProducts.length}})
+                            </div>
+                            <div class="icon ms-auto ">
+                                <mat-icon class="chevron mt-1" color="">code</mat-icon>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="collapse" id="products">
+                    <div class="splash-bg card p-3">
+                        <div class="product-list my-2" *ngFor="let category of getCategories; index as i">
+                            <div class="">
+                                <a class="" data-bs-toggle="collapse" href="#{{category}}">
+                                    <div class="d-flex py-1 px-2 category-toggle">
+                                        <div class="me-auto h4 align-self-center mt-1">
+                                            {{category}} ({{categorizedProducts.get(category)!.length}})
+                                        </div>
+                                        <div class="icon ms-auto ">
+                                            <mat-icon class="chevron mt-1" color="">code</mat-icon>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="collapse show" id="{{category}}">
+                                <div class="card px-3 pb-2 showcase">
+                                    <app-product-card *ngFor="let product of categorizedProducts.get(category)"
+                                    [product]="product" [isSearchResult]="true"></app-product-card>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="" *ngIf="filteredShops.length != 0">
+            <div class="product-list my-2">
+                <div class="">
+                    <a class="" data-bs-toggle="collapse" href="#shops">
+                        <div class="d-flex py-1 px-2 category-toggle">
+                            <div class="me-auto h4 align-self-center mt-1">
+                                Shops ({{filteredShops.length}})
+                            </div>
+                            <div class="icon ms-auto ">
+                                <mat-icon class="chevron mt-1" color="">code</mat-icon>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="collapse" id="shops">
+                    <div class="card px-3 pb-2 splash-bg">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="" *ngFor="let shop of filteredShops">
+                                <app-shop-card [shop]="shop"></app-shop-card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="" *ngIf="filteredShops.length == 0 && filteredProducts.length == 0">
+            <div class="h4 text-center">
+                No results to display
+            </div>
+        </div>
+    </div>
+</div>

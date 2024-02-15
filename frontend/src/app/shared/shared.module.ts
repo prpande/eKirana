@@ -31,11 +31,10 @@ import { MapDisplayComponent } from './components/map-dialog/map-display/map-dis
 import { QuantityFormComponent } from './components/quantity-form/quantity-form.component';
 import { ImageManagerModule } from './image-manager/image-manager.module';
 import { SearchComponent } from './components/search/search.component';
-import { SearchResultsComponent } from './components/search-results/search-results.component';
 
 @NgModule({
   declarations: [  
-    QuantityFormComponent, MapDialogComponent, MapDisplayComponent, InteractionDialogComponent, SearchComponent, SearchResultsComponent,
+    QuantityFormComponent, MapDialogComponent, MapDisplayComponent, InteractionDialogComponent, SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +65,7 @@ import { SearchResultsComponent } from './components/search-results/search-resul
     MatRadioModule,
     MatDialogModule,
     MatBadgeModule,
-    ImageManagerModule
+    ImageManagerModule,
   ],
   exports: [
     BrowserModule,

@@ -13,6 +13,7 @@ export class SearchComponent {
   onInput(event: any) {
     if (event.key === 'Enter' || event.keyCode === 13) {
       this.routerService.goToSearchResults(event.target.value);
+      event.target.value = "";
     }
   }
 }

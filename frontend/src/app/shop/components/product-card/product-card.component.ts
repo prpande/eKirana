@@ -24,7 +24,11 @@ export class ProductCardComponent implements OnInit, AfterViewChecked {
   @Output()
   productUpdatedEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  @Input()
+  isSearchResult: boolean = false;
+
   imgSrc!: string;
+  showDescription: boolean = false;
 
   constructor(public productDialog: MatDialog,
     private authService: AuthService,
@@ -118,5 +122,9 @@ export class ProductCardComponent implements OnInit, AfterViewChecked {
 
   addProductToCart() {
     this.cartService.addToCart(this.product);    
+  }
+
+  toggleDescription(){
+    this.showDescription = !this.showDescription;
   }
 }

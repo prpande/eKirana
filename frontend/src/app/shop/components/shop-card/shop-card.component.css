@@ -1,3 +1,11 @@
 .shop-card{
     width: 10vw;
 }
+.shop-card{
+    box-shadow: rgba(5, 5, 5, 0.568) 0px 0px 10px !important;
+    border-radius: 10px !important;
+}
+.shop-card:hover{
+    box-shadow: #3f51b5ad 0px 0px 5px 5px !important;
+    border: 1px solid #3f51b59a !important;
+}
