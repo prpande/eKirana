@@ -1,0 +1,16 @@
+img{
+    opacity: 0.8;
+}
+.mask{
+    background-image: url("/assets/images/ek80.png");
+    
+}
+.message{
+    position: absolute;
+    z-index: 5;
+    width: 99%;
+    margin-top: 16%;
+}
+p {
+    font-size: 7vw;
+}
