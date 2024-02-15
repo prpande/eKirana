@@ -91,6 +91,7 @@ export class ShopViewComponent implements OnInit, AfterViewChecked {
   }
 
   categorizeProducts() {
+    this.categorizedProducts.clear();
     this.products.forEach(product => {
       if (product.category) {
         let productArray = this.categorizedProducts.get(product.category)!;
