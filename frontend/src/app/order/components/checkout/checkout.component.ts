@@ -13,6 +13,7 @@ import { AddressSelectorComponent } from '../address-selector/address-selector.c
 import { OrderService } from '../../services/order.service';
 import { BehaviorSubject } from 'rxjs';
 import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
+import { InteractionDialogService } from 'src/app/shared/components/interaction-dialog/service/interaction-dialog.service';
 
 @Component({
   selector: 'app-checkout',
@@ -40,7 +41,9 @@ export class CheckoutComponent implements OnInit {
     private cartService: CartService,
     private routerService: RouterService,
     private orderService: OrderService,
-    private restErrorSvc: RestErrorHandlerService) { }
+    private dialogService: InteractionDialogService,
+    private restErrorSvc: RestErrorHandlerService,
+  ) { }
 
   ngOnInit(): void {
     this.cartService.cart$.subscribe(() => {
@@ -149,25 +152,40 @@ export class CheckoutComponent implements OnInit {
   }
 
   proceedToPayment() {
-    this.setDeliveryAddress();
-    this.createOrders();
 
-    this.successfulOrders = new BehaviorSubject<Order[]>([]);
-    this.successfulOrders.subscribe({
-      next: ordersSuccess => {
-        if (ordersSuccess.length == this.orders.length) {
-          this.logger.info("All orders placed successfully!");
-          this.cartService.clearCart();
-          // TODO mat snack bar/ dialog
-          this.routerService.goToHome();
-        }
-      },
-      error: err => {
-        this.logger.error("All orders not placed successfully!");
-        this.logger.error(err);
+    this.dialogService.openInteractionDialog({
+      isConfirmation: true,
+      title: `Are you sure you want to place the order?`,
+      message: `Total: \u20B9 ${this.cartTotal}`
+    }).subscribe(confirmation => {
+      if (confirmation) {
+        this.setDeliveryAddress();
+        this.createOrders();
+
+        this.successfulOrders = new BehaviorSubject<Order[]>([]);
+        this.successfulOrders.subscribe({
+          next: ordersSuccess => {
+            if (ordersSuccess.length == this.orders.length) {
+              this.logger.info("All orders placed successfully!");
+
+              this.dialogService.openInteractionDialog({
+                isConfirmation: false,
+                title: `Order placed Successfully!`,
+                message: ""
+              }).subscribe(() => {
+                this.cartService.clearCart();
+                this.routerService.goToHome();
+              });
+            }
+          },
+          error: err => {
+            this.logger.error("All orders not placed successfully!");
+            this.logger.error(err);
+          }
+        });
+
+        this.processOrders();
       }
     });
-
-    this.processOrders();
   }
 }
