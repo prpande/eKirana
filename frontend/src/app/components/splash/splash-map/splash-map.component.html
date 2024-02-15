@@ -1,0 +1,15 @@
+<div class="border border-3 rounded-2 h-auto w-100">
+    <google-map [zoom]="mapZoom" [center]="mapCenter" [options]="mapOptions" (mapInitialized)="initMarkers()" width="100%">
+        <div *ngIf="markersInitialized">
+            <div *ngFor="let marker of Markers">
+                <div class=""  >
+                    <map-info-window [position]="marker" (closeclick)="initializeInfoWindows()" (mouseover)="mouseOverInfo(getShop(marker).addressId!)">
+                        <div class="">
+                            <app-shop-marker [shop]="getShop(marker)"></app-shop-marker>
+                        </div>
+                    </map-info-window>
+                </div>
+            </div>
+        </div>
+    </google-map>
+</div>

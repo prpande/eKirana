@@ -18,6 +18,8 @@ import { UserModule } from './user/user.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { OrderModule } from './order/order.module';
 import { DeliveryModule } from './delivery/delivery.module';
+import { SplashMapComponent } from './components/splash/splash-map/splash-map.component';
+import { ShopMarkerComponent } from './components/splash/splash-map/shop-marker/shop-marker.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { DeliveryModule } from './delivery/delivery.module';
     HeaderComponent,
     FooterComponent,
     SplashComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SplashMapComponent,
+    ShopMarkerComponent
   ],
   imports: [
     SharedModule,
