@@ -8,7 +8,7 @@
 
 #nav-container{
     min-height: 30vh;
-    /* width: 87vw; */
+    min-width: 400px;
 }
 #nav-drawer{
     height: fit-content;
