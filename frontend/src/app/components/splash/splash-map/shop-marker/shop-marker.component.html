@@ -1,14 +1,18 @@
-<div class="card showcase primary-border m-1" [style.--hoverColor]="hoverColorVar">
+<a routerLink="/shop/{{shop?.userId}}">
+    <div class="card showcase primary-border m-1" [style.--hoverColor]="hoverColorVar">
         <div class="d-flex p-1">
             <div class="d-flex">
                 <div class="align-self-center">
                     <img *ngIf="imgSrc" class="img-fluid" mat-card-image [src]="imgSrc" [alt]="shop?.displayImageUrl">
                 </div>
             </div>
-            <div class="shop-name h6 ps-1">
-                <div class="" *ngFor="let s of shopName">
-                    {{s}}
+            <div class="shop-name h6 ps-1 d-flex">
+                <div class="align-self-center">
+                    <div class="" *ngFor="let s of shopName">
+                        {{s}}
+                    </div>
                 </div>
             </div>
         </div>
-</div>
+    </div>
+</a>

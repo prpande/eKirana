@@ -9,3 +9,7 @@ img{
 .shop-name{
     font-weight: bold;
 }
+a:link {
+    color: inherit;
+    text-decoration: none;
+  }
