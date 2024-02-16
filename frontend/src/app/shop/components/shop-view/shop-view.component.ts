@@ -137,6 +137,7 @@ export class ShopViewComponent implements OnInit, AfterViewChecked {
             if (savedProduct) {
               this.logger.info(`Saved product:[${savedProduct.productId}]`);
               this.products.push(savedProduct);
+              this.ngOnInit();
             }
           },
           error: err => {
