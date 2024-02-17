@@ -4,7 +4,7 @@
         <div *ngIf="markersInitialized">
             <div *ngFor="let marker of Markers">
                 <div class=""  >
-                    <map-info-window [position]="marker" (closeclick)="initializeInfoWindows()" (mouseover)="mouseOverInfo(getShop(marker).addressId!)">
+                    <map-info-window [position]="marker" (closeclick)="initializeInfoWindows()"  (click)="mouseOverInfo(getShop(marker).addressId!)">
                         <div class="">
                             <app-shop-marker [shop]="getShop(marker)"></app-shop-marker>
                         </div>

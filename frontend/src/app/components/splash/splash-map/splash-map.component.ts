@@ -104,13 +104,14 @@ export class SplashMapComponent {
           this.imageService.getImage(shop.displayImageUrl!).subscribe(img => {
             this.hoverImg = this.imageService.getImageSrcString(img);
             this.hoverShop = shop;
-            window.options = { disableAutoPan: false };
-            window.open(undefined, false);
-            window.infoWindow?.setZIndex(10);
-            // this.mapCenter = new google.maps.LatLng({
-            //   lat: shop.latitude!,
-            //   lng: shop.longitude!
-            // });
+            // window.options = { disableAutoPan: false };
+            // window.open(undefined, false);
+            window.infoWindow?.setZIndex(100);
+            let shopLatLng = new google.maps.LatLng({
+              lat: shop.latitude!,
+              lng: shop.longitude!
+            });
+            this.gMap.panTo(shopLatLng);
           })
         } else {
           window.infoWindow?.setZIndex(5);

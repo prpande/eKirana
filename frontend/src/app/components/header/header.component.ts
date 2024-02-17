@@ -1,12 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { CartService } from 'src/app/cart/services/cart.service';
-import { RestErrorHandlerService } from 'src/app/shared/services/rest-error-handler.service';
+import { OrderService } from 'src/app/order/services/order.service';
 import { RouterService } from 'src/app/shared/services/router.service';
-import { Product } from 'src/app/shop/models/product';
-import { ProductService } from 'src/app/shop/services/product.service';
 import { UserCredential } from 'src/app/user/models/userCredential';
 import { AuthService } from 'src/app/user/services/auth.service';
+import { Observable, count, debounceTime, map, reduce, tap } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -26,9 +25,11 @@ export class HeaderComponent implements OnInit {
   userCredentials: UserCredential;
   canOpenCartDrawer: boolean = true;
 
+
   constructor(private routerService: RouterService,
     private authService: AuthService,
-    private cartService: CartService) {
+    private cartService: CartService,
+    private orderService: OrderService) {
     this.title = "e-Kirana";
     this.userCredentials = authService.UserCredentials;
     authService.loggedInStatusStream$.subscribe({
@@ -78,4 +79,15 @@ export class HeaderComponent implements OnInit {
   }
 
 
+  get ordersNeedingAttentionCount(): Observable<number> {
+    return this.orderService.getOrdersNeedingAttention().pipe(
+      tap(a => console.log(a)),
+      reduce(
+        (count, _) => { return ++count; }
+        , 0),
+        debounceTime(10000),
+        tap(
+          count => console.log(count)
+        ));
+  }
 } 

@@ -3,8 +3,8 @@
         <app-splash-map [shops]="shops"></app-splash-map>
     </div>
     <div class="h-100 d-flex flex-wrap justify-content-evenly align-items-center">
-        <div class="d-flex fl m-2" *ngFor="let shop of shops">
-            <app-shop-card [shop]="shop"></app-shop-card>
+        <div class="fl m-2" *ngFor="let shop of shops">
+            <app-shop-card [shop]="shop" [imgSrc]="getImgSrc(shop)"></app-shop-card>
         </div>
     </div>
 </div>

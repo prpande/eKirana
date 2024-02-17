@@ -1,8 +1,6 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { elementAt } from 'rxjs';
+import { Component, Input } from '@angular/core';
 import { MapInteractionService } from 'src/app/components/splash/splash-map/map-interaction.service';
 import { LoggerService } from 'src/app/shared/components/logger/services/logger.service';
-import { ImageService } from 'src/app/shared/image-manager/services/image.service';
 import { Address } from 'src/app/user/models/address';
 
 @Component({
@@ -10,36 +8,18 @@ import { Address } from 'src/app/user/models/address';
   templateUrl: './shop-card.component.html',
   styleUrls: ['./shop-card.component.css']
 })
-export class ShopCardComponent implements OnInit {
+export class ShopCardComponent {
 
   @Input()
   shop?: Address;
+  @Input()
   imgSrc!: string;
-  card!: HTMLElement;
-  isInitialized = false;
 
-  constructor(private imageService: ImageService, private logger: LoggerService,
-    private mapInteractionService: MapInteractionService){
+  card!: HTMLElement;
+
+  constructor(private mapInteractionService: MapInteractionService){
       mapInteractionService.HoverId$.subscribe(() => { this.onHover()})
     }
-
-  ngOnInit(): void {
-    if(this.shop && this.shop.displayImageUrl){
-      this.imageService.getImage(this.shop.displayImageUrl).subscribe({
-        next: imgData =>{
-          if(imgData){
-            this.imgSrc = this.imageService.getImageSrcString(imgData);
-            this.isInitialized = true;
-          }
-        },
-        error: err =>{
-          this.logger.error(err);
-          this.isInitialized = true;
-        }
-      });
-    }
-
-  }
 
   mouseOverInfo(){
     this.mapInteractionService.HoverId = this.shop?.addressId!;

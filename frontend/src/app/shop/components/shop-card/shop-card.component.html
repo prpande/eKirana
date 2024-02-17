@@ -1,12 +1,12 @@
-<a routerLink="/shop/{{shop?.userId}}" class="m-2" *ngIf="isInitialized">
+<a routerLink="/shop/{{shop?.userId}}" class="m-2">
     <mat-card [id]="shop?.addressId" mat-ripple class="shop-card" (mouseover)="mouseOverInfo()">
-        <mat-card-content class="p-1">
-            <div class="d-flex d-lg-block flex-row flex-md-column">
+        <mat-card-content class="p-0 m-0">
+            <div class="d-flex d-lg-block flex-row flex-md-column pt-2 px-2">
                 <div class="img-container align-self-center">
                     <img *ngIf="imgSrc" class="img-thumbnail" mat-card-image [src]="imgSrc"
                         [alt]="shop?.displayImageUrl">
                 </div>
-                <div class="px-2 px-md-0">
+                <div class="px-md-0">
                     <mat-card-title color="primary">
                         {{shop?.fullName}}
                     </mat-card-title>

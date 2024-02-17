@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { Order } from '../models/order';
 import { OrderRestEndpointsService } from './order-rest-endpoints.service';
 import { OrderStatus } from '../models/orderStatus';
@@ -64,9 +64,9 @@ export class OrderService {
   }
 
   canOrderCancelRequest(order: Order): boolean {
-    return order && order.status != OrderStatus.CANCELLED && 
-    order.status != OrderStatus.CANCELLATION_REQUESTED && 
-    order.status != OrderStatus.DELIVERED;
+    return order && order.status != OrderStatus.CANCELLED &&
+      order.status != OrderStatus.CANCELLATION_REQUESTED &&
+      order.status != OrderStatus.DELIVERED;
   }
 
   getOrderStatusDisplay(order: Order) {
@@ -109,5 +109,16 @@ export class OrderService {
     }
 
     return statusDisplay;
+  }
+
+  getOrdersNeedingAttention(): Observable<Order[]> {
+    return this.getAllOrdersByUser().pipe(
+      tap(a => console.log(a)),
+      map(orders => {
+        return orders.filter(order => order.status == OrderStatus.INITIALIZED
+          || order.status == OrderStatus.CANCELLATION_REQUESTED);
+      }),
+      tap(a => console.log(a))
+      )
   }
 }
