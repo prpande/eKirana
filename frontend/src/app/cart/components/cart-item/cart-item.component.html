@@ -1,4 +1,7 @@
-<div class="card container mx-auto my-3 pt-2">
+<div class="card container mx-auto my-4 pt-2">
+    <div class="delete">
+            <mat-icon class="text-danger" matTooltip="Remove Item" class="text-danger" (click)="removeItem()">cancel</mat-icon>
+    </div>
     <div class="h5 text-center">
         {{cartItem.item?.name}}
     </div>

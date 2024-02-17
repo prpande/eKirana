@@ -1,9 +1,6 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Product } from 'src/app/shop/models/product';
+import { Component, Input } from '@angular/core';
 import { CartItem } from '../../models/cart';
 import { CartService } from '../../services/cart.service';
-import { QuantityFormComponent } from 'src/app/shared/components/quantity-form/quantity-form.component';
 
 @Component({
   selector: 'app-cart-item',
@@ -13,4 +10,9 @@ import { QuantityFormComponent } from 'src/app/shared/components/quantity-form/q
 export class CartItemComponent {
   @Input()
   cartItem!: CartItem;
+
+  constructor(private cartService: CartService){}
+  removeItem(){
+    this.cartService.removeFromCart(this.cartItem.item?.productId!);
+  }
 }
