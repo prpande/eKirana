@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
   userCredentials: UserCredential;
   canOpenCartDrawer: boolean = true;
+  ordersNeedingAttention: number = 0;
 
 
   constructor(private routerService: RouterService,
@@ -36,11 +37,13 @@ export class HeaderComponent implements OnInit {
       next: (data) => {
         this.loggedIn = data;
         this.userCredentials = authService.UserCredentials;
+        this.getOrdersNeedingAttention();
       }
     })
   }
-
+  
   ngOnInit(): void {
+    this.orderService.OrderUpdate$.subscribe( _ => this.getOrdersNeedingAttention());
     this.cartService.cart$.subscribe({
       next: () => {
         if (this.cartService.cartItems.length > 0) {
@@ -79,15 +82,9 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  get ordersNeedingAttentionCount(): Observable<number> {
-    return this.orderService.getOrdersNeedingAttention().pipe(
-      tap(a => console.log(a)),
-      reduce(
-        (count, _) => { return ++count; }
-        , 0),
-        debounceTime(10000),
-        tap(
-          count => console.log(count)
-        ));
+  getOrdersNeedingAttention() {
+    this.orderService.getOrdersNeedingAttention().subscribe(orders => {
+      this.ordersNeedingAttention = orders.length;
+    })
   }
 } 

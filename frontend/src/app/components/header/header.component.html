@@ -1,7 +1,7 @@
 <mat-toolbar id="main-toolbar" color="primary" class="container-fluid py-5 fl">
     <div class="header-slot  col-3 col-md-4">
         <a class="" routerLink="home">
-            <div class="d-inline-block h1 samarkan">{{title}}</div>
+            <div class="d-inline-block title samarkan pt-3">{{title}}</div>
         </a>
     </div>
     <div class="header-slot  col-2 col-sm-3 col-md-4">
@@ -9,7 +9,6 @@
     </div>
     <div class="header-slot  col-4 text-end">
         <div class="">
-            
             <div *ngIf="loggedIn==true && userCredentials.userType =='CARRIER'" class="button-container d-inline-block">
                 <button mat-fab extended matTooltip="Delivery Hub" routerLink="delivery-hub"
                     color="warn">
@@ -21,8 +20,9 @@
             </div>
             <div *ngIf="loggedIn==true && userCredentials.userType =='SELLER'" class="button-container d-inline-block">
                 <button mat-fab extended matTooltip="Store Front" routerLink="/shop/{{userCredentials.userId}}"
-                    color="warn">
-                    <!-- [matBadge]="" matBadgePosition="after" matBadgeColor="accent" matBadgeSize="medium"> -->
+                    color="warn"
+                    [matBadge]="ordersNeedingAttention" matBadgePosition="after" matBadgeColor="accent" matBadgeSize="medium"
+                    [matBadgeHidden]="ordersNeedingAttention==0">
                     <mat-icon class="p-0 m-0">store</mat-icon>
                     <p class="p-0 m-1">
                         Store Front

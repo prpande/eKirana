@@ -63,15 +63,23 @@ export class OrderCardComponent {
   }
 
   confirmOrder() {
-    this.orderService.confirmOrder(this.order.orderId!).subscribe({
-      next: updatedOrder => {
-        this.logger.info(`Order Confirmed:[${updatedOrder.orderId}]`);
-        this.order = updatedOrder;
-        this.orderUpdatedEvent.emit(this.order);
-      },
-      error: err => {
-        this.logger.error(`Error confirming order:[${this.order.orderId}]`);
-        this.restErrorSvc.processPostError(err);
+    this.dialogService.openInteractionDialog({
+      isConfirmation: true,
+      title: `Are you sure you want to confirm this order?`,
+      message: `Order:[${this.order.orderId}]`
+    }).subscribe(confirmation => {
+      if (confirmation) {
+        this.orderService.confirmOrder(this.order.orderId!).subscribe({
+          next: updatedOrder => {
+            this.logger.info(`Order Confirmed:[${updatedOrder.orderId}]`);
+            this.order = updatedOrder;
+            this.orderUpdatedEvent.emit(this.order);
+          },
+          error: err => {
+            this.logger.error(`Error confirming order:[${this.order.orderId}]`);
+            this.restErrorSvc.processPostError(err);
+          }
+        })
       }
     })
   }

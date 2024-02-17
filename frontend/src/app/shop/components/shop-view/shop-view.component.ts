@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditProductDialogComponent } from '../edit-product-dialog/edit-product-dialog.component';
 import { ImageService } from 'src/app/shared/image-manager/services/image.service';
 import { IdGeneratorService } from 'src/app/shared/services/id-generator.service';
+import { OrderService } from 'src/app/order/services/order.service';
 
 @Component({
   selector: 'app-shop-view',
@@ -28,6 +29,8 @@ export class ShopViewComponent implements OnInit, AfterViewChecked {
   products: Product[];
   imgSrc!: string;
   categorizedProducts: Map<string, Product[]> = new Map<string, Product[]>();
+  
+  ordersNeedingAttention: number = 0;
 
   constructor(private logger: LoggerService,
     private authService: AuthService,
@@ -39,7 +42,8 @@ export class ShopViewComponent implements OnInit, AfterViewChecked {
     public productDialog: MatDialog,
     private imageService: ImageService,
     private cdr: ChangeDetectorRef,
-    private idGenerator: IdGeneratorService) {
+    private idGenerator: IdGeneratorService,
+    private orderService: OrderService) {
     this.userInfo = authService.UserCredentials;
     this.shopInfo = new User();
     this.products = [];
@@ -60,14 +64,13 @@ export class ShopViewComponent implements OnInit, AfterViewChecked {
           this.shopInfo = info;
           this.getShopImage();
           this.getProductsInShop();
+          this.getOrdersNeedingAttention();
         },
         error: err => {
           this.handleRestErrorAndGoHome(err);
         }
       })
-    }
-    
-    )
+    })
   }
 
   ngAfterViewChecked() {
@@ -165,5 +168,11 @@ export class ShopViewComponent implements OnInit, AfterViewChecked {
 
   categoryId(id: string): string{
     return id.split(' ').join();
+  }
+
+  getOrdersNeedingAttention() {
+    this.orderService.getOrdersNeedingAttention().subscribe(orders => {
+      this.ordersNeedingAttention = orders.length;
+    })
   }
 }

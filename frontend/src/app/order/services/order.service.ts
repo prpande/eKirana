@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { Order } from '../models/order';
 import { OrderRestEndpointsService } from './order-rest-endpoints.service';
 import { OrderStatus } from '../models/orderStatus';
@@ -11,11 +11,18 @@ import { AuthService } from 'src/app/user/services/auth.service';
 })
 export class OrderService {
 
+  private _ordersUpdated: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  get OrderUpdate$(): Observable<Order>{
+    return this._ordersUpdated.asObservable();
+  }
+
   constructor(private httpCLient: HttpClient,
     private authService: AuthService) { }
 
   placeOrder(order: Order): Observable<Order> {
-    return this.httpCLient.post<Order>(OrderRestEndpointsService.PLACE_ORDER, order);
+    return this.httpCLient.post<Order>(OrderRestEndpointsService.PLACE_ORDER, order).pipe(
+      tap( order => this._ordersUpdated.next(order))
+    );
   }
 
   getOrder(orderId: string): Observable<Order> {
@@ -32,31 +39,45 @@ export class OrderService {
 
   cancelOrder(orderId: string, comment: string): Observable<Order> {
     let fmtComment = `[${Date.now().toString()}] : Order cancellation by User:[${this.authService.UserCredentials.userId}] : ${comment};`
-    return this.httpCLient.put<Order>(OrderRestEndpointsService.CANCEL_ORDER(orderId), OrderStatus.CANCELLED);
+    return this.httpCLient.put<Order>(OrderRestEndpointsService.CANCEL_ORDER(orderId), OrderStatus.CANCELLED).pipe(
+      tap( order => this._ordersUpdated.next(order))
+    );
   }
 
   confirmOrder(orderId: string): Observable<Order> {
-    return this.httpCLient.put<Order>(OrderRestEndpointsService.CONFIRM_ORDER(orderId), OrderStatus.CONFIRMED);
+    return this.httpCLient.put<Order>(OrderRestEndpointsService.CONFIRM_ORDER(orderId), OrderStatus.CONFIRMED).pipe(
+      tap( order => this._ordersUpdated.next(order))
+    );
   }
 
   shipOrder(orderId: string): Observable<Order> {
-    return this.httpCLient.put<Order>(OrderRestEndpointsService.SHIP_ORDER(orderId), OrderStatus.SHIPPED);
+    return this.httpCLient.put<Order>(OrderRestEndpointsService.SHIP_ORDER(orderId), OrderStatus.SHIPPED).pipe(
+      tap( order => this._ordersUpdated.next(order))
+    );
   }
 
   deliverOrder(orderId: string): Observable<Order> {
-    return this.httpCLient.put<Order>(OrderRestEndpointsService.DELIVER_ORDER(orderId), OrderStatus.DELIVERED);
+    return this.httpCLient.put<Order>(OrderRestEndpointsService.DELIVER_ORDER(orderId), OrderStatus.DELIVERED).pipe(
+      tap( order => this._ordersUpdated.next(order))
+    );
   }
 
   updateOrderCarrier(orderId: string, carrierId: string): Observable<Order> {
-    return this.httpCLient.put<Order>(OrderRestEndpointsService.UPDATE_ORDER_CARRIER(orderId), carrierId);
+    return this.httpCLient.put<Order>(OrderRestEndpointsService.UPDATE_ORDER_CARRIER(orderId), carrierId).pipe(
+      tap( order => this._ordersUpdated.next(order))
+    );
   }
 
   updateOrderComments(orderId: string, comments: string): Observable<Order> {
-    return this.httpCLient.put<Order>(OrderRestEndpointsService.UPDATE_ORDER_COMMENTS(orderId), comments);
+    return this.httpCLient.put<Order>(OrderRestEndpointsService.UPDATE_ORDER_COMMENTS(orderId), comments).pipe(
+      tap( order => this._ordersUpdated.next(order))
+    );
   }
 
   updateOrderDeliveryDate(orderId: string, date: Date): Observable<Order> {
-    return this.httpCLient.put<Order>(OrderRestEndpointsService.UPDATE_ORDER_DELIVERY_DATE(orderId), date);
+    return this.httpCLient.put<Order>(OrderRestEndpointsService.UPDATE_ORDER_DELIVERY_DATE(orderId), date).pipe(
+      tap( order => this._ordersUpdated.next(order))
+    );
   }
 
   isOrderInProgress(order: Order): boolean {

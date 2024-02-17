@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Address } from '../models/address';
 import { UserRestEndpointsService } from './user-rest-endpoints.service';
 import { UserCredential } from '../models/userCredential';
@@ -12,6 +12,11 @@ import { Vehicle } from '../models/vehicle';
   providedIn: 'root'
 })
 export class UserService {
+
+  private _userUpdated: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  get UserUpdate$(): Observable<User> {
+    return this._userUpdated.asObservable();
+  }
 
   constructor(private httpClient: HttpClient, private imageService: ImageService) { }
 
@@ -33,7 +38,9 @@ export class UserService {
     if (user.address?.displayImageUrl) {
       this.imageService.saveCachedImage(user.address?.displayImageUrl);
     }
-    return this.httpClient.put<User>(UserRestEndpointsService.UPDATE_USER, user);
+    return this.httpClient.put<User>(UserRestEndpointsService.UPDATE_USER, user).pipe(
+      tap( user => this._userUpdated.next(user))
+    );
   }
 
   getLoggedInUserInfo(): Observable<User> {
@@ -45,19 +52,27 @@ export class UserService {
   }
 
   addUserDeliveryAddress(address: Address): Observable<User> {
-    return this.httpClient.post<User>(UserRestEndpointsService.ADD_USER_ADDRESS, address);
+    return this.httpClient.post<User>(UserRestEndpointsService.ADD_USER_ADDRESS, address).pipe(
+      tap( user => this._userUpdated.next(user))
+    );
   }
 
   updateUserDeliveryAddress(address: Address): Observable<User> {
-    return this.httpClient.put<User>(UserRestEndpointsService.UPDATE_USER_ADDRESS, address);
+    return this.httpClient.put<User>(UserRestEndpointsService.UPDATE_USER_ADDRESS, address).pipe(
+      tap( user => this._userUpdated.next(user))
+    );
   }
 
   deleteUserDeliveryAddress(addressId: string): Observable<boolean> {
-    return this.httpClient.delete<boolean>(UserRestEndpointsService.DELETE_USER_ADDRESS(addressId));
+    return this.httpClient.delete<boolean>(UserRestEndpointsService.DELETE_USER_ADDRESS(addressId)).pipe(
+      tap( bool => this._userUpdated.next(bool))
+    );
   }
 
   updateVehicleInfo(vehicle: Vehicle): Observable<User> {
-    return this.httpClient.put<User>(UserRestEndpointsService.UPDATE_VEHICLE_INFO, vehicle);
+    return this.httpClient.put<User>(UserRestEndpointsService.UPDATE_VEHICLE_INFO, vehicle).pipe(
+      tap( user => this._userUpdated.next(user))
+    );;
   }
 
   login(userCredentials: UserCredential): Observable<string> {
