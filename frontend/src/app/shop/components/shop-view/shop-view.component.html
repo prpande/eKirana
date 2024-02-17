@@ -49,7 +49,7 @@
     <div class="card p-3 showcase">
         <div class="product-list my-2" *ngFor="let category of getCategories; index as i">
             <div class="">
-                <a class="" data-bs-toggle="collapse" href="#{{category}}">
+                <a class="" data-bs-toggle="collapse" href="#{{categoryId(category)}}">
                     <div class="d-flex py-1 px-2 category-toggle">
                         <div class="me-auto h4 align-self-center mt-1">
                             {{category}} ({{categorizedProducts.get(category)!.length}})
@@ -60,7 +60,7 @@
                     </div>
                 </a>
             </div>
-            <div class="collapse show" id="{{category}}">
+            <div [class]="'collapse ' +  ((i==0)?'show':'')"  id="{{categoryId(category)}}">
                 <div class="mt-2 card p-3 splash-bg">
                     <app-product-card *ngFor="let product of categorizedProducts.get(category)" [product]="product"
                     (productUpdatedEvent)="getProductsInShop()"></app-product-card>

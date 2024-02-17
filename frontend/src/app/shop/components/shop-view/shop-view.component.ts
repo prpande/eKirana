@@ -13,6 +13,7 @@ import { ProductService } from '../../services/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProductDialogComponent } from '../edit-product-dialog/edit-product-dialog.component';
 import { ImageService } from 'src/app/shared/image-manager/services/image.service';
+import { IdGeneratorService } from 'src/app/shared/services/id-generator.service';
 
 @Component({
   selector: 'app-shop-view',
@@ -37,7 +38,8 @@ export class ShopViewComponent implements OnInit, AfterViewChecked {
     private productService: ProductService,
     public productDialog: MatDialog,
     private imageService: ImageService,
-    private cdr: ChangeDetectorRef) {
+    private cdr: ChangeDetectorRef,
+    private idGenerator: IdGeneratorService) {
     this.userInfo = authService.UserCredentials;
     this.shopInfo = new User();
     this.products = [];
@@ -159,5 +161,9 @@ export class ShopViewComponent implements OnInit, AfterViewChecked {
 
   get getCategories(){
     return [...this.categorizedProducts.keys()];
+  }
+
+  categoryId(id: string): string{
+    return id.split(' ').join();
   }
 }
