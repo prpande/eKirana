@@ -21,6 +21,7 @@ import { DeliveryModule } from './delivery/delivery.module';
 import { SplashMapComponent } from './components/splash/splash-map/splash-map.component';
 import { ShopMarkerComponent } from './components/splash/splash-map/shop-marker/shop-marker.component';
 import { HoverDisplayComponent } from './components/splash/hover-display/hover-display.component';
+import { AddressMenuComponent } from './components/header/address-menu/address-menu.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { HoverDisplayComponent } from './components/splash/hover-display/hover-d
     PageNotFoundComponent,
     SplashMapComponent,
     ShopMarkerComponent,
-    HoverDisplayComponent
+    HoverDisplayComponent,
+    AddressMenuComponent
   ],
   imports: [
     SharedModule,

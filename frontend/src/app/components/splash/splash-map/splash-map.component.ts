@@ -18,7 +18,7 @@ export class SplashMapComponent {
 
   hoverShop!: Address;
   hoverImg!: string;
-  
+
   mapZoom = 16;
   mapCenter!: google.maps.LatLng;
   mapOptions: google.maps.MapOptions = {
@@ -35,15 +35,19 @@ export class SplashMapComponent {
 
   markersInitialized: boolean = false;
   markers: Map<google.maps.LatLng, Address> = new Map<google.maps.LatLng, Address>();
+
+  deliveryMarkerInitialized = false;
+  deliveryMarkerLatLng: google.maps.LatLng = new google.maps.LatLng({ lat: 0, lng: 0 });
   markerOptions: google.maps.MarkerOptions = {
     draggable: false,
     animation: google.maps.Animation.DROP,
-    clickable: true
+    icon: "https://maps.google.com/mapfiles/kml/pal3/icon56.png"
   };
 
   constructor(private imageService: ImageService,
     private mapInteractionService: MapInteractionService) {
     mapInteractionService.HoverId$.subscribe(_ => this.onHoverIndexChange());
+    mapInteractionService.AddressFilter$.subscribe(address => this.onDeliveryAddressChange(address));
   }
 
   initMarkers() {
@@ -118,6 +122,20 @@ export class SplashMapComponent {
         }
         index++;
       })
+    }
+  }
+
+  onDeliveryAddressChange(address: Address) {
+    if (address && address.addressId) {
+      let addressLatLng = new google.maps.LatLng({
+        lat: address.latitude!,
+        lng: address.longitude!
+      });
+      this.deliveryMarkerLatLng = addressLatLng;
+      this.gMap.panTo(this.deliveryMarkerLatLng);
+      this.deliveryMarkerInitialized = true
+    } else {
+      this.deliveryMarkerInitialized = false;
     }
   }
 }

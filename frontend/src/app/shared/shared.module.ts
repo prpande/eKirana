@@ -30,6 +30,7 @@ import { MapDialogComponent } from './components/map-dialog/map-dialog.component
 import { QuantityFormComponent } from './components/quantity-form/quantity-form.component';
 import { ImageManagerModule } from './image-manager/image-manager.module';
 import { SearchComponent } from './components/search/search.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [  
@@ -97,7 +98,8 @@ import { SearchComponent } from './components/search/search.component';
     MatBadgeModule,
     QuantityFormComponent,
     ImageManagerModule,
-    SearchComponent
+    SearchComponent,
+    MatMenuModule
   ],
 })
 export class SharedModule { }

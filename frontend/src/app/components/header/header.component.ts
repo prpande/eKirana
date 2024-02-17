@@ -5,7 +5,6 @@ import { OrderService } from 'src/app/order/services/order.service';
 import { RouterService } from 'src/app/shared/services/router.service';
 import { UserCredential } from 'src/app/user/models/userCredential';
 import { AuthService } from 'src/app/user/services/auth.service';
-import { Observable, count, debounceTime, map, reduce, tap } from 'rxjs';
 
 @Component({
   selector: 'app-header',

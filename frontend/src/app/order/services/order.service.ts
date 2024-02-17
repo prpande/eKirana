@@ -134,12 +134,10 @@ export class OrderService {
 
   getOrdersNeedingAttention(): Observable<Order[]> {
     return this.getAllOrdersByUser().pipe(
-      tap(a => console.log(a)),
       map(orders => {
         return orders.filter(order => order.status == OrderStatus.INITIALIZED
           || order.status == OrderStatus.CANCELLATION_REQUESTED);
-      }),
-      tap(a => console.log(a))
+      })
       )
   }
 }
