@@ -27,14 +27,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
 import { InteractionDialogComponent } from './components/interaction-dialog/interaction-dialog.component';
 import { MapDialogComponent } from './components/map-dialog/map-dialog.component';
-import { MapDisplayComponent } from './components/map-dialog/map-display/map-display.component';
 import { QuantityFormComponent } from './components/quantity-form/quantity-form.component';
 import { ImageManagerModule } from './image-manager/image-manager.module';
 import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [  
-    QuantityFormComponent, MapDialogComponent, MapDisplayComponent, InteractionDialogComponent, SearchComponent
+    QuantityFormComponent, MapDialogComponent, InteractionDialogComponent, SearchComponent
   ],
   imports: [
     BrowserModule,

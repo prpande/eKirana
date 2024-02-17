@@ -1,0 +1,25 @@
+.hover-card {
+    position: absolute;
+    z-index: 10;
+    right: 0px;
+    /* background: #3f51b581; */
+}
+
+img {
+    width: 7vw;
+
+}
+
+a:link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.info {
+    background-color: #f1f3f4e8;
+    box-shadow: 0 0 5px 5px #3f51b5a4;
+}
+.shop-name{
+    font-weight: bold;
+    font-size: 1.1rem;
+}

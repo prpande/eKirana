@@ -2,6 +2,7 @@ import { Component, Input, QueryList, ViewChild, ViewChildren } from '@angular/c
 import { GoogleMap, MapInfoWindow } from '@angular/google-maps';
 import { Address } from 'src/app/user/models/address';
 import { MapInteractionService } from './map-interaction.service';
+import { ImageService } from 'src/app/shared/image-manager/services/image.service';
 
 @Component({
   selector: 'app-splash-map',
@@ -15,6 +16,9 @@ export class SplashMapComponent {
   @Input()
   shops!: Address[];
 
+  hoverShop!: Address;
+  hoverImg!: string;
+  
   mapZoom = 16;
   mapCenter!: google.maps.LatLng;
   mapOptions: google.maps.MapOptions = {
@@ -37,7 +41,8 @@ export class SplashMapComponent {
     clickable: true
   };
 
-  constructor(private mapInteractionService: MapInteractionService) {
+  constructor(private imageService: ImageService,
+    private mapInteractionService: MapInteractionService) {
     mapInteractionService.HoverId$.subscribe(_ => this.onHoverIndexChange());
   }
 
@@ -68,7 +73,7 @@ export class SplashMapComponent {
 
   initializeInfoWindows() {
     this.infoWindowsView.forEach(window => {
-      window.options = { disableAutoPan: false };
+      window.options = { disableAutoPan: true };
       window.open(undefined, false);
     })
   }
@@ -94,8 +99,19 @@ export class SplashMapComponent {
     if (this.hoverId) {
       let index = 0;
       this.infoWindowsView.forEach(window => {
-        if (this.getShop(this.Markers.at(index)).addressId == this.hoverId) {
-          window.infoWindow?.setZIndex(10);
+        let shop = this.getShop(this.Markers.at(index));
+        if (shop.addressId == this.hoverId) {
+          this.imageService.getImage(shop.displayImageUrl!).subscribe(img => {
+            this.hoverImg = this.imageService.getImageSrcString(img);
+            this.hoverShop = shop;
+            window.options = { disableAutoPan: false };
+            window.open(undefined, false);
+            window.infoWindow?.setZIndex(10);
+            // this.mapCenter = new google.maps.LatLng({
+            //   lat: shop.latitude!,
+            //   lng: shop.longitude!
+            // });
+          })
         } else {
           window.infoWindow?.setZIndex(5);
         }

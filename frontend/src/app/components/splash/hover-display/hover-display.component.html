@@ -1,0 +1,25 @@
+<div class="hover-card  w-25 mt-4 me-5" >
+    <a routerLink="/shop/{{shop.userId}}">
+        <div class="card info primary-border m-1">
+            <div class="d-flex p-1 ">
+                <div class="d-none d-md-flex">
+                    <div class="align-self-center">
+                        <img *ngIf="imgSrc" class="img-fluid rounded-2" mat-card-image [src]="imgSrc" [alt]="shop.displayImageUrl">
+                    </div>
+                </div>
+                <div class="flex-fill align-self-center">
+                    <div class="shop-name  w-100 mt-2">
+                        <div class=" w-100">
+                            {{shop.fullName}}
+                        </div>
+                    </div>
+                    <div class="p-1 w-100">
+                        <div class=" w-100">
+                                {{shop.line1}}, {{shop.line2}}, {{shop.city}}, {{shop.phoneNumber}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>

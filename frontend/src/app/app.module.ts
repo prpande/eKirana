@@ -20,6 +20,7 @@ import { OrderModule } from './order/order.module';
 import { DeliveryModule } from './delivery/delivery.module';
 import { SplashMapComponent } from './components/splash/splash-map/splash-map.component';
 import { ShopMarkerComponent } from './components/splash/splash-map/shop-marker/shop-marker.component';
+import { HoverDisplayComponent } from './components/splash/hover-display/hover-display.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ShopMarkerComponent } from './components/splash/splash-map/shop-marker/
     SplashComponent,
     PageNotFoundComponent,
     SplashMapComponent,
-    ShopMarkerComponent
+    ShopMarkerComponent,
+    HoverDisplayComponent
   ],
   imports: [
     SharedModule,

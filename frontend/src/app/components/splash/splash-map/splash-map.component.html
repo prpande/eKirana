@@ -1,3 +1,4 @@
+<app-hover-display *ngIf="hoverShop" [shop]="hoverShop" [imgSrc]="hoverImg"></app-hover-display>
 <div class="border border-3 rounded-2 h-auto w-100">
     <google-map [zoom]="mapZoom" [center]="mapCenter" [options]="mapOptions" (mapInitialized)="initMarkers()" width="100%">
         <div *ngIf="markersInitialized">

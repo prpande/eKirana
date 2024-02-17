@@ -2,9 +2,9 @@
     <div class="" *ngIf="shops.length > 0">
         <app-splash-map [shops]="shops"></app-splash-map>
     </div>
-    <div class="h-100 d-flex flex-wrap justify-content-evenly align-items-center">        
+    <div class="h-100 d-flex flex-wrap justify-content-evenly align-items-center">
         <div class="d-flex d-md-inline-block m-2" *ngFor="let shop of shops">
-                <app-shop-card [shop]="shop"></app-shop-card>
+            <app-shop-card [shop]="shop"></app-shop-card>
         </div>
     </div>
 </div>
