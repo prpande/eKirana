@@ -1,0 +1,9 @@
+.checkout-panel{
+    position: fixed;
+    z-index: 15;
+    bottom: 5px;
+    width: 12vw;
+    background-color: rgba(245, 245, 245, 0.89);
+    box-shadow: 0 0 3px 3px  #ff47879a;
+    border: 2px solid #ff4787cb;
+}
